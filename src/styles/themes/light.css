@@ -1,0 +1,14 @@
+.dbru-theme-light {
+  --dbru-color-bg: #f6f4f1;
+  --dbru-color-surface: #ffffff;
+  --dbru-color-text: #1b1b1b;
+  --dbru-color-border: #e5e0d8;
+
+  --dbru-color-primary: #3b82f6;
+  --dbru-color-on-primary: #ffffff;
+
+  --dbru-color-danger: #fb464c;
+  --dbru-color-on-danger: #ffffff;
+
+  --dbru-color-focus: #3b82f6;
+}

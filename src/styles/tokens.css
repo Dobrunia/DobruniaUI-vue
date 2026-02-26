@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&display=swap");
+
+:root {
+  color-scheme: light dark;
+
+  --dbru-font-family: "Noto Sans", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Arial;
+  --dbru-font-size-base: 14px;
+  --dbru-line-height-base: 1.5;
+
+  --dbru-space-1: 4px;
+  --dbru-space-2: 8px;
+  --dbru-space-3: 12px;
+  --dbru-space-4: 16px;
+  --dbru-space-5: 20px;
+
+  --dbru-radius-sm: 8px;
+  --dbru-radius-md: 12px;
+
+  --dbru-ease-standard: ease;
+  --dbru-duration-fast: 120ms;
+  --dbru-duration-base: 160ms;
+
+  --dbru-color-bg: #ffffff;
+  --dbru-color-surface: #ffffff;
+  --dbru-color-text: #111827;
+  --dbru-color-border: #d1d3d7;
+
+  --dbru-color-primary: #3b82f6;
+  --dbru-color-on-primary: #ffffff;
+
+  --dbru-color-danger: #fb464c;
+  --dbru-color-on-danger: #ffffff;
+
+  --dbru-color-focus: #3b82f6;
+}

@@ -1,0 +1,25 @@
+.dbru-root {
+  font-family: var(--dbru-font-family);
+  font-size: var(--dbru-font-size-base);
+  line-height: var(--dbru-line-height-base);
+  color: var(--dbru-color-text);
+  background: var(--dbru-color-bg);
+}
+
+.dbru-surface {
+  background: var(--dbru-color-surface);
+  border: 1px solid var(--dbru-color-border);
+  color: var(--dbru-color-text);
+}
+
+.dbru-focusable:focus-visible {
+  outline: 2px solid var(--dbru-color-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbru-reduced-motion {
+    transition: none !important;
+    animation: none !important;
+  }
+}
