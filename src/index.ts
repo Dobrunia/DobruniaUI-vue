@@ -40,11 +40,21 @@ export { default as DbrTerminalLoader } from "./components/DbrTerminalLoader/Dbr
  * Props for the DbrTerminalLoader component.
  */
 export type { DbrTerminalLoaderProps } from "./components/DbrTerminalLoader/DbrTerminalLoader.types";
+/**
+ * Checkbox component with optional label.
+ * Use it for binary choices and form inputs.
+ */
+export { default as DbrCheckbox } from "./components/DbrCheckbox/DbrCheckbox.vue";
+/**
+ * Props for the DbrCheckbox component.
+ */
+export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrLoader from "./components/DbrLoader/DbrLoader.vue";
 import DbrTerminalLoader from "./components/DbrTerminalLoader/DbrTerminalLoader.vue";
+import DbrCheckbox from "./components/DbrCheckbox/DbrCheckbox.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -52,5 +62,6 @@ export default {
     app.component("DbrEyesLoader", DbrEyesLoader);
     app.component("DbrLoader", DbrLoader);
     app.component("DbrTerminalLoader", DbrTerminalLoader);
+    app.component("DbrCheckbox", DbrCheckbox);
   }
 };

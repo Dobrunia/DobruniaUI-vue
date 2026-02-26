@@ -6,12 +6,6 @@
   background: var(--dbru-color-bg);
 }
 
-.dbru-surface {
-  background: var(--dbru-color-surface);
-  border: 1px solid var(--dbru-color-border);
-  color: var(--dbru-color-text);
-}
-
 .dbru-focusable:focus-visible {
   outline: 2px solid var(--dbru-color-focus);
   outline-offset: 2px;

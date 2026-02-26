@@ -27,7 +27,7 @@ const preview: Preview = {
       return {
         components: { story },
         template:
-          `<div class="dbru-root dbru-surface ${themeClass}" style="padding:24px; background: var(--dbru-bg); min-height: 100vh;"><story /></div>`
+          `<div class="dbru-root ${themeClass}" style="padding:24px; min-height: 100vh;"><story /></div>`
       };
     }
   ]
