@@ -11,40 +11,23 @@
 </template>
 
 <script setup lang="ts">
-type ButtonVariant = "primary" | "ghost" | "danger";
-type ButtonSize = "sm" | "md" | "lg";
+/**
+ * Button component with variants and sizes.
+ * Use it for primary actions across the UI.
+ */
+defineOptions({
+  name: "DbrButton"
+});
 
-const props = withDefaults(
-  defineProps<{
-    /**
-     * Visual style of the button.
-     */
-    variant?: ButtonVariant;
-    /**
-     * Button size scale.
-     */
-    size?: ButtonSize;
-    /**
-     * Disables the button and removes pointer interaction.
-     */
-    disabled?: boolean;
-    /**
-     * Use for toggle buttons to communicate pressed state to screen readers.
-     */
-    pressed?: boolean;
-    /**
-     * Native HTML button type.
-     */
-    nativeType?: "button" | "submit" | "reset";
-  }>(),
-  {
-    variant: "primary",
-    size: "md",
-    disabled: false,
-    pressed: undefined,
-    nativeType: "button"
-  }
-);
+import type { DbrButtonProps } from "./DbrButton.types";
+
+const props = withDefaults(defineProps<DbrButtonProps>(), {
+  variant: "primary",
+  size: "md",
+  disabled: false,
+  pressed: undefined,
+  nativeType: "button"
+});
 
 const { variant, size, disabled, pressed, nativeType } = props;
 </script>
