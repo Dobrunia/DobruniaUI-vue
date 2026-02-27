@@ -2,17 +2,88 @@
   <div class="dbru-input" :class="{ 'dbru-input--disabled': disabled }">
     <input
       class="dbru-input__field dbru-reduced-motion"
-      :class="`dbru-size-${size}`"
+      :class="[
+        `dbru-size-${size}`,
+        {
+          'dbru-input__field--has-left-icon': hasLeftIcon,
+          'dbru-input__field--has-right-icon': hasRightIcon
+        }
+      ]"
       :id="inputId"
-      :type="type"
+      :type="resolvedType"
       :name="name"
       :disabled="disabled"
       :required="required"
-      :autocomplete="autocomplete"
+      :autocomplete="resolvedAutocomplete"
       :value="modelValue"
       :placeholder="label"
       @input="onInput"
     />
+    <span
+      v-if="hasLeftIcon"
+      class="dbru-input__icon dbru-input__icon--left"
+      aria-hidden="true"
+    >
+      <svg
+        v-if="isPasswordType"
+        viewBox="0 0 24 24"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect x="5" y="11" width="14" height="10" rx="2" />
+        <path d="M8 11V8a4 4 0 1 1 8 0v3" />
+      </svg>
+      <svg
+        v-else-if="isSearchType"
+        viewBox="0 0 24 24"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+    </span>
+    <button
+      v-if="isPasswordType"
+      type="button"
+      class="dbru-input__icon-btn dbru-input__icon--right"
+      :disabled="disabled"
+      :aria-label="showPassword ? 'Hide password' : 'Show password'"
+      @click="togglePassword"
+    >
+      <svg
+        v-if="!showPassword"
+        viewBox="0 0 24 24"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+      <svg
+        v-else
+        viewBox="0 0 24 24"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M3 3l18 18" />
+        <path d="M10.58 10.58a2 2 0 0 0 2.83 2.83" />
+        <path d="M9.88 5.09A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a16.84 16.84 0 0 1-2.67 3.49" />
+        <path d="M6.61 6.61A16.17 16.17 0 0 0 2 12s3.5 7 10 7a10.94 10.94 0 0 0 4.91-1.09" />
+      </svg>
+    </button>
   </div>
 </template>
 
@@ -26,6 +97,7 @@ defineOptions({
 });
 
 import type { DbrInputProps } from "./DbrInput.types";
+import { computed, ref } from "vue";
 
 const props = withDefaults(defineProps<DbrInputProps>(), {
   modelValue: "",
@@ -36,7 +108,7 @@ const props = withDefaults(defineProps<DbrInputProps>(), {
   id: undefined,
   disabled: false,
   required: false,
-  autocomplete: "off"
+  autocomplete: undefined
 });
 
 const emit = defineEmits<{
@@ -59,6 +131,36 @@ const {
 const inputId =
   id ?? `dbru-input-${Math.random().toString(36).slice(2, 9)}`;
 
+const showPassword = ref(false);
+
+const isPasswordType = computed(() => props.type === "password");
+const isSearchType = computed(() => props.type === "search");
+const hasLeftIcon = computed(() => isPasswordType.value || isSearchType.value);
+const hasRightIcon = computed(
+  () => isPasswordType.value
+);
+const resolvedType = computed(() =>
+  isPasswordType.value && showPassword.value ? "text" : props.type
+);
+const resolvedAutocomplete = computed(() => {
+  if (props.autocomplete)
+    return props.autocomplete;
+
+  if (isPasswordType.value)
+    return "current-password";
+
+  if (isSearchType.value)
+    return "on";
+
+  return "on";
+});
+
+const togglePassword = () => {
+  if (props.disabled)
+    return;
+  showPassword.value = !showPassword.value;
+};
+
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const nextValue = target.value;
@@ -68,6 +170,10 @@ const onInput = (event: Event) => {
 </script>
 
 <style scoped>
+.dbru-input {
+  position: relative;
+}
+
 .dbru-input__field {
   width: 100%;
   outline: none;
@@ -86,6 +192,14 @@ const onInput = (event: Event) => {
     background-color var(--dbru-duration-base) var(--dbru-ease-standard);
 }
 
+.dbru-input__field--has-left-icon {
+  padding-left: calc(var(--dbru-control-px, var(--dbru-space-4)) + 24px);
+}
+
+.dbru-input__field--has-right-icon {
+  padding-right: calc(var(--dbru-control-px, var(--dbru-space-4)) + 24px);
+}
+
 .dbru-input__field:hover:not(:disabled) {
   border-color: color-mix(in oklab, var(--dbru-color-primary) 55%, #0000);
 }
@@ -100,6 +214,45 @@ const onInput = (event: Event) => {
 }
 
 .dbru-input--disabled .dbru-input__field {
+  cursor: not-allowed;
+}
+
+.dbru-input__icon,
+.dbru-input__icon-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: color-mix(in oklab, var(--dbru-color-text) 65%, transparent);
+}
+
+.dbru-input__icon--left {
+  left: var(--dbru-space-4);
+}
+
+.dbru-input__icon--right,
+.dbru-input__icon-btn {
+  right: var(--dbru-space-4);
+}
+
+.dbru-input__icon-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dbru-input__icon-btn:focus-visible {
+  outline: 2px solid var(--dbru-color-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dbru-input--disabled .dbru-input__icon-btn {
   cursor: not-allowed;
 }
 </style>

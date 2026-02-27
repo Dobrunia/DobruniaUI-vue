@@ -57,6 +57,8 @@ export const Variants: Story = {
         <DbrInput label="Medium" size="md" />
         <DbrInput label="Large" size="lg" />
         <DbrInput label="Filled" :modelValue="'John Doe'" />
+        <DbrInput label="Password" type="password" :modelValue="'secret123'" />
+        <DbrInput label="Search" type="search" :modelValue="'Design system'" />
         <DbrInput label="Disabled" :disabled="true" />
       </div>
     `

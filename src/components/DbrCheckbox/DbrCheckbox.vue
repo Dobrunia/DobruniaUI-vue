@@ -61,6 +61,8 @@ const onChange = (event: Event) => {
   align-items: center;
   gap: var(--dbru-space-2);
   cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .dbru-checkbox__input {

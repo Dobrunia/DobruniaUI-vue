@@ -1,6 +1,6 @@
 {
   "name": "dobruniaui-vue",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Modern Vue 3 UI component library built with TypeScript and Vite",
   "private": false,
   "type": "module",
