@@ -151,6 +151,14 @@ export type {
   DbrChatAttachment,
   DbrAttachmentKind
 } from "./components/DbrChatComposer/DbrChatComposer.types";
+/**
+ * Theme toggle button.
+ */
+export { default as DbrThemeToggle } from "./components/DbrThemeToggle/DbrThemeToggle.vue";
+/**
+ * Props for the DbrThemeToggle component.
+ */
+export type { DbrThemeToggleProps } from "./components/DbrThemeToggle/DbrThemeToggle.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -166,6 +174,7 @@ import DbrIconButton from "./components/DbrIconButton/DbrIconButton.vue";
 import DbrChatListItem from "./components/DbrChatListItem/DbrChatListItem.vue";
 import DbrChatBubble from "./components/DbrChatBubble/DbrChatBubble.vue";
 import DbrChatComposer from "./components/DbrChatComposer/DbrChatComposer.vue";
+import DbrThemeToggle from "./components/DbrThemeToggle/DbrThemeToggle.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -183,5 +192,6 @@ export default {
     app.component("DbrChatListItem", DbrChatListItem);
     app.component("DbrChatBubble", DbrChatBubble);
     app.component("DbrChatComposer", DbrChatComposer);
+    app.component("DbrThemeToggle", DbrThemeToggle);
   }
 };

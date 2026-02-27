@@ -6,6 +6,7 @@ import DbrChatBubble from "../DbrChatBubble/DbrChatBubble.vue";
 const meta: Meta<typeof DbrChatComposer> = {
   title: "Chat/Composer",
   component: DbrChatComposer,
+  tags: ['autodocs'],
   args: {
     placeholder: "Message",
     disabled: false

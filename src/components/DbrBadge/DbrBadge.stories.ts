@@ -4,6 +4,7 @@ import DbrBadge from "./DbrBadge.vue";
 const meta: Meta<typeof DbrBadge> = {
   title: "Components/Badge",
   component: DbrBadge,
+  tags: ['autodocs'],
   args: {
     text: "Badge",
     variant: "primary"

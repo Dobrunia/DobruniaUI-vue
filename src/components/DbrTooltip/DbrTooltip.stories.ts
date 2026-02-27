@@ -4,6 +4,7 @@ import DbrTooltip from "./DbrTooltip.vue";
 const meta: Meta<typeof DbrTooltip> = {
   title: "Components/Tooltip",
   component: DbrTooltip,
+  tags: ['autodocs'],
   args: {
     text: "This is a cool tooltip!",
     variant: undefined

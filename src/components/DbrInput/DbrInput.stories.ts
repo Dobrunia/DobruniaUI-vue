@@ -4,6 +4,7 @@ import DbrInput from "./DbrInput.vue";
 const meta: Meta<typeof DbrInput> = {
   title: "Components/Input",
   component: DbrInput,
+  tags: ['autodocs'],
   args: {
     modelValue: "",
     label: "Name",

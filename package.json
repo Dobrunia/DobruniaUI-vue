@@ -6,6 +6,9 @@
   "files": [
     "dist"
   ],
+  "sideEffects": [
+    "./dist/styles.css"
+  ],
   "main": "./dist/dobruniaui.cjs",
   "module": "./dist/dobruniaui.mjs",
   "types": "./dist/index.d.ts",

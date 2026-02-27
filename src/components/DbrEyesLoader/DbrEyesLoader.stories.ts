@@ -4,6 +4,7 @@ import DbrEyesLoader from "./DbrEyesLoader.vue";
 const meta: Meta<typeof DbrEyesLoader> = {
   title: "Components/Eyes Loader",
   component: DbrEyesLoader,
+  tags: ['autodocs'],
   args: {},
   argTypes: {}
 };

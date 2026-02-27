@@ -4,6 +4,7 @@ import DbrCheckbox from "./DbrCheckbox.vue";
 const meta: Meta<typeof DbrCheckbox> = {
   title: "Components/Checkbox",
   component: DbrCheckbox,
+  tags: ['autodocs'],
   args: {
     modelValue: false,
     disabled: false,

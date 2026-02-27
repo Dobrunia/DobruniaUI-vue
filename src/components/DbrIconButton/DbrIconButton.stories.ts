@@ -4,6 +4,7 @@ import DbrIconButton from "./DbrIconButton.vue";
 const meta: Meta<typeof DbrIconButton> = {
   title: "Components/Icon Button",
   component: DbrIconButton,
+  tags: ['autodocs'],
   args: {
     label: "Action",
     variant: "primary",

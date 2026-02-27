@@ -4,6 +4,7 @@ import DbrTerminalLoader from "./DbrTerminalLoader.vue";
 const meta: Meta<typeof DbrTerminalLoader> = {
   title: "Components/Terminal Loader",
   component: DbrTerminalLoader,
+  tags: ['autodocs'],
   args: {},
   argTypes: {}
 };

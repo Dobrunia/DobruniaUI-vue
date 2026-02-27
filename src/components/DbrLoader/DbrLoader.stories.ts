@@ -4,6 +4,7 @@ import DbrLoader from "./DbrLoader.vue";
 const meta: Meta<typeof DbrLoader> = {
   title: "Components/Loader",
   component: DbrLoader,
+  tags: ['autodocs'],
   args: {},
   argTypes: {}
 };

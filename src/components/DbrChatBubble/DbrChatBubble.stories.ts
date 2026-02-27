@@ -7,6 +7,7 @@ const imageUrl = "https://cdn.fishki.net/upload/post/2021/02/16/3613245/tn/alber
 const meta: Meta<typeof DbrChatBubble> = {
   title: "Chat/Bubble",
   component: DbrChatBubble,
+  tags: ['autodocs'],
   args: {
     text: "Hey! Are you coming today?",
     time: "12:45",

@@ -4,6 +4,7 @@ import DbrToggle from "./DbrToggle.vue";
 const meta: Meta<typeof DbrToggle> = {
   title: "Components/Toggle",
   component: DbrToggle,
+  tags: ['autodocs'],
   args: {
     modelValue: false,
     disabled: false,

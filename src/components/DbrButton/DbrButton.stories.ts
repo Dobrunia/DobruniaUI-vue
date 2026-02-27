@@ -4,6 +4,7 @@ import DbrButton from "./DbrButton.vue";
 const meta: Meta<typeof DbrButton> = {
   title: "Components/Button",
   component: DbrButton,
+  tags: ["autodocs"],
   args: {
     variant: "primary",
     size: "md",

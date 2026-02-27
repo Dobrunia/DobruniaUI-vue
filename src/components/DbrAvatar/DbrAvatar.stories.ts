@@ -4,6 +4,7 @@ import DbrAvatar from "./DbrAvatar.vue";
 const meta: Meta<typeof DbrAvatar> = {
   title: "Components/Avatar",
   component: DbrAvatar,
+  tags: ['autodocs'],
   args: {
     name: "Jane Doe",
     size: "md",

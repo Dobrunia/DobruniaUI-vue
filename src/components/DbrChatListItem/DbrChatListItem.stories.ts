@@ -4,6 +4,7 @@ import DbrChatListItem from "./DbrChatListItem.vue";
 const meta: Meta<typeof DbrChatListItem> = {
   title: "Chat/List Item",
   component: DbrChatListItem,
+  tags: ['autodocs'],
   args: {
     name: "Alex Johnson",
     lastMessage: { text: "Hey! Are you coming today?", type: "text" },
