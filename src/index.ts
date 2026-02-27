@@ -95,7 +95,7 @@ export { default as DbrBadge } from "./components/DbrBadge/DbrBadge.vue";
  */
 export type {
   DbrBadgeProps,
-  DbrBadgeVariant
+  DbrBadgeVariant,
 } from "./components/DbrBadge/DbrBadge.types";
 /**
  * Button with optional icons and text label.
@@ -110,6 +110,35 @@ export type {
   DbrIconButtonSize,
   DbrIconButtonVariant
 } from "./components/DbrIconButton/DbrIconButton.types";
+/**
+ * Chat list item for a single dialog.
+ */
+export { default as DbrChatListItem } from "./components/DbrChatListItem/DbrChatListItem.vue";
+/**
+ * Skeleton for chat list item.
+ */
+/**
+ * Props for the DbrChatListItem component.
+ */
+export type {
+  DbrChatListItemProps,
+  DbrMessageStatus,
+  DbrMessageType,
+  DbrPresence
+} from "./components/DbrChatListItem/DbrChatListItem.types";
+/**
+ * Chat message bubble component.
+ */
+export { default as DbrChatBubble } from "./components/DbrChatBubble/DbrChatBubble.vue";
+/**
+ * Props for the DbrChatBubble component.
+ */
+export type {
+  DbrChatBubbleProps,
+  DbrChatBubbleDirection,
+  DbrChatBubbleStatus,
+  DbrChatBubbleKind
+} from "./components/DbrChatBubble/DbrChatBubble.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -122,6 +151,8 @@ import DbrTooltip from "./components/DbrTooltip/DbrTooltip.vue";
 import DbrAvatar from "./components/DbrAvatar/DbrAvatar.vue";
 import DbrBadge from "./components/DbrBadge/DbrBadge.vue";
 import DbrIconButton from "./components/DbrIconButton/DbrIconButton.vue";
+import DbrChatListItem from "./components/DbrChatListItem/DbrChatListItem.vue";
+import DbrChatBubble from "./components/DbrChatBubble/DbrChatBubble.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -136,5 +167,7 @@ export default {
     app.component("DbrAvatar", DbrAvatar);
     app.component("DbrBadge", DbrBadge);
     app.component("DbrIconButton", DbrIconButton);
+    app.component("DbrChatListItem", DbrChatListItem);
+    app.component("DbrChatBubble", DbrChatBubble);
   }
 };
