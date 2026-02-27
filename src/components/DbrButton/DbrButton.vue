@@ -51,9 +51,6 @@ const { variant, size, disabled, pressed, nativeType } = props;
   padding: 0 var(--_px);
   border-radius: var(--_radius);
   border: 1px solid var(--dbru-color-border);
-  font-family: var(--dbru-font-family);
-  font-weight: 600;
-  line-height: 1;
   font-size: var(--_font-size);
   letter-spacing: 0.01em;
   transition: transform var(--dbru-duration-fast) var(--dbru-ease-standard),
@@ -97,11 +94,5 @@ const { variant, size, disabled, pressed, nativeType } = props;
 
 .dbru-button--sm {
   --_radius: var(--dbru-radius-sm);
-}
-
-.dbru-button--md {
-}
-
-.dbru-button--lg {
 }
 </style>

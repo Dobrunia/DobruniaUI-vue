@@ -77,7 +77,7 @@ const icon =
   color: var(--dbru-color-on-primary);
   border-radius: 50%;
   text-align: center;
-  font-size: 12px;
+  font-size: var(--dbru-font-size-sm);
   line-height: 1;
 }
 

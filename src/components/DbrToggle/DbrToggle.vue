@@ -137,13 +137,6 @@ const onChange = (event: Event) => {
   transform: rotate(180deg);
 }
 
-.dbru-toggle__label {
-  font-family: var(--dbru-font-family);
-  font-size: var(--dbru-font-size-base);
-  line-height: var(--dbru-line-height-base);
-  color: var(--dbru-color-text);
-}
-
 .dbru-toggle--disabled {
   cursor: not-allowed;
   opacity: 0.6;

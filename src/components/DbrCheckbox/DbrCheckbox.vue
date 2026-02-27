@@ -9,7 +9,7 @@
       :value="value"
       @change="onChange"
     />
-    <span v-if="label || $slots.default" class="dbru-checkbox__label">
+    <span v-if="label || $slots.default">
       <slot>{{ label }}</slot>
     </span>
   </label>
@@ -123,13 +123,6 @@ const onChange = (event: Event) => {
 .dbru-checkbox__input:focus-visible {
   outline: 2px solid var(--dbru-color-focus);
   outline-offset: 2px;
-}
-
-.dbru-checkbox__label {
-  font-family: var(--dbru-font-family);
-  font-size: var(--dbru-font-size-base);
-  line-height: var(--dbru-line-height-base);
-  color: var(--dbru-color-text);
 }
 
 .dbru-checkbox--disabled {

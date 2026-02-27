@@ -1,5 +1,5 @@
 <template>
-  <div class="dbru-input" :class="{ 'dbru-input--disabled': disabled }">
+  <div :class="{ 'dbru-input--disabled': disabled }">
     <input
       class="dbru-input__field dbru-reduced-motion"
       :class="`dbru-size-${size}`"
@@ -68,10 +68,6 @@ const onInput = (event: Event) => {
 </script>
 
 <style scoped>
-.dbru-input {
-  font-family: var(--dbru-font-family);
-}
-
 .dbru-input__field {
   width: 100%;
   outline: none;
@@ -79,30 +75,11 @@ const onInput = (event: Event) => {
   background-color: var(--dbru-color-surface);
   border-radius: var(--dbru-radius-md);
   color: var(--dbru-color-text);
-  font-family: var(--dbru-font-family);
   line-height: var(--dbru-line-height-base);
   transition:
     border-color var(--dbru-duration-base) var(--dbru-ease-standard),
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard),
     background-color var(--dbru-duration-base) var(--dbru-ease-standard);
-}
-
-.dbru-input__field.dbru-size-sm {
-  height: var(--dbru-control-height-sm);
-  padding: 0 var(--dbru-space-3);
-  font-size: var(--dbru-font-size-sm);
-}
-
-.dbru-input__field.dbru-size-md {
-  height: var(--dbru-control-height-md);
-  padding: 0 var(--dbru-space-4);
-  font-size: var(--dbru-font-size-base);
-}
-
-.dbru-input__field.dbru-size-lg {
-  height: var(--dbru-control-height-lg);
-  padding: 0 var(--dbru-space-5);
-  font-size: var(--dbru-font-size-lg);
 }
 
 .dbru-input__field:hover:not(:disabled) {

@@ -76,6 +76,15 @@ export { default as DbrTooltip } from "./components/DbrTooltip/DbrTooltip.vue";
  * Props for the DbrTooltip component.
  */
 export type { DbrTooltipProps } from "./components/DbrTooltip/DbrTooltip.types";
+/**
+ * Avatar component with image or initials fallback.
+ * Use it to represent a user or entity.
+ */
+export { default as DbrAvatar } from "./components/DbrAvatar/DbrAvatar.vue";
+/**
+ * Props for the DbrAvatar component.
+ */
+export type { DbrAvatarProps } from "./components/DbrAvatar/DbrAvatar.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -85,6 +94,7 @@ import DbrCheckbox from "./components/DbrCheckbox/DbrCheckbox.vue";
 import DbrToggle from "./components/DbrToggle/DbrToggle.vue";
 import DbrInput from "./components/DbrInput/DbrInput.vue";
 import DbrTooltip from "./components/DbrTooltip/DbrTooltip.vue";
+import DbrAvatar from "./components/DbrAvatar/DbrAvatar.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -96,5 +106,6 @@ export default {
     app.component("DbrToggle", DbrToggle);
     app.component("DbrInput", DbrInput);
     app.component("DbrTooltip", DbrTooltip);
+    app.component("DbrAvatar", DbrAvatar);
   }
 };
