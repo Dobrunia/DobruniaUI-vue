@@ -1,7 +1,21 @@
-# DobruniaUI
+# 🎨 DobruniaUI for Vue 3
 
-![npm](https://img.shields.io/npm/v/dobruniaui-vue)
-![Storybook](https://img.shields.io/badge/Storybook-GitHub%20Pages-ff4785)
+**Modern Vue 3 UI component library**
+
+[![npm version](https://img.shields.io/npm/v/dobruniaui-vue.svg)](https://www.npmjs.com/package/dobruniaui-vue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+DobruniaUI is a comprehensive Vue 3 component library designed with a focus on modern design, performance, and developer experience.
+
+## 🎮 Демо
+
+**[Explore all components in the interactive playground →](https://dobrunia.github.io/DobruniaUI-vue/)**
+
+## ☕ Support
+
+You can support the development of the library:
+
+[![Boosty](https://img.shields.io/badge/Boosty-Поддержать-orange?logo=buymeacoffee)](https://boosty.to/sentryez/donate)
 
 UI library for Vue 3.
 
