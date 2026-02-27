@@ -139,6 +139,18 @@ export type {
   DbrChatBubbleStatus,
   DbrChatBubbleKind
 } from "./components/DbrChatBubble/DbrChatBubble.types";
+/**
+ * Chat composer with attachments and send behavior.
+ */
+export { default as DbrChatComposer } from "./components/DbrChatComposer/DbrChatComposer.vue";
+/**
+ * Props for the DbrChatComposer component.
+ */
+export type {
+  DbrChatComposerProps,
+  DbrChatAttachment,
+  DbrAttachmentKind
+} from "./components/DbrChatComposer/DbrChatComposer.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -153,6 +165,7 @@ import DbrBadge from "./components/DbrBadge/DbrBadge.vue";
 import DbrIconButton from "./components/DbrIconButton/DbrIconButton.vue";
 import DbrChatListItem from "./components/DbrChatListItem/DbrChatListItem.vue";
 import DbrChatBubble from "./components/DbrChatBubble/DbrChatBubble.vue";
+import DbrChatComposer from "./components/DbrChatComposer/DbrChatComposer.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -169,5 +182,6 @@ export default {
     app.component("DbrIconButton", DbrIconButton);
     app.component("DbrChatListItem", DbrChatListItem);
     app.component("DbrChatBubble", DbrChatBubble);
+    app.component("DbrChatComposer", DbrChatComposer);
   }
 };
