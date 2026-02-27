@@ -1,7 +1,7 @@
 {
   "name": "dobruniaui-vue",
-  "version": "1.0.0",
-  "description": "Vue 3 UI библиотека компонентов с современным дизайном",
+  "version": "1.0.1",
+  "description": "Modern Vue 3 UI component library built with TypeScript and Vite",
   "private": false,
   "type": "module",
   "publishConfig": {
@@ -12,6 +12,26 @@
   ],
   "sideEffects": [
     "./dist/styles.css"
+  ],
+  "keywords": [
+    "vue",
+    "vue3",
+    "vue 3",
+    "vue component library",
+    "ui library",
+    "design system",
+    "typescript",
+    "vite",
+    "storybook",
+    "components",
+    "ui components",
+    "frontend",
+    "modern ui",
+    "chat ui",
+    "theming",
+    "dark theme",
+    "a11y",
+    "accessible components"
   ],
   "main": "./dist/dobruniaui.cjs",
   "module": "./dist/dobruniaui.mjs",
