@@ -6,6 +6,10 @@
   background: var(--dbru-color-bg);
 }
 
+:where(.dbru-root, .dbru-root *) {
+  font-family: var(--dbru-font-family);
+}
+
 *,
 *::before,
 *::after {

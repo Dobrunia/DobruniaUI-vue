@@ -67,6 +67,15 @@ export { default as DbrInput } from "./components/DbrInput/DbrInput.vue";
  * Props for the DbrInput component.
  */
 export type { DbrInputProps } from "./components/DbrInput/DbrInput.types";
+/**
+ * Tooltip component with info icon.
+ * Use it to show short helper text on hover.
+ */
+export { default as DbrTooltip } from "./components/DbrTooltip/DbrTooltip.vue";
+/**
+ * Props for the DbrTooltip component.
+ */
+export type { DbrTooltipProps } from "./components/DbrTooltip/DbrTooltip.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -75,6 +84,7 @@ import DbrTerminalLoader from "./components/DbrTerminalLoader/DbrTerminalLoader.
 import DbrCheckbox from "./components/DbrCheckbox/DbrCheckbox.vue";
 import DbrToggle from "./components/DbrToggle/DbrToggle.vue";
 import DbrInput from "./components/DbrInput/DbrInput.vue";
+import DbrTooltip from "./components/DbrTooltip/DbrTooltip.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -85,5 +95,6 @@ export default {
     app.component("DbrCheckbox", DbrCheckbox);
     app.component("DbrToggle", DbrToggle);
     app.component("DbrInput", DbrInput);
+    app.component("DbrTooltip", DbrTooltip);
   }
 };
