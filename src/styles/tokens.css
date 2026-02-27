@@ -8,7 +8,8 @@
   --dbru-font-size-sm: 12px;
   --dbru-font-size-base: 14px;
   --dbru-font-size-lg: 16px;
-  --dbru-line-height-base: 1.5;
+  --dbru-font-weight-semibold: 600;
+  --dbru-line-height-base: 1;
 
   --dbru-space-1: 4px;
   --dbru-space-2: 8px;

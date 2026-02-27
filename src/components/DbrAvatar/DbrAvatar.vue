@@ -53,7 +53,7 @@ const initials = (() => {
   color: var(--dbru-color-text);
   border: 1px solid var(--dbru-color-border);
   font-size: var(--_font-size);
-  font-weight: 600;
+  font-weight: var(--dbru-font-weight-semibold);
   overflow: hidden;
 }
 
@@ -69,7 +69,7 @@ const initials = (() => {
 }
 
 .dbru-avatar__initials {
-  line-height: 1;
+  line-height: var(--dbru-line-height-base);
   text-transform: uppercase;
 }
 </style>

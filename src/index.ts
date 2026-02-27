@@ -85,6 +85,31 @@ export { default as DbrAvatar } from "./components/DbrAvatar/DbrAvatar.vue";
  * Props for the DbrAvatar component.
  */
 export type { DbrAvatarProps } from "./components/DbrAvatar/DbrAvatar.types";
+/**
+ * Badge component for short status labels.
+ * Use it to highlight small pieces of information.
+ */
+export { default as DbrBadge } from "./components/DbrBadge/DbrBadge.vue";
+/**
+ * Props for the DbrBadge component.
+ */
+export type {
+  DbrBadgeProps,
+  DbrBadgeVariant
+} from "./components/DbrBadge/DbrBadge.types";
+/**
+ * Button with optional icons and text label.
+ * Use slots to provide SVG icons.
+ */
+export { default as DbrIconButton } from "./components/DbrIconButton/DbrIconButton.vue";
+/**
+ * Props for the DbrIconButton component.
+ */
+export type {
+  DbrIconButtonProps,
+  DbrIconButtonSize,
+  DbrIconButtonVariant
+} from "./components/DbrIconButton/DbrIconButton.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -95,6 +120,8 @@ import DbrToggle from "./components/DbrToggle/DbrToggle.vue";
 import DbrInput from "./components/DbrInput/DbrInput.vue";
 import DbrTooltip from "./components/DbrTooltip/DbrTooltip.vue";
 import DbrAvatar from "./components/DbrAvatar/DbrAvatar.vue";
+import DbrBadge from "./components/DbrBadge/DbrBadge.vue";
+import DbrIconButton from "./components/DbrIconButton/DbrIconButton.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -107,5 +134,7 @@ export default {
     app.component("DbrInput", DbrInput);
     app.component("DbrTooltip", DbrTooltip);
     app.component("DbrAvatar", DbrAvatar);
+    app.component("DbrBadge", DbrBadge);
+    app.component("DbrIconButton", DbrIconButton);
   }
 };

@@ -78,7 +78,7 @@ const icon =
   border-radius: 50%;
   text-align: center;
   font-size: var(--dbru-font-size-sm);
-  line-height: 1;
+  line-height: var(--dbru-line-height-base);
 }
 
 .dbru-tooltip--plain {
