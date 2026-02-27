@@ -159,6 +159,14 @@ export { default as DbrThemeToggle } from "./components/DbrThemeToggle/DbrThemeT
  * Props for the DbrThemeToggle component.
  */
 export type { DbrThemeToggleProps } from "./components/DbrThemeToggle/DbrThemeToggle.types";
+/**
+ * Neumorphic card container.
+ */
+export { default as DbrCard } from "./components/DbrCard/DbrCard.vue";
+/**
+ * Props for the DbrCard component.
+ */
+export type { DbrCardProps, DbrCardVariant } from "./components/DbrCard/DbrCard.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -175,6 +183,7 @@ import DbrChatListItem from "./components/DbrChatListItem/DbrChatListItem.vue";
 import DbrChatBubble from "./components/DbrChatBubble/DbrChatBubble.vue";
 import DbrChatComposer from "./components/DbrChatComposer/DbrChatComposer.vue";
 import DbrThemeToggle from "./components/DbrThemeToggle/DbrThemeToggle.vue";
+import DbrCard from "./components/DbrCard/DbrCard.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -193,5 +202,6 @@ export default {
     app.component("DbrChatBubble", DbrChatBubble);
     app.component("DbrChatComposer", DbrChatComposer);
     app.component("DbrThemeToggle", DbrThemeToggle);
+    app.component("DbrCard", DbrCard);
   }
 };

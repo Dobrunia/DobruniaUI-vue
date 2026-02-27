@@ -29,10 +29,10 @@
   --dbru-duration-fast: 120ms;
   --dbru-duration-base: 160ms;
 
-  --dbru-color-bg: #ffffff;
+  --dbru-color-bg: #f6f4f1;
   --dbru-color-surface: #ffffff;
-  --dbru-color-text: #111827;
-  --dbru-color-border: #d1d3d7;
+  --dbru-color-text: #1b1b1b;
+  --dbru-color-border: #cdcbc8;
 
   --dbru-color-primary: #3b82f6;
   --dbru-color-on-primary: #ffffff;

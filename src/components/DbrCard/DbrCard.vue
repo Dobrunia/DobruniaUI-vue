@@ -1,0 +1,63 @@
+<template>
+  <component
+    :is="as"
+    class="dbru-card"
+    :class="[
+      `dbru-card--${variant}`,
+      { 'dbru-card--disabled': disabled }
+    ]"
+    :aria-disabled="disabled || undefined"
+  >
+    <slot />
+  </component>
+</template>
+
+<script setup lang="ts">
+/**
+ * Neumorphic card container with slot content.
+ */
+defineOptions({
+  name: "DbrCard"
+});
+
+import type { DbrCardProps } from "./DbrCard.types";
+
+const props = withDefaults(defineProps<DbrCardProps>(), {
+  as: "div",
+  variant: "surface",
+  disabled: false
+});
+
+const { as, variant, disabled } = props;
+</script>
+
+<style scoped>
+.dbru-card {
+  border-radius: var(--dbru-radius-md);
+  border: 2px solid transparent;
+  transition: color var(--dbru-duration-base) var(--dbru-ease-standard),background-color var(--dbru-duration-base) var(--dbru-ease-standard),border-color var(--dbru-duration-base) var(--dbru-ease-standard),opacity var(--dbru-duration-base) var(--dbru-ease-standard),box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
+  transition-property: color, background-color, border-color, opacity, box-shadow;
+  transition-duration: var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base);
+  transition-timing-function: var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard);
+  background: var(--dbru-color-surface);
+}
+
+.dbru-card--surface:not(.dbru-card--disabled):hover {
+  border-color: var(--dbru-color-border);
+}
+
+.dbru-card--bordered {
+  border-style: dashed;
+  border-color: rgb(from var(--dbru-color-border) r g b / 50%);
+}
+
+.dbru-card--bordered:not(.dbru-card--disabled):hover {
+  border-color: var(--dbru-color-border);
+}
+
+.dbru-card--disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  /* pointer-events: none; */
+}
+</style>
