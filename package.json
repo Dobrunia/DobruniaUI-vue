@@ -1,8 +1,12 @@
 {
   "name": "dobruniaui-vue",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "Vue 3 UI библиотека компонентов с современным дизайном",
   "private": false,
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],
