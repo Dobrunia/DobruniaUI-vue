@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'dbru-input--disabled': disabled }">
+  <div class="dbru-input" :class="{ 'dbru-input--disabled': disabled }">
     <input
       class="dbru-input__field dbru-reduced-motion"
       :class="`dbru-size-${size}`"
@@ -75,6 +75,10 @@ const onInput = (event: Event) => {
   background-color: var(--dbru-color-surface);
   border-radius: var(--dbru-radius-md);
   color: var(--dbru-color-text);
+  font-family: var(--dbru-font-family);
+  font-size: var(--dbru-control-font-size, var(--dbru-font-size-base));
+  height: var(--dbru-control-height, var(--dbru-control-height-md));
+  padding: 0 var(--dbru-control-px, var(--dbru-space-4));
   line-height: var(--dbru-line-height-base);
   transition:
     border-color var(--dbru-duration-base) var(--dbru-ease-standard),
