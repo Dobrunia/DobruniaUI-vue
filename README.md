@@ -7,7 +7,7 @@
 
 DobruniaUI is a comprehensive Vue 3 component library designed with a focus on modern design, performance, and developer experience.
 
-## 🎮 Демо
+## 🎮 Demo
 
 **[Explore all components in the interactive playground →](https://dobrunia.github.io/DobruniaUI-vue/)**
 
