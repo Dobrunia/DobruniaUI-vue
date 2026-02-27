@@ -53,8 +53,11 @@
         class="dbru-chat-bubble__status"
         :class="`dbru-chat-bubble__status--${status}`"
       >
-        <span class="dbru-chat-bubble__check">✓</span>
-        <span v-if="status === 'read'" class="dbru-chat-bubble__check">✓</span>
+        <span v-if="status === 'sending'" class="dbru-chat-bubble__sending">⏳</span>
+        <template v-else>
+          <span class="dbru-chat-bubble__check">✓</span>
+          <span v-if="status === 'read'" class="dbru-chat-bubble__check">✓</span>
+        </template>
       </span>
     </div>
   </div>
@@ -398,7 +401,16 @@ watch(isImageOpen, (open) => {
   line-height: var(--dbru-line-height-tight);
 }
 
+.dbru-chat-bubble__status--sending {
+  color: color-mix(in oklab, var(--dbru-color-text) 45%, transparent);
+}
+
 .dbru-chat-bubble__status--read {
   color: #22c55e;
+}
+
+.dbru-chat-bubble__sending {
+  font-size: 12px;
+  line-height: var(--dbru-line-height-tight);
 }
 </style>

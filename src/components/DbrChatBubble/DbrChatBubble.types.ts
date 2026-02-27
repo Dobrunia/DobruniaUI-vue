@@ -1,5 +1,5 @@
 export type DbrChatBubbleDirection = "in" | "out";
-export type DbrChatBubbleStatus = "none" | "sent" | "read";
+export type DbrChatBubbleStatus = "none" | "sending" | "sent" | "read";
 export type DbrChatBubbleKind = "text" | "image" | "audio";
 
 export interface DbrChatBubbleProps {

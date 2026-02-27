@@ -1,4 +1,4 @@
-export type DbrAttachmentKind = "image" | "file";
+export type DbrAttachmentKind = "image" | "file" | "audio";
 
 export interface DbrChatAttachment {
   id: string;

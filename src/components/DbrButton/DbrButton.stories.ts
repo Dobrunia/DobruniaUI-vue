@@ -5,14 +5,12 @@ const meta: Meta<typeof DbrButton> = {
   title: "Components/Button",
   component: DbrButton,
   args: {
-    label: "Primary",
     variant: "primary",
     size: "md",
     disabled: false,
     nativeType: "button"
   },
   argTypes: {
-    label: { control: "text" },
     variant: {
       control: "select",
       options: ["primary", "ghost", "danger"]
@@ -34,7 +32,6 @@ type Story = StoryObj<typeof DbrButton>;
 
 export const Playground: Story = {
   args: {
-    label: "Primary",
     variant: "primary",
     disabled: false,
     size: "md",
@@ -47,7 +44,7 @@ export const Playground: Story = {
     setup: () => ({ args }),
     template: `
       <div style="display:flex; gap:16px; align-items:center; flex-wrap: wrap;">
-        <DbrButton v-bind="args">{{ args.label }}</DbrButton>
+        <DbrButton v-bind="args">Primary</DbrButton>
         <DbrButton variant="ghost" size="md">Ghost</DbrButton>
         <DbrButton variant="danger" size="md">Danger</DbrButton>
       </div>

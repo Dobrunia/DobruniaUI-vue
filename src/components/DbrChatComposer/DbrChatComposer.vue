@@ -12,6 +12,23 @@
           :src="item.url"
           :alt="item.name"
         />
+        <div v-else-if="item.kind === 'audio'" class="dbru-chat-composer__audio">
+          <button
+            type="button"
+            class="dbru-chat-composer__audio-btn"
+            @click="togglePreview(item.id)"
+            aria-label="Play or pause audio"
+          >
+            <span v-if="!item.playing">▶</span>
+            <span v-else>⏸</span>
+          </button>
+          <audio
+            class="dbru-chat-composer__audio-el"
+            :src="item.url"
+            @ended="onPreviewEnded(item.id)"
+          ></audio>
+          <span class="dbru-chat-composer__file-name">{{ item.name }}</span>
+        </div>
         <div v-else class="dbru-chat-composer__file">
           <span class="dbru-chat-composer__file-icon">📎</span>
           <span class="dbru-chat-composer__file-name">{{ item.name }}</span>
@@ -58,6 +75,25 @@
         @input="onInput"
         @keydown="onKeydown"
       ></textarea>
+
+      <button
+        type="button"
+        class="dbru-chat-composer__icon-btn"
+        :class="{ 'dbru-chat-composer__icon-btn--recording': isRecording }"
+        :disabled="disabled || !canRecord"
+        aria-label="Record voice message"
+        @click="toggleRecord"
+      >
+        <svg class="dbru-chat-composer__icon" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 14a3 3 0 003-3V6a3 3 0 10-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0M12 19v3m-4 0h8"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
 
       <button
         type="button"
@@ -118,10 +154,18 @@ const { modelValue, disabled, maxHeight } = toRefs(props);
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
 const fileInputRef = ref<HTMLInputElement | null>(null);
-const attachments = ref<DbrChatAttachment[]>([]);
+const attachments = ref<(DbrChatAttachment & { playing?: boolean })[]>([]);
+const audioMap = ref(new Map<string, HTMLAudioElement>());
+const mediaRecorder = ref<MediaRecorder | null>(null);
+const chunks = ref<Blob[]>([]);
+const isRecording = ref(false);
 
 const canSend = computed(() => {
   return modelValue.value.trim().length > 0 || attachments.value.length > 0;
+});
+
+const canRecord = computed(() => {
+  return typeof MediaRecorder !== "undefined";
 });
 
 const resizeTextarea = () => {
@@ -171,8 +215,12 @@ const onFilesSelected = (event: Event) => {
   if (!files.length) return;
 
   const mapped = files.map((file) => {
-    const kind = file.type.startsWith("image/") ? "image" : "file";
-    const url = kind === "image" ? URL.createObjectURL(file) : undefined;
+    const kind = file.type.startsWith("image/")
+      ? "image"
+      : file.type.startsWith("audio/")
+        ? "audio"
+        : "file";
+    const url = kind === "image" || kind === "audio" ? URL.createObjectURL(file) : undefined;
     return {
       id: `${file.name}-${file.size}-${file.lastModified}`,
       name: file.name,
@@ -191,6 +239,7 @@ const onFilesSelected = (event: Event) => {
 const removeAttachment = (id: string) => {
   const target = attachments.value.find((item) => item.id === id);
   if (target?.url) URL.revokeObjectURL(target.url);
+  audioMap.value.delete(id);
   attachments.value = attachments.value.filter((item) => item.id !== id);
   emit("attachmentsChange", attachments.value);
 };
@@ -199,8 +248,73 @@ const clearAttachments = () => {
   attachments.value.forEach((item) => {
     if (item.url) URL.revokeObjectURL(item.url);
   });
+  audioMap.value.clear();
   attachments.value = [];
   emit("attachmentsChange", attachments.value);
+};
+
+const togglePreview = (id: string) => {
+  const item = attachments.value.find((att) => att.id === id);
+  if (!item || !item.url) return;
+  let audio = audioMap.value.get(id);
+  if (!audio) {
+    audio = new Audio(item.url);
+    audioMap.value.set(id, audio);
+  }
+  if (audio.paused) {
+    audio.play();
+    item.playing = true;
+  } else {
+    audio.pause();
+    item.playing = false;
+  }
+};
+
+const onPreviewEnded = (id: string) => {
+  const item = attachments.value.find((att) => att.id === id);
+  if (item) item.playing = false;
+};
+
+const toggleRecord = async () => {
+  if (!canRecord.value || disabled.value) return;
+  if (isRecording.value) {
+    mediaRecorder.value?.stop();
+    isRecording.value = false;
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const recorder = new MediaRecorder(stream);
+    mediaRecorder.value = recorder;
+    chunks.value = [];
+    recorder.ondataavailable = (event) => {
+      if (event.data.size > 0) chunks.value.push(event.data);
+    };
+    recorder.onstop = () => {
+      const blob = new Blob(chunks.value, { type: "audio/webm" });
+      const file = new File([blob], `voice-${Date.now()}.webm`, {
+        type: "audio/webm"
+      });
+      const url = URL.createObjectURL(blob);
+      attachments.value = [
+        ...attachments.value,
+        {
+          id: `${file.name}-${file.size}-${file.lastModified}`,
+          name: "Voice message",
+          size: file.size,
+          kind: "audio",
+          url,
+          file
+        }
+      ];
+      emit("attachmentsChange", attachments.value);
+      stream.getTracks().forEach((track) => track.stop());
+    };
+    recorder.start();
+    isRecording.value = true;
+  } catch {
+    isRecording.value = false;
+  }
 };
 
 watch(modelValue, () => resizeTextarea());
@@ -220,7 +334,7 @@ onMounted(() => resizeTextarea());
 
 .dbru-chat-composer__row {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: end;
   gap: var(--dbru-space-2);
 }
@@ -264,10 +378,31 @@ onMounted(() => resizeTextarea());
     color var(--dbru-duration-base) var(--dbru-ease-standard);
 }
 
+.dbru-chat-composer__icon-btn--recording {
+  border-color: #ef4444;
+  color: #ef4444;
+  animation: dbru-record-pulse 1s ease-in-out infinite;
+}
+
+@keyframes dbru-record-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, #ef4444 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in oklab, #ef4444 30%, transparent);
+  }
+}
+
 .dbru-chat-composer__icon {
   width: 18px;
   height: 18px;
   display: block;
+  color: currentColor;
+}
+
+.dbru-chat-composer__icon path {
+  stroke: currentColor;
 }
 
 .dbru-chat-composer__icon-btn:hover:not(:disabled),
@@ -312,6 +447,34 @@ onMounted(() => resizeTextarea());
   color: var(--dbru-color-text);
 }
 
+.dbru-chat-composer__audio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dbru-space-2);
+  padding: var(--dbru-space-1) var(--dbru-space-2);
+  font-size: var(--dbru-font-size-sm);
+  color: var(--dbru-color-text);
+}
+
+.dbru-chat-composer__audio-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--dbru-color-border);
+  background: var(--dbru-color-surface);
+  color: var(--dbru-color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.dbru-chat-composer__audio-el {
+  display: none;
+}
+
 .dbru-chat-composer__file-name {
   max-width: 160px;
   white-space: nowrap;
@@ -328,6 +491,7 @@ onMounted(() => resizeTextarea());
   border-radius: 50%;
   border: 1px solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
+  color: var(--dbru-color-text);
   cursor: pointer;
   display: inline-flex;
   align-items: center;

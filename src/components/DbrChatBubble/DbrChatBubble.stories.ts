@@ -29,7 +29,7 @@ const meta: Meta<typeof DbrChatBubble> = {
     },
     status: {
       control: "select",
-      options: ["none", "sent", "read"]
+      options: ["none", "sending", "sent", "read"]
     }
   }
 };
@@ -65,7 +65,7 @@ export const Showcase: Story = {
       <div style="display:flex; flex-direction: column; gap:16px; max-width: 720px;">
         <div style="font-weight: 600;">Text</div>
         <DbrChatBubble text="Hello!" time="11:20" direction="in" status="none" />
-        <DbrChatBubble text="Hi, on my way." time="11:23" direction="out" status="sent" />
+        <DbrChatBubble text="Hi, on my way." time="11:23" direction="out" status="sending" />
 
         <div style="font-weight: 600; margin-top: 8px;">Media</div>
         <DbrChatBubble

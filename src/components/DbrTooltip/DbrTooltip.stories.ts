@@ -21,10 +21,6 @@ export default meta;
 type Story = StoryObj<typeof DbrTooltip>;
 
 export const Playground: Story = {
-  args: {
-    maxWidth: 500
-  },
-
   render: (args) => ({
     components: { DbrTooltip },
     setup: () => ({ args }),
