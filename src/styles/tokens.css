@@ -5,7 +5,9 @@
 
   --dbru-font-family: "Noto Sans", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, Arial;
+  --dbru-font-size-sm: 12px;
   --dbru-font-size-base: 14px;
+  --dbru-font-size-lg: 16px;
   --dbru-line-height-base: 1.5;
 
   --dbru-space-1: 4px;
@@ -13,6 +15,10 @@
   --dbru-space-3: 12px;
   --dbru-space-4: 16px;
   --dbru-space-5: 20px;
+
+  --dbru-control-height-sm: 32px;
+  --dbru-control-height-md: 40px;
+  --dbru-control-height-lg: 48px;
 
   --dbru-radius-sm: 8px;
   --dbru-radius-md: 12px;

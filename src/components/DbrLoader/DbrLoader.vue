@@ -37,6 +37,7 @@ defineProps<DbrLoaderProps>();
   justify-content: flex-start;
   width: var(--_size);
   height: var(--_size);
+  cursor: progress;
 }
 
 .dbru-loader__dot {

@@ -63,13 +63,6 @@ const onChange = (event: Event) => {
   cursor: pointer;
 }
 
-.dbru-checkbox,
-.dbru-checkbox *,
-.dbru-checkbox *::before,
-.dbru-checkbox *::after {
-  box-sizing: border-box;
-}
-
 .dbru-checkbox__input {
   appearance: none;
   width: 20px;

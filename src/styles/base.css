@@ -6,9 +6,33 @@
   background: var(--dbru-color-bg);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .dbru-focusable:focus-visible {
   outline: 2px solid var(--dbru-color-focus);
   outline-offset: 2px;
+}
+
+.dbru-size-sm {
+  --dbru-control-height: var(--dbru-control-height-sm);
+  --dbru-control-font-size: var(--dbru-font-size-sm);
+  --dbru-control-px: var(--dbru-space-3);
+}
+
+.dbru-size-md {
+  --dbru-control-height: var(--dbru-control-height-md);
+  --dbru-control-font-size: var(--dbru-font-size-base);
+  --dbru-control-px: var(--dbru-space-4);
+}
+
+.dbru-size-lg {
+  --dbru-control-height: var(--dbru-control-height-lg);
+  --dbru-control-font-size: var(--dbru-font-size-lg);
+  --dbru-control-px: var(--dbru-space-5);
 }
 
 @media (prefers-reduced-motion: reduce) {

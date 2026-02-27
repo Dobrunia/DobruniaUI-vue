@@ -49,12 +49,32 @@ export { default as DbrCheckbox } from "./components/DbrCheckbox/DbrCheckbox.vue
  * Props for the DbrCheckbox component.
  */
 export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.types";
+/**
+ * Toggle icon switch (hamburger to close).
+ * Use it for compact on/off controls.
+ */
+export { default as DbrToggle } from "./components/DbrToggle/DbrToggle.vue";
+/**
+ * Props for the DbrToggle component.
+ */
+export type { DbrToggleProps } from "./components/DbrToggle/DbrToggle.types";
+/**
+ * Base input with floating label.
+ * Use it for text entry in forms.
+ */
+export { default as DbrInput } from "./components/DbrInput/DbrInput.vue";
+/**
+ * Props for the DbrInput component.
+ */
+export type { DbrInputProps } from "./components/DbrInput/DbrInput.types";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrLoader from "./components/DbrLoader/DbrLoader.vue";
 import DbrTerminalLoader from "./components/DbrTerminalLoader/DbrTerminalLoader.vue";
 import DbrCheckbox from "./components/DbrCheckbox/DbrCheckbox.vue";
+import DbrToggle from "./components/DbrToggle/DbrToggle.vue";
+import DbrInput from "./components/DbrInput/DbrInput.vue";
 
 export default {
   install(app: import("vue").App) {
@@ -63,5 +83,7 @@ export default {
     app.component("DbrLoader", DbrLoader);
     app.component("DbrTerminalLoader", DbrTerminalLoader);
     app.component("DbrCheckbox", DbrCheckbox);
+    app.component("DbrToggle", DbrToggle);
+    app.component("DbrInput", DbrInput);
   }
 };

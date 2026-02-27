@@ -20,6 +20,7 @@ defineProps<DbrEyesLoaderProps>();
 .dbru-loader {
   display: inline-flex;
   gap: 10px;
+  cursor: progress;
 }
 
 .dbru-loader:before,

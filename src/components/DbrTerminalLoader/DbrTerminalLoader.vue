@@ -60,7 +60,7 @@ defineProps<DbrTerminalLoaderProps>();
   border-radius: 4px;
   position: relative;
   overflow: hidden;
-  box-sizing: border-box;
+  cursor: progress;
 }
 
 .dbru-terminal-header {
@@ -73,7 +73,6 @@ defineProps<DbrTerminalLoaderProps>();
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   padding: 0 0.4em;
-  box-sizing: border-box;
 }
 
 .dbru-terminal-controls {

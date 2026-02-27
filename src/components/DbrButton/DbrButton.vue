@@ -1,7 +1,7 @@
 <template>
   <button
     class="dbru-button dbru-focusable dbru-reduced-motion"
-    :class="[`dbru-button--${variant}`, `dbru-button--${size}`]"
+    :class="[`dbru-button--${variant}`, `dbru-button--${size}`, `dbru-size-${size}`]"
     :type="nativeType"
     :disabled="disabled"
     :aria-pressed="pressed"
@@ -36,8 +36,8 @@ const { variant, size, disabled, pressed, nativeType } = props;
 .dbru-button {
   --_radius: var(--dbru-radius-md);
   --_gap: var(--dbru-space-2);
-  --_py: 10px;
-  --_px: var(--dbru-space-4);
+  --_px: var(--dbru-control-px, var(--dbru-space-4));
+  --_font-size: var(--dbru-control-font-size, var(--dbru-font-size-base));
 
   --_bg: var(--dbru-color-primary);
   --_fg: var(--dbru-color-on-primary);
@@ -47,12 +47,14 @@ const { variant, size, disabled, pressed, nativeType } = props;
   align-items: center;
   justify-content: center;
   gap: var(--_gap);
-  padding: var(--_py) var(--_px);
+  height: var(--dbru-control-height, var(--dbru-control-height-md));
+  padding: 0 var(--_px);
   border-radius: var(--_radius);
   border: 1px solid var(--dbru-color-border);
   font-family: var(--dbru-font-family);
   font-weight: 600;
   line-height: 1;
+  font-size: var(--_font-size);
   letter-spacing: 0.01em;
   transition: transform var(--dbru-duration-fast) var(--dbru-ease-standard),
     background-color var(--dbru-duration-base) var(--dbru-ease-standard),
@@ -95,18 +97,11 @@ const { variant, size, disabled, pressed, nativeType } = props;
 
 .dbru-button--sm {
   --_radius: var(--dbru-radius-sm);
-  --_py: 6px;
-  --_px: var(--dbru-space-3);
-  font-size: 12px;
 }
 
 .dbru-button--md {
-  font-size: 14px;
 }
 
 .dbru-button--lg {
-  --_py: 12px;
-  --_px: var(--dbru-space-5);
-  font-size: 16px;
 }
 </style>
