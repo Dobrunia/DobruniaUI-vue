@@ -1,6 +1,6 @@
 <template>
   <DbrChatListItemSkeleton v-if="loading" />
-  <div v-else class="dbru-chat-item">
+  <div v-else class="dbru-chat-item dbru-chat-item--interactive">
     <div class="dbru-chat-item__avatar">
       <template v-if="!loading">
         <DbrAvatar
@@ -151,6 +151,17 @@ const messageIcon = (() => {
   border-radius: var(--dbru-radius-md);
   background: var(--dbru-color-surface);
   border: 1px solid var(--dbru-color-border);
+  transition:
+    background-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    border-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
+}
+
+.dbru-chat-item--interactive:hover {
+  cursor: pointer;
+  background: color-mix(in oklab, var(--dbru-color-primary) 8%, var(--dbru-color-surface));
+  border-color: color-mix(in oklab, var(--dbru-color-primary) 35%, var(--dbru-color-border));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--dbru-color-primary) 18%, transparent);
 }
 
 .dbru-chat-item__avatar {

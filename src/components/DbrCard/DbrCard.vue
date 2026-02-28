@@ -4,7 +4,10 @@
     class="dbru-card"
     :class="[
       `dbru-card--${variant}`,
-      { 'dbru-card--disabled': disabled }
+      {
+        'dbru-card--disabled': disabled,
+        'dbru-card--hoverable': hoverable
+      }
     ]"
     :aria-disabled="disabled || undefined"
   >
@@ -25,10 +28,11 @@ import type { DbrCardProps } from "./DbrCard.types";
 const props = withDefaults(defineProps<DbrCardProps>(), {
   as: "div",
   variant: "surface",
-  disabled: false
+  disabled: false,
+  hoverable: false
 });
 
-const { as, variant, disabled } = props;
+const { as, variant, disabled, hoverable } = props;
 </script>
 
 <style scoped>
@@ -42,7 +46,7 @@ const { as, variant, disabled } = props;
   background: var(--dbru-color-surface);
 }
 
-.dbru-card--surface:not(.dbru-card--disabled):hover {
+.dbru-card--surface.dbru-card--hoverable:not(.dbru-card--disabled):hover {
   border-color: var(--dbru-color-border);
 }
 
@@ -51,13 +55,12 @@ const { as, variant, disabled } = props;
   border-color: rgb(from var(--dbru-color-border) r g b / 50%);
 }
 
-.dbru-card--bordered:not(.dbru-card--disabled):hover {
+.dbru-card--bordered.dbru-card--hoverable:not(.dbru-card--disabled):hover {
   border-color: var(--dbru-color-border);
 }
 
 .dbru-card--disabled {
   opacity: 0.65;
   cursor: not-allowed;
-  /* pointer-events: none; */
 }
 </style>

@@ -1,9 +1,12 @@
 <template>
-  <label class="dbru-theme-toggle">
+  <label
+    class="dbru-theme-toggle"
+    :class="[`dbru-size-${size}`, { 'dbru-theme-toggle--square': square }]"
+  >
     <input
       class="dbru-theme-toggle__input"
       type="checkbox"
-      :checked="modelValue"
+      :checked="isDark"
       @change="onToggle"
       aria-label="Toggle theme"
     />
@@ -35,14 +38,20 @@ defineOptions({
   name: "DbrThemeToggle"
 });
 
-import { onMounted, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import type { DbrThemeToggleProps } from "./DbrThemeToggle.types";
 
 const props = withDefaults(defineProps<DbrThemeToggleProps>(), {
   modelValue: false,
+  size: "md",
+  square: false,
   persist: true,
   storageKey: "dbru-theme"
 });
+
+const { size, square } = props;
+const isDark = ref(props.modelValue);
+let themeObserver: MutationObserver | null = null;
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
@@ -60,39 +69,68 @@ const applyTheme = (isDark: boolean) => {
 const onToggle = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const next = target.checked;
+  isDark.value = next;
   emit("update:modelValue", next);
   emit("change", next);
   applyTheme(next);
 };
 
 onMounted(() => {
+  const syncFromDom = () => {
+    if (typeof document === "undefined") return;
+    const next = document.documentElement.classList.contains("dbru-theme-dark");
+    if (isDark.value === next) return;
+    isDark.value = next;
+    emit("update:modelValue", next);
+  };
+
   if (!props.persist || typeof localStorage === "undefined") {
-    applyTheme(props.modelValue);
-    return;
-  }
-  const saved = localStorage.getItem(props.storageKey);
-  if (saved === "dark") {
-    emit("update:modelValue", true);
-    applyTheme(true);
-  } else if (saved === "light") {
-    emit("update:modelValue", false);
-    applyTheme(false);
+    isDark.value = props.modelValue;
+    applyTheme(isDark.value);
   } else {
-    applyTheme(props.modelValue);
+    const saved = localStorage.getItem(props.storageKey);
+    if (saved === "dark") {
+      isDark.value = true;
+      emit("update:modelValue", true);
+      applyTheme(true);
+    } else if (saved === "light") {
+      isDark.value = false;
+      emit("update:modelValue", false);
+      applyTheme(false);
+    } else {
+      isDark.value = props.modelValue;
+      applyTheme(isDark.value);
+    }
+  }
+
+  if (typeof MutationObserver !== "undefined" && typeof document !== "undefined") {
+    themeObserver = new MutationObserver(syncFromDom);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"]
+    });
   }
 });
 
 watch(
   () => props.modelValue,
-  (next) => applyTheme(next)
+  (next) => {
+    isDark.value = next;
+    applyTheme(next);
+  }
 );
+
+onBeforeUnmount(() => {
+  themeObserver?.disconnect();
+  themeObserver = null;
+});
 </script>
 
 <style scoped>
 .dbru-theme-toggle {
   background-color: var(--dbru-color-surface);
-  width: 56px;
-  height: 56px;
+  width: var(--dbru-control-height, var(--dbru-control-height-md));
+  height: var(--dbru-control-height, var(--dbru-control-height-md));
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -101,6 +139,10 @@ watch(
   border: 1px solid var(--dbru-color-border);
   line-height: 1;
   position: relative;
+}
+
+.dbru-theme-toggle--square {
+  border-radius: var(--dbru-radius-md);
 }
 
 .dbru-theme-toggle__input {
@@ -116,8 +158,8 @@ watch(
 }
 
 .dbru-theme-toggle__icon svg {
-  width: 32px;
-  height: 32px;
+  width: calc(var(--dbru-control-height, var(--dbru-control-height-md)) * 0.57);
+  height: calc(var(--dbru-control-height, var(--dbru-control-height-md)) * 0.57);
 }
 
 .dbru-theme-toggle__icon--moon {

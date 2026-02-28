@@ -13,4 +13,8 @@ export interface DbrCardProps {
    * Disables hover and interactions.
    */
   disabled?: boolean;
+  /**
+   * Enables hover highlight effect.
+   */
+  hoverable?: boolean;
 }

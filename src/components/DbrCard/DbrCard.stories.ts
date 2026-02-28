@@ -8,7 +8,8 @@ const meta: Meta<typeof DbrCard> = {
   args: {
     as: "div",
     variant: "surface",
-    disabled: false
+    disabled: false,
+    hoverable: false
   },
   argTypes: {
     as: {
@@ -20,6 +21,9 @@ const meta: Meta<typeof DbrCard> = {
       options: ["surface", "bordered"]
     },
     disabled: {
+      control: "boolean"
+    },
+    hoverable: {
       control: "boolean"
     }
   }
@@ -51,16 +55,22 @@ export const Variants: Story = {
         <DbrCard variant="surface">
           <div style="padding:12px 14px;">
             <strong>Surface</strong>
-            <div style="opacity:.75; margin-top: 6px;">Hover to see default card effect.</div>
+            <div style="opacity:.75; margin-top: 6px;">No hover by default.</div>
+          </div>
+        </DbrCard>
+        <DbrCard variant="surface" hoverable>
+          <div style="padding:12px 14px;">
+            <strong>Surface + hoverable</strong>
+            <div style="opacity:.75; margin-top: 6px;">Hover highlight is enabled.</div>
           </div>
         </DbrCard>
         <DbrCard variant="bordered">
           <div style="padding:14px 16px;">
             <strong>Bordered</strong>
-            <div style="opacity:.75; margin-top: 6px;">Dashed border.</div>
+            <div style="opacity:.75; margin-top: 6px;">Dashed border, no hover.</div>
           </div>
         </DbrCard>
-        <DbrCard variant="bordered" disabled>
+        <DbrCard variant="bordered" hoverable disabled>
           <div style="padding:10px 12px;">
             <strong>Disabled</strong>
             <div style="opacity:.75; margin-top: 6px;">No hover/interactions.</div>
