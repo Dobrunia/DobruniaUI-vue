@@ -9,6 +9,7 @@
           :alt="avatarAltText"
           :name="name"
           size="md"
+          :shape="avatarShape"
         />
         <span
           class="dbru-chat-item__presence"
@@ -85,28 +86,118 @@ defineOptions({
 });
 
 import type { DbrChatListItemProps } from "./DbrChatListItem.types";
+import type { PropType } from "vue";
 import DbrAvatar from "../DbrAvatar/DbrAvatar.vue";
 import DbrBadge from "../DbrBadge/DbrBadge.vue";
 import DbrChatListItemSkeleton from "./DbrChatListItemSkeleton.vue";
 
-const props = withDefaults(defineProps<DbrChatListItemProps>(), {
-  id: undefined,
-  avatar: undefined,
-  avatarAlt: undefined,
-  name: "User",
-  lastMessage: () => ({ text: "Last message...", type: "text" }),
-  timestamp: undefined,
-  messageStatus: "read",
-  isOutgoing: false,
-  status: "offline",
-  unreadCount: 0,
-  isTyping: false,
-  loading: false
+const props = defineProps({
+  /**
+   * Unique chat id.
+   */
+  id: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Avatar image source.
+   */
+  avatar: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Avatar alt text.
+   */
+  avatarAlt: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Avatar shape.
+   * @default "circle"
+   */
+  avatarShape: {
+    type: String as PropType<NonNullable<DbrChatListItemProps["avatarShape"]>>,
+    default: "circle"
+  },
+  /**
+   * Display name.
+   * @default "User"
+   */
+  name: {
+    type: String,
+    default: "User"
+  },
+  /**
+   * Last message object.
+   * @default { text: "Last message...", type: "text" }
+   */
+  lastMessage: {
+    type: Object as PropType<DbrChatListItemProps["lastMessage"]>,
+    default: () => ({ text: "Last message...", type: "text" })
+  },
+  /**
+   * Timestamp of last message.
+   */
+  timestamp: {
+    type: [Number, Date] as PropType<DbrChatListItemProps["timestamp"]>,
+    default: undefined
+  },
+  /**
+   * Message status (incoming only).
+   * @default "read"
+   */
+  messageStatus: {
+    type: String as PropType<NonNullable<DbrChatListItemProps["messageStatus"]>>,
+    default: "read"
+  },
+  /**
+   * Whether the last message is outgoing.
+   * @default false
+   */
+  isOutgoing: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * User presence status.
+   * @default "offline"
+   */
+  status: {
+    type: String as PropType<NonNullable<DbrChatListItemProps["status"]>>,
+    default: "offline"
+  },
+  /**
+   * Unread count badge (incoming only).
+   * @default 0
+   */
+  unreadCount: {
+    type: Number,
+    default: 0
+  },
+  /**
+   * Shows typing indicator.
+   * @default false
+   */
+  isTyping: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Shows loading skeleton when true.
+   * @default false
+   */
+  loading: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const {
   avatar,
   avatarAlt,
+  avatarShape,
   name,
   lastMessage,
   timestamp,

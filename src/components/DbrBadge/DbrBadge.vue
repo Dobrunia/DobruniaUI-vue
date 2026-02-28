@@ -14,10 +14,25 @@ defineOptions({
 });
 
 import type { DbrBadgeProps } from "./DbrBadge.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrBadgeProps>(), {
-  text: "Badge",
-  variant: "primary"
+const props = defineProps({
+  /**
+   * Badge text.
+   * @default "Badge"
+   */
+  text: {
+    type: String,
+    default: "Badge"
+  },
+  /**
+   * Visual style of the badge.
+   * @default "primary"
+   */
+  variant: {
+    type: String as PropType<NonNullable<DbrBadgeProps["variant"]>>,
+    default: "primary"
+  }
 });
 
 const { text, variant } = props;

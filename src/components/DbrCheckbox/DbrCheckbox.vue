@@ -25,13 +25,46 @@ defineOptions({
 });
 
 import type { DbrCheckboxProps } from "./DbrCheckbox.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrCheckboxProps>(), {
-  modelValue: false,
-  disabled: false,
-  label: undefined,
-  name: undefined,
-  value: undefined
+const props = defineProps({
+  /**
+   * Checked state for v-model.
+   * @default false
+   */
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Disables the checkbox and removes pointer interaction.
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Optional label text. You can also use the default slot.
+   */
+  label: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Native name attribute for form submission.
+   */
+  name: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Native value attribute for form submission.
+   */
+  value: {
+    type: String as PropType<DbrCheckboxProps["value"]>,
+    default: undefined
+  }
 });
 
 const emit = defineEmits<{

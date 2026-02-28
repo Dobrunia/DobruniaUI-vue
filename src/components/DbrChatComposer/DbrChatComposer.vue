@@ -133,14 +133,50 @@ defineOptions({
 });
 
 import { computed, onMounted, ref, toRefs, watch } from "vue";
-import type { DbrChatAttachment, DbrChatComposerProps } from "./DbrChatComposer.types";
+import type { DbrChatAttachment } from "./DbrChatComposer.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrChatComposerProps>(), {
-  modelValue: "",
-  placeholder: "Message",
-  ariaLabel: "Message",
-  disabled: false,
-  maxHeight: 120
+const props = defineProps({
+  /**
+   * Message text for v-model.
+   * @default ""
+   */
+  modelValue: {
+    type: String,
+    default: ""
+  },
+  /**
+   * Placeholder text for the input.
+   * @default "Message"
+   */
+  placeholder: {
+    type: String,
+    default: "Message"
+  },
+  /**
+   * Accessible label for the textarea.
+   * @default "Message"
+   */
+  ariaLabel: {
+    type: String,
+    default: "Message"
+  },
+  /**
+   * Disable composer controls.
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Max height for auto-growing textarea (px).
+   * @default 120
+   */
+  maxHeight: {
+    type: Number as PropType<number>,
+    default: 120
+  }
 });
 
 const emit = defineEmits<{
@@ -215,11 +251,12 @@ const onFilesSelected = (event: Event) => {
   if (!files.length) return;
 
   const mapped = files.map((file) => {
-    const kind = file.type.startsWith("image/")
-      ? "image"
-      : file.type.startsWith("audio/")
-        ? "audio"
-        : "file";
+    let kind: "image" | "audio" | "file" = "file";
+    if (file.type.startsWith("image/")) {
+      kind = "image";
+    } else if (file.type.startsWith("audio/")) {
+      kind = "audio";
+    }
     const url = kind === "image" || kind === "audio" ? URL.createObjectURL(file) : undefined;
     return {
       id: `${file.name}-${file.size}-${file.lastModified}`,

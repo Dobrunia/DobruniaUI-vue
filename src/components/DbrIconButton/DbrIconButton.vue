@@ -29,14 +29,57 @@ defineOptions({
 });
 
 import type { DbrIconButtonProps } from "./DbrIconButton.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrIconButtonProps>(), {
-  label: "Button",
-  variant: "primary",
-  size: "md",
-  disabled: false,
-  nativeType: "button",
-  iconPosition: "start"
+const props = defineProps({
+  /**
+   * Button text label.
+   * @default "Button"
+   */
+  label: {
+    type: String,
+    default: "Button"
+  },
+  /**
+   * Visual style of the button.
+   * @default "primary"
+   */
+  variant: {
+    type: String as PropType<NonNullable<DbrIconButtonProps["variant"]>>,
+    default: "primary"
+  },
+  /**
+   * Button size.
+   * @default "md"
+   */
+  size: {
+    type: String as PropType<NonNullable<DbrIconButtonProps["size"]>>,
+    default: "md"
+  },
+  /**
+   * Disables the button and removes pointer interaction.
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Native HTML button type.
+   * @default "button"
+   */
+  nativeType: {
+    type: String as PropType<NonNullable<DbrIconButtonProps["nativeType"]>>,
+    default: "button"
+  },
+  /**
+   * Icon position relative to text.
+   * @default "start"
+   */
+  iconPosition: {
+    type: String as PropType<NonNullable<DbrIconButtonProps["iconPosition"]>>,
+    default: "start"
+  }
 });
 
 const { label, variant, size, disabled, nativeType, iconPosition } = props;

@@ -9,7 +9,7 @@ const meta: Meta<typeof DbrThemeToggle> = {
   args: {
     modelValue: false,
     size: "md",
-    square: false
+    shape: "circle"
   },
   argTypes: {
     modelValue: { control: "boolean" },
@@ -17,7 +17,10 @@ const meta: Meta<typeof DbrThemeToggle> = {
       control: "select",
       options: ["sm", "md", "lg"]
     },
-    square: { control: "boolean" }
+    shape: {
+      control: "select",
+      options: ["circle", "rounded"]
+    }
   }
 };
 
@@ -57,9 +60,9 @@ export const Variants: Story = {
           <DbrThemeToggle v-model="c" size="lg" />
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
-          <DbrThemeToggle v-model="d" size="sm" square />
-          <DbrThemeToggle v-model="e" size="md" square />
-          <DbrThemeToggle v-model="f" size="lg" square />
+          <DbrThemeToggle v-model="d" size="sm" shape="rounded" />
+          <DbrThemeToggle v-model="e" size="md" shape="rounded" />
+          <DbrThemeToggle v-model="f" size="lg" shape="rounded" />
         </div>
       </div>
     `

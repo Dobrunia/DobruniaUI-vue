@@ -18,13 +18,47 @@ defineOptions({
 });
 
 import type { DbrAvatarProps } from "./DbrAvatar.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrAvatarProps>(), {
-  src: undefined,
-  alt: undefined,
-  name: "",
-  size: "md",
-  shape: "circle"
+const props = defineProps({
+  /**
+   * Image source.
+   */
+  src: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Alt text for the image.
+   */
+  alt: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Name used to generate initials fallback.
+   * @default ""
+   */
+  name: {
+    type: String,
+    default: ""
+  },
+  /**
+   * Avatar size.
+   * @default "md"
+   */
+  size: {
+    type: String as PropType<NonNullable<DbrAvatarProps["size"]>>,
+    default: "md"
+  },
+  /**
+   * Avatar shape.
+   * @default "circle"
+   */
+  shape: {
+    type: String as PropType<NonNullable<DbrAvatarProps["shape"]>>,
+    default: "circle"
+  }
 });
 
 const { src, alt, name, size, shape } = props;

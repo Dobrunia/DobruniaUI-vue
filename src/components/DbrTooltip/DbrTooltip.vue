@@ -18,10 +18,24 @@ defineOptions({
 });
 
 import type { DbrTooltipProps } from "./DbrTooltip.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrTooltipProps>(), {
-  text: "This is a cool tooltip!",
-  variant: undefined
+const props = defineProps({
+  /**
+   * Tooltip text content.
+   * @default "This is a cool tooltip!"
+   */
+  text: {
+    type: String,
+    default: "This is a cool tooltip!"
+  },
+  /**
+   * Tooltip visual variant.
+   */
+  variant: {
+    type: String as PropType<DbrTooltipProps["variant"]>,
+    default: undefined
+  }
 });
 
 const { variant } = props;

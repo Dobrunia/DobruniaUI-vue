@@ -10,7 +10,7 @@
     <div v-if="kind === 'text'" class="dbru-chat-bubble__text">{{ text }}</div>
     <div v-else-if="kind === 'image'" class="dbru-chat-bubble__media">
       <button class="dbru-chat-bubble__image-btn" type="button" @click="openImage">
-        <img class="dbru-chat-bubble__image" :src="mediaSrc" :alt="text || 'Image'" />
+        <img class="dbru-chat-bubble__image" :src="mediaSrc" :alt="text || 'Media'" />
       </button>
       <div v-if="text" class="dbru-chat-bubble__caption">{{ text }}</div>
     </div>
@@ -71,7 +71,7 @@
       <img
         class="dbru-chat-bubble__overlay-img"
         :src="mediaSrc"
-        :alt="text || 'Image'"
+        :alt="text || 'Media'"
         @click.stop
       />
     </div>
@@ -88,14 +88,57 @@ defineOptions({
 
 import type { DbrChatBubbleProps } from "./DbrChatBubble.types";
 import { computed, ref, watch } from "vue";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrChatBubbleProps>(), {
-  text: "Message text",
-  kind: "text",
-  mediaSrc: "",
-  time: "12:45",
-  direction: "in",
-  status: "none"
+const props = defineProps({
+  /**
+   * Message text.
+   * @default "Message text"
+   */
+  text: {
+    type: String,
+    default: "Message text"
+  },
+  /**
+   * Message kind.
+   * @default "text"
+   */
+  kind: {
+    type: String as PropType<NonNullable<DbrChatBubbleProps["kind"]>>,
+    default: "text"
+  },
+  /**
+   * Media source (image or audio).
+   * @default ""
+   */
+  mediaSrc: {
+    type: String,
+    default: ""
+  },
+  /**
+   * Time label.
+   * @default "12:45"
+   */
+  time: {
+    type: String,
+    default: "12:45"
+  },
+  /**
+   * Direction of the message.
+   * @default "in"
+   */
+  direction: {
+    type: String as PropType<NonNullable<DbrChatBubbleProps["direction"]>>,
+    default: "in"
+  },
+  /**
+   * Message status for checkmarks.
+   * @default "none"
+   */
+  status: {
+    type: String as PropType<NonNullable<DbrChatBubbleProps["status"]>>,
+    default: "none"
+  }
 });
 
 const { text, kind, mediaSrc, time, direction, status } = props;

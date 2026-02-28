@@ -1,7 +1,7 @@
 <template>
   <label
     class="dbru-theme-toggle"
-    :class="[`dbru-size-${size}`, { 'dbru-theme-toggle--square': square }]"
+    :class="[`dbru-size-${size}`, `dbru-theme-toggle--${shape}`]"
   >
     <input
       class="dbru-theme-toggle__input"
@@ -39,17 +39,53 @@ defineOptions({
 });
 
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import type { PropType } from "vue";
 import type { DbrThemeToggleProps } from "./DbrThemeToggle.types";
 
-const props = withDefaults(defineProps<DbrThemeToggleProps>(), {
-  modelValue: false,
-  size: "md",
-  square: false,
-  persist: true,
-  storageKey: "dbru-theme"
+const props = defineProps({
+  /**
+   * Whether dark theme is enabled.
+   * @default false
+   */
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Control size from global size scale.
+   * @default "md"
+   */
+  size: {
+    type: String as PropType<NonNullable<DbrThemeToggleProps["size"]>>,
+    default: "md"
+  },
+  /**
+   * Toggle button shape.
+   * @default "circle"
+   */
+  shape: {
+    type: String as PropType<NonNullable<DbrThemeToggleProps["shape"]>>,
+    default: "circle"
+  },
+  /**
+   * Persist choice to localStorage.
+   * @default true
+   */
+  persist: {
+    type: Boolean,
+    default: true
+  },
+  /**
+   * Storage key for persistence.
+   * @default "dbru-theme"
+   */
+  storageKey: {
+    type: String,
+    default: "dbru-theme"
+  }
 });
 
-const { size, square } = props;
+const { size, shape } = props;
 const isDark = ref(props.modelValue);
 let themeObserver: MutationObserver | null = null;
 
@@ -141,7 +177,7 @@ onBeforeUnmount(() => {
   position: relative;
 }
 
-.dbru-theme-toggle--square {
+.dbru-theme-toggle--rounded {
   border-radius: var(--dbru-radius-md);
 }
 

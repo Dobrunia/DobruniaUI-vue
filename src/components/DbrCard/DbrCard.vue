@@ -24,12 +24,41 @@ defineOptions({
 });
 
 import type { DbrCardProps } from "./DbrCard.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrCardProps>(), {
-  as: "div",
-  variant: "surface",
-  disabled: false,
-  hoverable: false
+const props = defineProps({
+  /**
+   * HTML tag used as card root element.
+   * @default "div"
+   */
+  as: {
+    type: String as PropType<NonNullable<DbrCardProps["as"]>>,
+    default: "div"
+  },
+  /**
+   * Visual style of the card.
+   * @default "surface"
+   */
+  variant: {
+    type: String as PropType<NonNullable<DbrCardProps["variant"]>>,
+    default: "surface"
+  },
+  /**
+   * Disables hover and interactions.
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Enables hover highlight effect.
+   * @default false
+   */
+  hoverable: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const { as, variant, disabled, hoverable } = props;

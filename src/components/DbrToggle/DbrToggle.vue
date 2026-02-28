@@ -31,14 +31,53 @@ defineOptions({
 });
 
 import type { DbrToggleProps } from "./DbrToggle.types";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrToggleProps>(), {
-  modelValue: false,
-  disabled: false,
-  label: undefined,
-  id: undefined,
-  name: undefined,
-  value: undefined
+const props = defineProps({
+  /**
+   * Checked state for v-model.
+   * @default false
+   */
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Disables the toggle and removes pointer interaction.
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Optional label text. You can also use the default slot.
+   */
+  label: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Native id used to connect input and label.
+   */
+  id: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Native name attribute for form submission.
+   */
+  name: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Native value attribute for form submission.
+   */
+  value: {
+    type: String as PropType<DbrToggleProps["value"]>,
+    default: undefined
+  }
 });
 
 const emit = defineEmits<{

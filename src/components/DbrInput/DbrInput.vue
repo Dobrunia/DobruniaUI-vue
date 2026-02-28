@@ -98,17 +98,77 @@ defineOptions({
 
 import type { DbrInputProps } from "./DbrInput.types";
 import { computed, ref } from "vue";
+import type { PropType } from "vue";
 
-const props = withDefaults(defineProps<DbrInputProps>(), {
-  modelValue: "",
-  label: undefined,
-  size: "md",
-  type: "text",
-  name: undefined,
-  id: undefined,
-  disabled: false,
-  required: false,
-  autocomplete: undefined
+const props = defineProps({
+  /**
+   * Input value for v-model.
+   * @default ""
+   */
+  modelValue: {
+    type: String,
+    default: ""
+  },
+  /**
+   * Input label text. You can also use the default slot.
+   */
+  label: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Input size.
+   * @default "md"
+   */
+  size: {
+    type: String as PropType<NonNullable<DbrInputProps["size"]>>,
+    default: "md"
+  },
+  /**
+   * Native input type.
+   * @default "text"
+   */
+  type: {
+    type: String,
+    default: "text"
+  },
+  /**
+   * Native name attribute for form submission.
+   */
+  name: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Native id used to connect input and label.
+   */
+  id: {
+    type: String,
+    default: undefined
+  },
+  /**
+   * Disables the input and removes pointer interaction.
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Marks input as required.
+   * @default false
+   */
+  required: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Native autocomplete attribute.
+   */
+  autocomplete: {
+    type: String,
+    default: undefined
+  }
 });
 
 const emit = defineEmits<{

@@ -19,14 +19,49 @@ defineOptions({
   name: "DbrButton"
 });
 
-import type { DbrButtonProps } from "./DbrButton.types";
+import type { PropType } from "vue";
+import type { DbrButtonSize, DbrButtonVariant } from "./DbrButton.types";
 
-const props = withDefaults(defineProps<DbrButtonProps>(), {
-  variant: "primary",
-  size: "md",
-  disabled: false,
-  pressed: undefined,
-  nativeType: "button"
+const props = defineProps({
+  /**
+   * Visual style variant.
+   * @default "primary"
+   */
+  variant: {
+    type: String as PropType<DbrButtonVariant>,
+    default: "primary"
+  },
+  /**
+   * Size from global control scale.
+   * @default "md"
+   */
+  size: {
+    type: String as PropType<DbrButtonSize>,
+    default: "md"
+  },
+  /**
+   * Disables the button.
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * ARIA pressed state for toggle-like usage.
+   */
+  pressed: {
+    type: Boolean as PropType<boolean | undefined>,
+    default: undefined
+  },
+  /**
+   * Native HTML button type.
+   * @default "button"
+   */
+  nativeType: {
+    type: String as PropType<"button" | "submit" | "reset">,
+    default: "button"
+  }
 });
 
 const { variant, size, disabled, pressed, nativeType } = props;
