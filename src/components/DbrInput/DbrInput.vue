@@ -6,8 +6,8 @@
         `dbru-size-${size}`,
         {
           'dbru-input__field--has-left-icon': hasLeftIcon,
-          'dbru-input__field--has-right-icon': hasRightIcon
-        }
+          'dbru-input__field--has-right-icon': hasRightIcon,
+        },
       ]"
       :id="inputId"
       :type="resolvedType"
@@ -19,11 +19,7 @@
       :placeholder="label"
       @input="onInput"
     />
-    <span
-      v-if="hasLeftIcon"
-      class="dbru-input__icon dbru-input__icon--left"
-      aria-hidden="true"
-    >
+    <span v-if="hasLeftIcon" class="dbru-input__icon dbru-input__icon--left" aria-hidden="true">
       <svg
         v-if="isPasswordType"
         viewBox="0 0 24 24"
@@ -88,144 +84,63 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Base input with label.
- * Use it for text entry in forms.
- */
+import type { DbrInputProps } from './DbrInput.types';
+import { computed, ref } from 'vue';
+
 defineOptions({
-  name: "DbrInput"
+  name: 'DbrInput',
 });
 
-import type { DbrInputProps } from "./DbrInput.types";
-import { computed, ref } from "vue";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Input value for v-model.
-   * @default ""
-   */
-  modelValue: {
-    type: String,
-    default: ""
-  },
-  /**
-   * Input label text. You can also use the default slot.
-   */
-  label: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Input size.
-   * @default "md"
-   */
-  size: {
-    type: String as PropType<NonNullable<DbrInputProps["size"]>>,
-    default: "md"
-  },
-  /**
-   * Native input type.
-   * @default "text"
-   */
-  type: {
-    type: String,
-    default: "text"
-  },
-  /**
-   * Native name attribute for form submission.
-   */
-  name: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Native id used to connect input and label.
-   */
-  id: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Disables the input and removes pointer interaction.
-   * @default false
-   */
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Marks input as required.
-   * @default false
-   */
-  required: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Native autocomplete attribute.
-   */
-  autocomplete: {
-    type: String,
-    default: undefined
-  }
+const props = withDefaults(defineProps<DbrInputProps>(), {
+  modelValue: '',
+  label: undefined,
+  size: 'md',
+  type: 'text',
+  name: undefined,
+  id: undefined,
+  disabled: false,
+  required: false,
+  autocomplete: undefined,
 });
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string): void;
-  (e: "input", value: string): void;
+  (e: 'update:modelValue', value: string): void;
+  (e: 'input', value: string): void;
 }>();
 
-const {
-  modelValue,
-  label,
-  size,
-  type,
-  name,
-  id,
-  disabled,
-  required,
-  autocomplete
-} = props;
+const { modelValue, label, size, type, name, id, disabled, required, autocomplete } = props;
 
-const inputId =
-  id ?? `dbru-input-${Math.random().toString(36).slice(2, 9)}`;
+const inputId = id ?? `dbru-input-${Math.random().toString(36).slice(2, 9)}`;
 
 const showPassword = ref(false);
 
-const isPasswordType = computed(() => props.type === "password");
-const isSearchType = computed(() => props.type === "search");
+const isPasswordType = computed(() => props.type === 'password');
+const isSearchType = computed(() => props.type === 'search');
 const hasLeftIcon = computed(() => isPasswordType.value || isSearchType.value);
-const hasRightIcon = computed(
-  () => isPasswordType.value
-);
+const hasRightIcon = computed(() => isPasswordType.value);
 const resolvedType = computed(() =>
-  isPasswordType.value && showPassword.value ? "text" : props.type
+  isPasswordType.value && showPassword.value ? 'text' : props.type
 );
 const resolvedAutocomplete = computed(() => {
-  if (props.autocomplete)
-    return props.autocomplete;
+  if (props.autocomplete) return props.autocomplete;
 
-  if (isPasswordType.value)
-    return "current-password";
+  if (isPasswordType.value) return 'current-password';
 
-  if (isSearchType.value)
-    return "on";
+  if (isSearchType.value) return 'on';
 
-  return "on";
+  return 'on';
 });
 
 const togglePassword = () => {
-  if (props.disabled)
-    return;
+  if (props.disabled) return;
   showPassword.value = !showPassword.value;
 };
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const nextValue = target.value;
-  emit("update:modelValue", nextValue);
-  emit("input", nextValue);
+  emit('update:modelValue', nextValue);
+  emit('input', nextValue);
 };
 </script>
 

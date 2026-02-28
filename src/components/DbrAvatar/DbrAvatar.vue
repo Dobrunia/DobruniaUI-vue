@@ -1,74 +1,33 @@
 <template>
-  <span
-    class="dbru-avatar dbru-text-main"
-    :class="[`dbru-size-${size}`, `dbru-avatar--${shape}`]"
-  >
+  <span class="dbru-avatar dbru-text-main" :class="[`dbru-size-${size}`, `dbru-avatar--${shape}`]">
     <img v-if="src" class="dbru-avatar__img" :src="src" :alt="altText" />
     <span v-else class="dbru-avatar__initials dbru-text-main">{{ initials }}</span>
   </span>
 </template>
 
 <script setup lang="ts">
-/**
- * Avatar component with image or initials fallback.
- * Use it to represent a user or entity.
- */
+import type { DbrAvatarProps } from './DbrAvatar.types';
+
 defineOptions({
-  name: "DbrAvatar"
+  name: 'DbrAvatar',
 });
 
-import type { DbrAvatarProps } from "./DbrAvatar.types";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Image source.
-   */
-  src: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Alt text for the image.
-   */
-  alt: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Name used to generate initials fallback.
-   * @default ""
-   */
-  name: {
-    type: String,
-    default: ""
-  },
-  /**
-   * Avatar size.
-   * @default "md"
-   */
-  size: {
-    type: String as PropType<NonNullable<DbrAvatarProps["size"]>>,
-    default: "md"
-  },
-  /**
-   * Avatar shape.
-   * @default "circle"
-   */
-  shape: {
-    type: String as PropType<NonNullable<DbrAvatarProps["shape"]>>,
-    default: "circle"
-  }
+const props = withDefaults(defineProps<DbrAvatarProps>(), {
+  src: undefined,
+  alt: undefined,
+  name: '',
+  size: 'md',
+  shape: 'circle',
 });
 
 const { src, alt, name, size, shape } = props;
 
-const altText = alt ?? (name ? `${name} avatar` : "Avatar");
+const altText = alt ?? (name ? `${name} avatar` : 'Avatar');
 
 const initials = (() => {
-  if (!name) return "";
+  if (!name) return '';
   const parts = name.trim().split(/\s+/).slice(0, 2);
-  return parts.map((part) => part[0]?.toUpperCase()).join("");
+  return parts.map((part) => part[0]?.toUpperCase()).join('');
 })();
 </script>
 

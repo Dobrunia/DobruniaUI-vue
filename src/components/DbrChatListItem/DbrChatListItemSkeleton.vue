@@ -24,7 +24,7 @@
  * Skeleton for chat list item.
  */
 defineOptions({
-  name: "DbrChatListItemSkeleton"
+  name: 'DbrChatListItemSkeleton',
 });
 </script>
 

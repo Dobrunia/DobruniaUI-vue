@@ -1,52 +1,31 @@
 <template>
-  <span
-    class="dbru-tooltip"
-    :class="variant ? `dbru-tooltip--${variant}` : 'dbru-tooltip--plain'"
-  >
+  <span class="dbru-tooltip" :class="variant ? `dbru-tooltip--${variant}` : 'dbru-tooltip--plain'">
     <span class="dbru-tooltip__icon dbru-text-sm" aria-hidden="true">{{ icon }}</span>
     <span class="dbru-tooltip__text dbru-text-sm dbru-text-main">{{ text }}</span>
   </span>
 </template>
 
 <script setup lang="ts">
-/**
- * Tooltip component with info icon.
- * Use it to show short helper text on hover.
- */
+import type { DbrTooltipProps } from './DbrTooltip.types';
+
 defineOptions({
-  name: "DbrTooltip"
+  name: 'DbrTooltip',
 });
 
-import type { DbrTooltipProps } from "./DbrTooltip.types";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Tooltip text content.
-   * @default "This is a cool tooltip!"
-   */
-  text: {
-    type: String,
-    default: "This is a cool tooltip!"
-  },
-  /**
-   * Tooltip visual variant.
-   */
-  variant: {
-    type: String as PropType<DbrTooltipProps["variant"]>,
-    default: undefined
-  }
+const props = withDefaults(defineProps<DbrTooltipProps>(), {
+  text: 'This is a cool tooltip!',
+  variant: undefined,
 });
 
 const { variant } = props;
 
-let icon = "i";
-if (variant === "warning") {
-  icon = "!";
-} else if (variant === "error") {
-  icon = "x";
-} else if (variant === "success") {
-  icon = "✓";
+let icon = 'i';
+if (variant === 'warning') {
+  icon = '!';
+} else if (variant === 'error') {
+  icon = 'x';
+} else if (variant === 'success') {
+  icon = '✓';
 }
 </script>
 

@@ -6,8 +6,8 @@
       `dbru-card--${variant}`,
       {
         'dbru-card--disabled': disabled,
-        'dbru-card--hoverable': hoverable
-      }
+        'dbru-card--hoverable': hoverable,
+      },
     ]"
     :aria-disabled="disabled || undefined"
   >
@@ -16,49 +16,17 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Neumorphic card container with slot content.
- */
+import type { DbrCardProps } from './DbrCard.types';
+
 defineOptions({
-  name: "DbrCard"
+  name: 'DbrCard',
 });
 
-import type { DbrCardProps } from "./DbrCard.types";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * HTML tag used as card root element.
-   * @default "div"
-   */
-  as: {
-    type: String as PropType<NonNullable<DbrCardProps["as"]>>,
-    default: "div"
-  },
-  /**
-   * Visual style of the card.
-   * @default "surface"
-   */
-  variant: {
-    type: String as PropType<NonNullable<DbrCardProps["variant"]>>,
-    default: "surface"
-  },
-  /**
-   * Disables hover and interactions.
-   * @default false
-   */
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Enables hover highlight effect.
-   * @default false
-   */
-  hoverable: {
-    type: Boolean,
-    default: false
-  }
+const props = withDefaults(defineProps<DbrCardProps>(), {
+  as: 'div',
+  variant: 'surface',
+  disabled: false,
+  hoverable: false,
 });
 
 const { as, variant, disabled, hoverable } = props;
@@ -68,10 +36,19 @@ const { as, variant, disabled, hoverable } = props;
 .dbru-card {
   border-radius: var(--dbru-radius-md);
   border: 2px solid transparent;
-  transition: color var(--dbru-duration-base) var(--dbru-ease-standard),background-color var(--dbru-duration-base) var(--dbru-ease-standard),border-color var(--dbru-duration-base) var(--dbru-ease-standard),opacity var(--dbru-duration-base) var(--dbru-ease-standard),box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
+  transition:
+    color var(--dbru-duration-base) var(--dbru-ease-standard),
+    background-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    border-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    opacity var(--dbru-duration-base) var(--dbru-ease-standard),
+    box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
   transition-property: color, background-color, border-color, opacity, box-shadow;
-  transition-duration: var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base);
-  transition-timing-function: var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard);
+  transition-duration:
+    var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base),
+    var(--dbru-duration-base), var(--dbru-duration-base);
+  transition-timing-function:
+    var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard),
+    var(--dbru-ease-standard), var(--dbru-ease-standard);
   background: var(--dbru-color-surface);
 }
 

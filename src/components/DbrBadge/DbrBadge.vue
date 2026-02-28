@@ -8,43 +8,24 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Badge component for short status labels.
- * Use it to highlight small pieces of information.
- */
+import { computed } from 'vue';
+import type { DbrBadgeProps } from './DbrBadge.types';
+
 defineOptions({
-  name: "DbrBadge"
+  name: 'DbrBadge',
 });
 
-import { computed } from "vue";
-import type { DbrBadgeProps } from "./DbrBadge.types";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Badge text.
-   * @default "Badge"
-   */
-  text: {
-    type: String,
-    default: "Badge"
-  },
-  /**
-   * Visual style of the badge.
-   * @default "primary"
-   */
-  variant: {
-    type: String as PropType<NonNullable<DbrBadgeProps["variant"]>>,
-    default: "primary"
-  }
+const props = withDefaults(defineProps<DbrBadgeProps>(), {
+  text: 'Badge',
+  variant: 'primary',
 });
 
 const { text, variant } = props;
 
-const textColorClass: Record<NonNullable<DbrBadgeProps["variant"]>, string> = {
-  primary: "dbru-text-on-primary",
-  ghost: "dbru-text-main",
-  danger: "dbru-text-on-danger"
+const textColorClass: Record<NonNullable<DbrBadgeProps['variant']>, string> = {
+  primary: 'dbru-text-on-primary',
+  ghost: 'dbru-text-main',
+  danger: 'dbru-text-on-danger',
 };
 
 const resolvedTextColorClass = computed(() => textColorClass[variant]);

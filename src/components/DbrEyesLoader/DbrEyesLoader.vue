@@ -3,15 +3,11 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Loader component with animated "eyes".
- * Use it to indicate background activity.
- */
-defineOptions({
-  name: "DbrEyesLoader"
-});
+import type { DbrEyesLoaderProps } from './DbrEyesLoader.types';
 
-import type { DbrEyesLoaderProps } from "./DbrEyesLoader.types";
+defineOptions({
+  name: 'DbrEyesLoader',
+});
 
 defineProps<DbrEyesLoaderProps>();
 </script>
@@ -25,13 +21,11 @@ defineProps<DbrEyesLoaderProps>();
 
 .dbru-loader:before,
 .dbru-loader:after {
-  content: "";
+  content: '';
   height: 20px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(farthest-side, #000 95%, #0000) 35% 35% / 6px 6px
-      no-repeat
-    #fff;
+  background: radial-gradient(farthest-side, #000 95%, #0000) 35% 35% / 6px 6px no-repeat #fff;
   transform: scaleX(var(--s, 1)) rotate(0deg);
   animation: dbru-loader-spin 1s infinite linear;
 }

@@ -13,15 +13,11 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Terminal style loader with typing cursor.
- * Use it to convey scripted or developer-focused activity.
- */
-defineOptions({
-  name: "DbrTerminalLoader"
-});
+import type { DbrTerminalLoaderProps } from './DbrTerminalLoader.types';
 
-import type { DbrTerminalLoaderProps } from "./DbrTerminalLoader.types";
+defineOptions({
+  name: 'DbrTerminalLoader',
+});
 
 defineProps<DbrTerminalLoaderProps>();
 </script>
@@ -52,7 +48,7 @@ defineProps<DbrTerminalLoaderProps>();
   border: 0.1em solid #333;
   background-color: #1a1a1a;
   color: #0f0;
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 1em;
   padding: 1.5em 1em;
   width: 12em;

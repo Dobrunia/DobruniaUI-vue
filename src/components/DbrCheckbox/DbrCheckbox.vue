@@ -16,60 +16,23 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Checkbox component with optional label.
- * Use it for binary choices and form inputs.
- */
+import type { DbrCheckboxProps } from './DbrCheckbox.types';
+
 defineOptions({
-  name: "DbrCheckbox"
+  name: 'DbrCheckbox',
 });
 
-import type { DbrCheckboxProps } from "./DbrCheckbox.types";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Checked state for v-model.
-   * @default false
-   */
-  modelValue: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Disables the checkbox and removes pointer interaction.
-   * @default false
-   */
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Optional label text. You can also use the default slot.
-   */
-  label: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Native name attribute for form submission.
-   */
-  name: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Native value attribute for form submission.
-   */
-  value: {
-    type: String as PropType<DbrCheckboxProps["value"]>,
-    default: undefined
-  }
+const props = withDefaults(defineProps<DbrCheckboxProps>(), {
+  modelValue: false,
+  disabled: false,
+  label: undefined,
+  name: undefined,
+  value: undefined,
 });
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: boolean): void;
-  (e: "change", value: boolean): void;
+  (e: 'update:modelValue', value: boolean): void;
+  (e: 'change', value: boolean): void;
 }>();
 
 const { modelValue, disabled, name, value, label } = props;
@@ -77,8 +40,8 @@ const { modelValue, disabled, name, value, label } = props;
 const onChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const nextValue = target.checked;
-  emit("update:modelValue", nextValue);
-  emit("change", nextValue);
+  emit('update:modelValue', nextValue);
+  emit('change', nextValue);
 };
 </script>
 
@@ -111,7 +74,7 @@ const onChange = (event: Event) => {
 }
 
 .dbru-checkbox__input::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   box-shadow: 0 0 0 calc(20px / 2.5) var(--_primary);
@@ -123,7 +86,7 @@ const onChange = (event: Event) => {
 .dbru-checkbox__input::before {
   top: 40%;
   left: 50%;
-  content: "";
+  content: '';
   position: absolute;
   width: 4px;
   height: 7px;
@@ -131,7 +94,9 @@ const onChange = (event: Event) => {
   border-bottom: 2px solid var(--_secondary);
   transform: translate(-50%, -50%) rotate(45deg) scale(0);
   opacity: 0;
-  transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+  transition:
+    all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6),
+    opacity 0.1s;
 }
 
 .dbru-checkbox__input:hover:not(:disabled) {

@@ -1,8 +1,5 @@
 <template>
-  <label
-    class="dbru-theme-toggle"
-    :class="[`dbru-size-${size}`, `dbru-theme-toggle--${shape}`]"
-  >
+  <label class="dbru-theme-toggle" :class="[`dbru-size-${size}`, `dbru-theme-toggle--${shape}`]">
     <input
       class="dbru-theme-toggle__input"
       type="checkbox"
@@ -30,59 +27,19 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Theme toggle button.
- * Adds/removes `dbru-theme-dark` on documentElement.
- */
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import type { DbrThemeToggleProps } from './DbrThemeToggle.types';
+
 defineOptions({
-  name: "DbrThemeToggle"
+  name: 'DbrThemeToggle',
 });
 
-import { onBeforeUnmount, onMounted, ref, watch } from "vue";
-import type { PropType } from "vue";
-import type { DbrThemeToggleProps } from "./DbrThemeToggle.types";
-
-const props = defineProps({
-  /**
-   * Whether dark theme is enabled.
-   * @default false
-   */
-  modelValue: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Control size from global size scale.
-   * @default "md"
-   */
-  size: {
-    type: String as PropType<NonNullable<DbrThemeToggleProps["size"]>>,
-    default: "md"
-  },
-  /**
-   * Toggle button shape.
-   * @default "circle"
-   */
-  shape: {
-    type: String as PropType<NonNullable<DbrThemeToggleProps["shape"]>>,
-    default: "circle"
-  },
-  /**
-   * Persist choice to localStorage.
-   * @default true
-   */
-  persist: {
-    type: Boolean,
-    default: true
-  },
-  /**
-   * Storage key for persistence.
-   * @default "dbru-theme"
-   */
-  storageKey: {
-    type: String,
-    default: "dbru-theme"
-  }
+const props = withDefaults(defineProps<DbrThemeToggleProps>(), {
+  modelValue: false,
+  size: 'md',
+  shape: 'circle',
+  persist: true,
+  storageKey: 'dbru-theme',
 });
 
 const { size, shape } = props;
@@ -90,15 +47,15 @@ const isDark = ref(props.modelValue);
 let themeObserver: MutationObserver | null = null;
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: boolean): void;
-  (e: "change", value: boolean): void;
+  (e: 'update:modelValue', value: boolean): void;
+  (e: 'change', value: boolean): void;
 }>();
 
 const applyTheme = (isDark: boolean) => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.toggle("dbru-theme-dark", isDark);
+  if (typeof document === 'undefined') return;
+  document.documentElement.classList.toggle('dbru-theme-dark', isDark);
   if (props.persist) {
-    localStorage.setItem(props.storageKey, isDark ? "dark" : "light");
+    localStorage.setItem(props.storageKey, isDark ? 'dark' : 'light');
   }
 };
 
@@ -106,32 +63,32 @@ const onToggle = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const next = target.checked;
   isDark.value = next;
-  emit("update:modelValue", next);
-  emit("change", next);
+  emit('update:modelValue', next);
+  emit('change', next);
   applyTheme(next);
 };
 
 onMounted(() => {
   const syncFromDom = () => {
-    if (typeof document === "undefined") return;
-    const next = document.documentElement.classList.contains("dbru-theme-dark");
+    if (typeof document === 'undefined') return;
+    const next = document.documentElement.classList.contains('dbru-theme-dark');
     if (isDark.value === next) return;
     isDark.value = next;
-    emit("update:modelValue", next);
+    emit('update:modelValue', next);
   };
 
-  if (!props.persist || typeof localStorage === "undefined") {
+  if (!props.persist || typeof localStorage === 'undefined') {
     isDark.value = props.modelValue;
     applyTheme(isDark.value);
   } else {
     const saved = localStorage.getItem(props.storageKey);
-    if (saved === "dark") {
+    if (saved === 'dark') {
       isDark.value = true;
-      emit("update:modelValue", true);
+      emit('update:modelValue', true);
       applyTheme(true);
-    } else if (saved === "light") {
+    } else if (saved === 'light') {
       isDark.value = false;
-      emit("update:modelValue", false);
+      emit('update:modelValue', false);
       applyTheme(false);
     } else {
       isDark.value = props.modelValue;
@@ -139,11 +96,11 @@ onMounted(() => {
     }
   }
 
-  if (typeof MutationObserver !== "undefined" && typeof document !== "undefined") {
+  if (typeof MutationObserver !== 'undefined' && typeof document !== 'undefined') {
     themeObserver = new MutationObserver(syncFromDom);
     themeObserver.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ["class"]
+      attributeFilter: ['class'],
     });
   }
 });

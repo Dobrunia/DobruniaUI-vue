@@ -3,8 +3,8 @@ export type DbrIconButtonSize = "sm" | "md" | "lg";
 
 export interface DbrIconButtonProps {
   /**
-   * Button text label.
-   * @default "Button"
+   * Button text label. Leave empty for square icon-only mode.
+   * @default undefined
    */
   label?: string;
   /**

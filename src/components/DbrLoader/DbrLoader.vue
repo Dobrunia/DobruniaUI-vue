@@ -17,26 +17,14 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Base dot spinner loader.
- * Use it to indicate background activity.
- */
+import type { DbrLoaderProps } from './DbrLoader.types';
+
 defineOptions({
-  name: "DbrLoader"
+  name: 'DbrLoader',
 });
 
-import type { DbrLoaderProps } from "./DbrLoader.types";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Loader size from global control scale.
-   * @default "md"
-   */
-  size: {
-    type: String as PropType<NonNullable<DbrLoaderProps["size"]>>,
-    default: "md"
-  }
+const props = withDefaults(defineProps<DbrLoaderProps>(), {
+  size: 'md',
 });
 
 const { size } = props;
@@ -69,7 +57,7 @@ const { size } = props;
 }
 
 .dbru-loader__dot::before {
-  content: "";
+  content: '';
   width: 20%;
   height: 20%;
   border-radius: 50%;

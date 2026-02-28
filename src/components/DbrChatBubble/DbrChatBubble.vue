@@ -4,7 +4,7 @@
     :class="[
       `dbru-chat-bubble--${direction}`,
       `dbru-chat-bubble--${kind}`,
-      { 'dbru-chat-bubble--no-text': !text }
+      { 'dbru-chat-bubble--no-text': !text },
     ]"
   >
     <div v-if="kind === 'text'" class="dbru-chat-bubble__text dbru-text-base">{{ text }}</div>
@@ -12,7 +12,9 @@
       <button class="dbru-chat-bubble__image-btn" type="button" @click="openImage">
         <img class="dbru-chat-bubble__image" :src="mediaSrc" :alt="text || 'Media'" />
       </button>
-      <div v-if="text" class="dbru-chat-bubble__caption dbru-text-sm dbru-text-muted">{{ text }}</div>
+      <div v-if="text" class="dbru-chat-bubble__caption dbru-text-sm dbru-text-muted">
+        {{ text }}
+      </div>
     </div>
     <div v-else-if="kind === 'audio'" class="dbru-chat-bubble__media">
       <div class="dbru-chat-bubble__audio">
@@ -23,17 +25,16 @@
           :aria-label="isPlaying ? 'Pause audio' : 'Play audio'"
         >
           <span class="dbru-chat-bubble__audio-icon">
-            {{ isPlaying ? "⏸" : "▶" }}
+            {{ isPlaying ? '⏸' : '▶' }}
           </span>
         </button>
         <div class="dbru-chat-bubble__audio-controls">
           <div class="dbru-chat-bubble__audio-track" @click="seek">
-            <div
-              class="dbru-chat-bubble__audio-progress"
-              :style="{ width: progress + '%' }"
-            ></div>
+            <div class="dbru-chat-bubble__audio-progress" :style="{ width: progress + '%' }"></div>
           </div>
-          <span class="dbru-chat-bubble__audio-time dbru-text-sm dbru-text-muted">{{ durationLabel }}</span>
+          <span class="dbru-chat-bubble__audio-time dbru-text-sm dbru-text-muted">{{
+            durationLabel
+          }}</span>
         </div>
         <audio
           ref="audioRef"
@@ -44,7 +45,9 @@
           @ended="onEnded"
         ></audio>
       </div>
-      <div v-if="text" class="dbru-chat-bubble__caption dbru-text-sm dbru-text-muted">{{ text }}</div>
+      <div v-if="text" class="dbru-chat-bubble__caption dbru-text-sm dbru-text-muted">
+        {{ text }}
+      </div>
     </div>
     <div class="dbru-chat-bubble__meta">
       <span class="dbru-chat-bubble__time dbru-text-sm dbru-text-muted">{{ time }}</span>
@@ -63,11 +66,7 @@
   </div>
 
   <teleport to="body">
-    <div
-      v-if="isImageOpen"
-      class="dbru-chat-bubble__overlay"
-      @click="closeImage"
-    >
+    <div v-if="isImageOpen" class="dbru-chat-bubble__overlay" @click="closeImage">
       <img
         class="dbru-chat-bubble__overlay-img"
         :src="mediaSrc"
@@ -79,66 +78,20 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Chat message bubble for incoming or outgoing messages.
- */
+import type { DbrChatBubbleProps } from './DbrChatBubble.types';
+import { computed, ref, watch } from 'vue';
+
 defineOptions({
-  name: "DbrChatBubble"
+  name: 'DbrChatBubble',
 });
 
-import type { DbrChatBubbleProps } from "./DbrChatBubble.types";
-import { computed, ref, watch } from "vue";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Message text.
-   * @default "Message text"
-   */
-  text: {
-    type: String,
-    default: "Message text"
-  },
-  /**
-   * Message kind.
-   * @default "text"
-   */
-  kind: {
-    type: String as PropType<NonNullable<DbrChatBubbleProps["kind"]>>,
-    default: "text"
-  },
-  /**
-   * Media source (image or audio).
-   * @default ""
-   */
-  mediaSrc: {
-    type: String,
-    default: ""
-  },
-  /**
-   * Time label.
-   * @default "12:45"
-   */
-  time: {
-    type: String,
-    default: "12:45"
-  },
-  /**
-   * Direction of the message.
-   * @default "in"
-   */
-  direction: {
-    type: String as PropType<NonNullable<DbrChatBubbleProps["direction"]>>,
-    default: "in"
-  },
-  /**
-   * Message status for checkmarks.
-   * @default "none"
-   */
-  status: {
-    type: String as PropType<NonNullable<DbrChatBubbleProps["status"]>>,
-    default: "none"
-  }
+const props = withDefaults(defineProps<DbrChatBubbleProps>(), {
+  text: 'Message text',
+  kind: 'text',
+  mediaSrc: '',
+  time: '12:45',
+  direction: 'in',
+  status: 'none',
 });
 
 const { text, kind, mediaSrc, time, direction, status } = props;
@@ -158,7 +111,7 @@ const progress = computed(() => {
 const durationLabel = computed(() => {
   const total = Math.round(duration.value);
   const mins = Math.floor(total / 60);
-  const secs = String(total % 60).padStart(2, "0");
+  const secs = String(total % 60).padStart(2, '0');
   return `${mins}:${secs}`;
 });
 
@@ -210,10 +163,10 @@ const closeImage = () => {
 };
 
 watch(isImageOpen, (open) => {
-  if (typeof document === "undefined") return;
+  if (typeof document === 'undefined') return;
   if (open) {
     bodyOverflow.value = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
   } else if (bodyOverflow.value !== null) {
     document.body.style.overflow = bodyOverflow.value;
     bodyOverflow.value = null;
@@ -249,7 +202,7 @@ watch(isImageOpen, (open) => {
 .dbru-chat-bubble--in::after,
 .dbru-chat-bubble--out::before,
 .dbru-chat-bubble--out::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 0;
   height: 0;
@@ -414,7 +367,6 @@ watch(isImageOpen, (open) => {
   cursor: default;
 }
 
-
 .dbru-chat-bubble__meta {
   display: inline-flex;
   align-items: center;
@@ -435,5 +387,4 @@ watch(isImageOpen, (open) => {
 .dbru-chat-bubble__status--read {
   color: #22c55e;
 }
-
 </style>

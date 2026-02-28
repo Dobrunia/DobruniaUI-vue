@@ -85,6 +85,13 @@ export const Variants: Story = {
             </svg>
           </template>
         </DbrIconButton>
+        <DbrIconButton :label="undefined" size="md" variant="primary" iconPosition="start">
+          <template #iconBefore>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M4 12h16M12 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </template>
+        </DbrIconButton>
       </div>
     `
   })

@@ -1,18 +1,17 @@
 <template>
   <div class="dbru-chat-composer" :class="{ 'dbru-chat-composer--disabled': disabled }">
     <div v-if="attachments.length" class="dbru-chat-composer__attachments">
-      <div
-        v-for="item in attachments"
-        :key="item.id"
-        class="dbru-chat-composer__attachment"
-      >
+      <div v-for="item in attachments" :key="item.id" class="dbru-chat-composer__attachment">
         <img
           v-if="item.kind === 'image'"
           class="dbru-chat-composer__thumb"
           :src="item.url"
           :alt="item.name"
         />
-        <div v-else-if="item.kind === 'audio'" class="dbru-chat-composer__audio dbru-text-sm dbru-text-main">
+        <div
+          v-else-if="item.kind === 'audio'"
+          class="dbru-chat-composer__audio dbru-text-sm dbru-text-main"
+        >
           <button
             type="button"
             class="dbru-chat-composer__audio-btn dbru-text-main dbru-text-xs"
@@ -27,11 +26,15 @@
             :src="item.url"
             @ended="onPreviewEnded(item.id)"
           ></audio>
-          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{ item.name }}</span>
+          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{
+            item.name
+          }}</span>
         </div>
         <div v-else class="dbru-chat-composer__file dbru-text-sm dbru-text-main">
           <span class="dbru-chat-composer__file-icon">📎</span>
-          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{ item.name }}</span>
+          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{
+            item.name
+          }}</span>
         </div>
         <button
           type="button"
@@ -125,65 +128,26 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Chat composer with attachments, typing, and send behavior.
- */
+import { computed, onMounted, ref, toRefs, watch } from 'vue';
+import type { DbrChatAttachment, DbrChatComposerProps } from './DbrChatComposer.types';
+
 defineOptions({
-  name: "DbrChatComposer"
+  name: 'DbrChatComposer',
 });
 
-import { computed, onMounted, ref, toRefs, watch } from "vue";
-import type { DbrChatAttachment } from "./DbrChatComposer.types";
-import type { PropType } from "vue";
-
-const props = defineProps({
-  /**
-   * Message text for v-model.
-   * @default ""
-   */
-  modelValue: {
-    type: String,
-    default: ""
-  },
-  /**
-   * Placeholder text for the input.
-   * @default "Message"
-   */
-  placeholder: {
-    type: String,
-    default: "Message"
-  },
-  /**
-   * Accessible label for the textarea.
-   * @default "Message"
-   */
-  ariaLabel: {
-    type: String,
-    default: "Message"
-  },
-  /**
-   * Disable composer controls.
-   * @default false
-   */
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Max height for auto-growing textarea (px).
-   * @default 120
-   */
-  maxHeight: {
-    type: Number as PropType<number>,
-    default: 120
-  }
+const props = withDefaults(defineProps<DbrChatComposerProps>(), {
+  modelValue: '',
+  placeholder: 'Message',
+  ariaLabel: 'Message',
+  disabled: false,
+  maxHeight: 120,
 });
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string): void;
-  (e: "send", payload: { text: string; attachments: DbrChatAttachment[] }): void;
-  (e: "typing", value: boolean): void;
-  (e: "attachmentsChange", value: DbrChatAttachment[]): void;
+  (e: 'update:modelValue', value: string): void;
+  (e: 'send', payload: { text: string; attachments: DbrChatAttachment[] }): void;
+  (e: 'typing', value: boolean): void;
+  (e: 'attachmentsChange', value: DbrChatAttachment[]): void;
 }>();
 
 const { modelValue, disabled, maxHeight } = toRefs(props);
@@ -201,27 +165,27 @@ const canSend = computed(() => {
 });
 
 const canRecord = computed(() => {
-  return typeof MediaRecorder !== "undefined";
+  return typeof MediaRecorder !== 'undefined';
 });
 
 const resizeTextarea = () => {
   const el = textareaRef.value;
   if (!el) return;
-  el.style.height = "auto";
+  el.style.height = 'auto';
   const next = Math.min(el.scrollHeight, maxHeight.value);
   el.style.height = `${next}px`;
-  el.style.overflowY = el.scrollHeight > maxHeight.value ? "auto" : "hidden";
+  el.style.overflowY = el.scrollHeight > maxHeight.value ? 'auto' : 'hidden';
 };
 
 const onInput = (event: Event) => {
   const target = event.target as HTMLTextAreaElement;
-  emit("update:modelValue", target.value);
-  emit("typing", target.value.trim().length > 0);
+  emit('update:modelValue', target.value);
+  emit('typing', target.value.trim().length > 0);
   resizeTextarea();
 };
 
 const onKeydown = (event: KeyboardEvent) => {
-  if (event.key === "Enter" && !event.shiftKey) {
+  if (event.key === 'Enter' && !event.shiftKey) {
     event.preventDefault();
     send();
   }
@@ -231,11 +195,11 @@ const send = () => {
   if (!canSend.value || disabled.value) return;
   const payload = {
     text: modelValue.value.trim(),
-    attachments: attachments.value
+    attachments: attachments.value,
   };
-  emit("send", payload);
-  emit("update:modelValue", "");
-  emit("typing", false);
+  emit('send', payload);
+  emit('update:modelValue', '');
+  emit('typing', false);
   clearAttachments();
   resizeTextarea();
 };
@@ -251,26 +215,26 @@ const onFilesSelected = (event: Event) => {
   if (!files.length) return;
 
   const mapped = files.map((file) => {
-    let kind: "image" | "audio" | "file" = "file";
-    if (file.type.startsWith("image/")) {
-      kind = "image";
-    } else if (file.type.startsWith("audio/")) {
-      kind = "audio";
+    let kind: 'image' | 'audio' | 'file' = 'file';
+    if (file.type.startsWith('image/')) {
+      kind = 'image';
+    } else if (file.type.startsWith('audio/')) {
+      kind = 'audio';
     }
-    const url = kind === "image" || kind === "audio" ? URL.createObjectURL(file) : undefined;
+    const url = kind === 'image' || kind === 'audio' ? URL.createObjectURL(file) : undefined;
     return {
       id: `${file.name}-${file.size}-${file.lastModified}`,
       name: file.name,
       size: file.size,
       kind,
       url,
-      file
+      file,
     } satisfies DbrChatAttachment;
   });
 
   attachments.value = [...attachments.value, ...mapped];
-  emit("attachmentsChange", attachments.value);
-  input.value = "";
+  emit('attachmentsChange', attachments.value);
+  input.value = '';
 };
 
 const removeAttachment = (id: string) => {
@@ -278,7 +242,7 @@ const removeAttachment = (id: string) => {
   if (target?.url) URL.revokeObjectURL(target.url);
   audioMap.value.delete(id);
   attachments.value = attachments.value.filter((item) => item.id !== id);
-  emit("attachmentsChange", attachments.value);
+  emit('attachmentsChange', attachments.value);
 };
 
 const clearAttachments = () => {
@@ -287,7 +251,7 @@ const clearAttachments = () => {
   });
   audioMap.value.clear();
   attachments.value = [];
-  emit("attachmentsChange", attachments.value);
+  emit('attachmentsChange', attachments.value);
 };
 
 const togglePreview = (id: string) => {
@@ -328,23 +292,23 @@ const toggleRecord = async () => {
       if (event.data.size > 0) chunks.value.push(event.data);
     };
     recorder.onstop = () => {
-      const blob = new Blob(chunks.value, { type: "audio/webm" });
+      const blob = new Blob(chunks.value, { type: 'audio/webm' });
       const file = new File([blob], `voice-${Date.now()}.webm`, {
-        type: "audio/webm"
+        type: 'audio/webm',
       });
       const url = URL.createObjectURL(blob);
       attachments.value = [
         ...attachments.value,
         {
           id: `${file.name}-${file.size}-${file.lastModified}`,
-          name: "Voice message",
+          name: 'Voice message',
           size: file.size,
-          kind: "audio",
+          kind: 'audio',
           url,
-          file
-        }
+          file,
+        },
       ];
-      emit("attachmentsChange", attachments.value);
+      emit('attachmentsChange', attachments.value);
       stream.getTracks().forEach((track) => track.stop());
     };
     recorder.start();
@@ -385,7 +349,8 @@ onMounted(() => resizeTextarea());
   border-radius: var(--dbru-radius-md);
   padding: var(--dbru-space-2) var(--dbru-space-3);
   background: var(--dbru-color-surface);
-  transition: border-color var(--dbru-duration-base) var(--dbru-ease-standard),
+  transition:
+    border-color var(--dbru-duration-base) var(--dbru-ease-standard),
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
 }
 
@@ -406,7 +371,8 @@ onMounted(() => resizeTextarea());
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background var(--dbru-duration-base) var(--dbru-ease-standard),
+  transition:
+    background var(--dbru-duration-base) var(--dbru-ease-standard),
     border-color var(--dbru-duration-base) var(--dbru-ease-standard),
     color var(--dbru-duration-base) var(--dbru-ease-standard);
 }

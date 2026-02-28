@@ -21,7 +21,9 @@
 
     <div class="dbru-chat-item__content">
       <div class="dbru-chat-item__row">
-        <span v-if="!loading" class="dbru-chat-item__name dbru-text-base dbru-text-main">{{ name }}</span>
+        <span v-if="!loading" class="dbru-chat-item__name dbru-text-base dbru-text-main">{{
+          name
+        }}</span>
         <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--title"></span>
 
         <div class="dbru-chat-item__meta">
@@ -29,11 +31,7 @@
             v-if="!loading && isOutgoing"
             class="dbru-chat-item__status dbru-text-xs dbru-text-muted"
             :class="`dbru-chat-item__status--${
-              messageStatus === 'read'
-                ? 'read'
-                : messageStatus === 'error'
-                  ? 'error'
-                  : 'sent'
+              messageStatus === 'read' ? 'read' : messageStatus === 'error' ? 'error' : 'sent'
             }`"
           >
             <span v-if="messageStatus === 'error'" class="dbru-chat-item__check">×</span>
@@ -42,7 +40,9 @@
               <span v-if="messageStatus === 'read'" class="dbru-chat-item__check">✓</span>
             </template>
           </span>
-          <span v-if="!loading" class="dbru-chat-item__time dbru-text-sm dbru-text-muted">{{ timeLabel }}</span>
+          <span v-if="!loading" class="dbru-chat-item__time dbru-text-sm dbru-text-muted">{{
+            timeLabel
+          }}</span>
           <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--time"></span>
         </div>
       </div>
@@ -55,7 +55,7 @@
             class="dbru-chat-item__message dbru-text-sm dbru-text-muted"
             :class="{
               'dbru-chat-item__message--unread':
-                !isOutgoing && messageStatus === 'unread' && unreadCount
+                !isOutgoing && messageStatus === 'unread' && unreadCount,
             }"
           >
             <span v-if="messageIcon" class="dbru-chat-item__msg-icon">
@@ -77,121 +77,29 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Chat list item for a single dialog.
- * Use it in chat list views.
- */
+import type { DbrChatListItemProps } from './DbrChatListItem.types';
+import DbrAvatar from '../DbrAvatar/DbrAvatar.vue';
+import DbrBadge from '../DbrBadge/DbrBadge.vue';
+import DbrChatListItemSkeleton from './DbrChatListItemSkeleton.vue';
+
 defineOptions({
-  name: "DbrChatListItem"
+  name: 'DbrChatListItem',
 });
 
-import type { DbrChatListItemProps } from "./DbrChatListItem.types";
-import type { PropType } from "vue";
-import DbrAvatar from "../DbrAvatar/DbrAvatar.vue";
-import DbrBadge from "../DbrBadge/DbrBadge.vue";
-import DbrChatListItemSkeleton from "./DbrChatListItemSkeleton.vue";
-
-const props = defineProps({
-  /**
-   * Unique chat id.
-   */
-  id: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Avatar image source.
-   */
-  avatar: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Avatar alt text.
-   */
-  avatarAlt: {
-    type: String,
-    default: undefined
-  },
-  /**
-   * Avatar shape.
-   * @default "circle"
-   */
-  avatarShape: {
-    type: String as PropType<NonNullable<DbrChatListItemProps["avatarShape"]>>,
-    default: "circle"
-  },
-  /**
-   * Display name.
-   * @default "User"
-   */
-  name: {
-    type: String,
-    default: "User"
-  },
-  /**
-   * Last message object.
-   * @default { text: "Last message...", type: "text" }
-   */
-  lastMessage: {
-    type: Object as PropType<DbrChatListItemProps["lastMessage"]>,
-    default: () => ({ text: "Last message...", type: "text" })
-  },
-  /**
-   * Timestamp of last message.
-   */
-  timestamp: {
-    type: [Number, Date] as PropType<DbrChatListItemProps["timestamp"]>,
-    default: undefined
-  },
-  /**
-   * Message status (incoming only).
-   * @default "read"
-   */
-  messageStatus: {
-    type: String as PropType<NonNullable<DbrChatListItemProps["messageStatus"]>>,
-    default: "read"
-  },
-  /**
-   * Whether the last message is outgoing.
-   * @default false
-   */
-  isOutgoing: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * User presence status.
-   * @default "offline"
-   */
-  status: {
-    type: String as PropType<NonNullable<DbrChatListItemProps["status"]>>,
-    default: "offline"
-  },
-  /**
-   * Unread count badge (incoming only).
-   * @default 0
-   */
-  unreadCount: {
-    type: Number,
-    default: 0
-  },
-  /**
-   * Shows typing indicator.
-   * @default false
-   */
-  isTyping: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Shows loading skeleton when true.
-   * @default false
-   */
-  loading: {
-    type: Boolean,
-    default: false
-  }
+const props = withDefaults(defineProps<DbrChatListItemProps>(), {
+  id: undefined,
+  avatar: undefined,
+  avatarAlt: undefined,
+  avatarShape: 'circle',
+  name: 'User',
+  lastMessage: () => ({ text: 'Last message...', type: 'text' }),
+  timestamp: undefined,
+  messageStatus: 'read',
+  isOutgoing: false,
+  status: 'offline',
+  unreadCount: 0,
+  isTyping: false,
+  loading: false,
 });
 
 const {
@@ -206,29 +114,29 @@ const {
   status,
   unreadCount,
   isTyping,
-  loading
+  loading,
 } = props;
 
-const avatarAltText = avatarAlt ?? (name ? `${name} avatar` : "Avatar");
+const avatarAltText = avatarAlt ?? (name ? `${name} avatar` : 'Avatar');
 
 const timeLabel = (() => {
-  if (!timestamp) return "";
-  const date = typeof timestamp === "number" ? new Date(timestamp) : timestamp;
-  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  if (!timestamp) return '';
+  const date = typeof timestamp === 'number' ? new Date(timestamp) : timestamp;
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 })();
 
 const messagePreview = (() => {
-  if (lastMessage?.type === "image") return "Photo";
-  if (lastMessage?.type === "file") return "File";
-  if (lastMessage?.type === "voice") return "Voice message";
-  return lastMessage?.text ?? "";
+  if (lastMessage?.type === 'image') return 'Photo';
+  if (lastMessage?.type === 'file') return 'File';
+  if (lastMessage?.type === 'voice') return 'Voice message';
+  return lastMessage?.text ?? '';
 })();
 
 const messageIcon = (() => {
-  if (lastMessage?.type === "image") return "🖼️";
-  if (lastMessage?.type === "file") return "📎";
-  if (lastMessage?.type === "voice") return "🎙️";
-  return "";
+  if (lastMessage?.type === 'image') return '🖼️';
+  if (lastMessage?.type === 'file') return '📎';
+  if (lastMessage?.type === 'voice') return '🎙️';
+  return '';
 })();
 </script>
 
