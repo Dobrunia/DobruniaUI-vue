@@ -88,3 +88,4 @@ npm run build-storybook
 - DbrChatBubble
 - DbrChatComposer
 - DbrThemeToggle
+- DbrCard
