@@ -14,7 +14,8 @@ export default defineConfig({
     lib: {
       entry: "src/index.ts",
       name: "DobruniaUI",
-      fileName: (format) => `dobruniaui.${format}.js`
+      formats: ["es", "cjs"],
+      fileName: (format) => (format === "es" ? "dobruniaui.mjs" : "dobruniaui.cjs")
     },
     rollupOptions: {
       external: ["vue"],
