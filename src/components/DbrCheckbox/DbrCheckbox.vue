@@ -9,7 +9,7 @@
       :value="value"
       @change="onChange"
     />
-    <span v-if="label || $slots.default">
+    <span v-if="label || $slots.default" class="dbru-text-base dbru-text-main">
       <slot>{{ label }}</slot>
     </span>
   </label>

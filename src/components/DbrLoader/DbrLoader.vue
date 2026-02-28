@@ -1,5 +1,10 @@
 <template>
-  <div class="dbru-loader dbru-reduced-motion" aria-busy="true" aria-live="polite">
+  <div
+    class="dbru-loader dbru-reduced-motion"
+    :class="`dbru-size-${size}`"
+    aria-busy="true"
+    aria-live="polite"
+  >
     <span class="dbru-loader__dot"></span>
     <span class="dbru-loader__dot"></span>
     <span class="dbru-loader__dot"></span>
@@ -21,13 +26,25 @@ defineOptions({
 });
 
 import type { DbrLoaderProps } from "./DbrLoader.types";
+import type { PropType } from "vue";
 
-defineProps<DbrLoaderProps>();
+const props = defineProps({
+  /**
+   * Loader size from global control scale.
+   * @default "md"
+   */
+  size: {
+    type: String as PropType<NonNullable<DbrLoaderProps["size"]>>,
+    default: "md"
+  }
+});
+
+const { size } = props;
 </script>
 
 <style scoped>
 .dbru-loader {
-  --_size: calc(var(--dbru-space-5) * 1.4);
+  --_size: var(--dbru-control-height, var(--dbru-control-height-md));
   --_speed: 0.9s;
   --_color: var(--dbru-color-primary);
 

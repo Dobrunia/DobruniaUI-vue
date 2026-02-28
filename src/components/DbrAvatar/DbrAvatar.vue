@@ -1,10 +1,10 @@
 <template>
   <span
-    class="dbru-avatar"
+    class="dbru-avatar dbru-text-main"
     :class="[`dbru-size-${size}`, `dbru-avatar--${shape}`]"
   >
     <img v-if="src" class="dbru-avatar__img" :src="src" :alt="altText" />
-    <span v-else class="dbru-avatar__initials">{{ initials }}</span>
+    <span v-else class="dbru-avatar__initials dbru-text-main">{{ initials }}</span>
   </span>
 </template>
 
@@ -84,7 +84,6 @@ const initials = (() => {
   height: var(--_size);
   border-radius: 50%;
   background-color: var(--dbru-color-surface);
-  color: var(--dbru-color-text);
   border: 1px solid var(--dbru-color-border);
   font-size: var(--_font-size);
   font-weight: var(--dbru-font-weight-semibold);
@@ -103,7 +102,6 @@ const initials = (() => {
 }
 
 .dbru-avatar__initials {
-  line-height: var(--dbru-line-height-base);
   text-transform: uppercase;
 }
 </style>

@@ -7,7 +7,7 @@ const meta: Meta<typeof DbrInput> = {
   tags: ['autodocs'],
   args: {
     modelValue: "",
-    label: "Name",
+    label: "Input label",
     disabled: false,
     required: false,
     size: "md",
@@ -34,7 +34,7 @@ type Story = StoryObj<typeof DbrInput>;
 
 export const Playground: Story = {
   args: {
-    label: "",
+    label: "Input label",
     modelValue: "",
     disabled: false
   },
@@ -58,7 +58,7 @@ export const Variants: Story = {
         <DbrInput label="Large" size="lg" />
         <DbrInput label="Filled" :modelValue="'John Doe'" />
         <DbrInput label="Password" type="password" :modelValue="'secret123'" />
-        <DbrInput label="Search" type="search" :modelValue="'Design system'" />
+        <DbrInput label="Search (centered icon)" type="search" :modelValue="'Design system'" />
         <DbrInput label="Disabled" :disabled="true" />
       </div>
     `

@@ -4,7 +4,9 @@
     :class="[
       `dbru-btn--${variant}`,
       `dbru-size-${size}`,
-      `dbru-icon-button--${iconPosition}`
+      `dbru-icon-button--${iconPosition}`,
+      resolvedTextSizeClass,
+      resolvedTextColorClass
     ]"
     :type="nativeType"
     :disabled="disabled"
@@ -28,6 +30,7 @@ defineOptions({
   name: "DbrIconButton"
 });
 
+import { computed } from "vue";
 import type { DbrIconButtonProps } from "./DbrIconButton.types";
 import type { PropType } from "vue";
 
@@ -83,6 +86,21 @@ const props = defineProps({
 });
 
 const { label, variant, size, disabled, nativeType, iconPosition } = props;
+
+const textSizeClass: Record<NonNullable<DbrIconButtonProps["size"]>, string> = {
+  sm: "dbru-text-sm",
+  md: "dbru-text-base",
+  lg: "dbru-text-lg"
+};
+
+const textColorClass: Record<NonNullable<DbrIconButtonProps["variant"]>, string> = {
+  primary: "dbru-text-on-primary",
+  ghost: "dbru-text-main",
+  danger: "dbru-text-on-danger"
+};
+
+const resolvedTextSizeClass = computed(() => textSizeClass[size]);
+const resolvedTextColorClass = computed(() => textColorClass[variant]);
 </script>
 
 <style scoped>

@@ -12,10 +12,10 @@
           :src="item.url"
           :alt="item.name"
         />
-        <div v-else-if="item.kind === 'audio'" class="dbru-chat-composer__audio">
+        <div v-else-if="item.kind === 'audio'" class="dbru-chat-composer__audio dbru-text-sm dbru-text-main">
           <button
             type="button"
-            class="dbru-chat-composer__audio-btn"
+            class="dbru-chat-composer__audio-btn dbru-text-main dbru-text-xs"
             @click="togglePreview(item.id)"
             aria-label="Play or pause audio"
           >
@@ -27,15 +27,15 @@
             :src="item.url"
             @ended="onPreviewEnded(item.id)"
           ></audio>
-          <span class="dbru-chat-composer__file-name">{{ item.name }}</span>
+          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{ item.name }}</span>
         </div>
-        <div v-else class="dbru-chat-composer__file">
+        <div v-else class="dbru-chat-composer__file dbru-text-sm dbru-text-main">
           <span class="dbru-chat-composer__file-icon">📎</span>
-          <span class="dbru-chat-composer__file-name">{{ item.name }}</span>
+          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{ item.name }}</span>
         </div>
         <button
           type="button"
-          class="dbru-chat-composer__remove"
+          class="dbru-chat-composer__remove dbru-text-main dbru-text-xs"
           :disabled="disabled"
           @click="removeAttachment(item.id)"
           aria-label="Remove attachment"
@@ -48,7 +48,7 @@
     <div class="dbru-chat-composer__row">
       <button
         type="button"
-        class="dbru-chat-composer__icon-btn"
+        class="dbru-chat-composer__icon-btn dbru-text-main"
         :disabled="disabled"
         aria-label="Attach file"
         @click="openFilePicker"
@@ -66,7 +66,7 @@
 
       <textarea
         ref="textareaRef"
-        class="dbru-chat-composer__input dbru-reduced-motion"
+        class="dbru-chat-composer__input dbru-reduced-motion dbru-text-base dbru-text-main"
         :value="modelValue"
         :placeholder="placeholder"
         :aria-label="ariaLabel"
@@ -78,7 +78,7 @@
 
       <button
         type="button"
-        class="dbru-chat-composer__icon-btn"
+        class="dbru-chat-composer__icon-btn dbru-text-main"
         :class="{ 'dbru-chat-composer__icon-btn--recording': isRecording }"
         :disabled="disabled || !canRecord"
         aria-label="Record voice message"
@@ -97,7 +97,7 @@
 
       <button
         type="button"
-        class="dbru-chat-composer__send"
+        class="dbru-chat-composer__send dbru-text-main"
         :disabled="disabled || !canSend"
         aria-label="Send message"
         @click="send"
@@ -384,10 +384,7 @@ onMounted(() => resizeTextarea());
   border: 1px solid var(--dbru-color-border);
   border-radius: var(--dbru-radius-md);
   padding: var(--dbru-space-2) var(--dbru-space-3);
-  font-size: var(--dbru-font-size-base);
-  line-height: var(--dbru-line-height-base);
   background: var(--dbru-color-surface);
-  color: var(--dbru-color-text);
   transition: border-color var(--dbru-duration-base) var(--dbru-ease-standard),
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
 }
@@ -405,7 +402,6 @@ onMounted(() => resizeTextarea());
   border-radius: 50%;
   border: 1px solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
-  color: var(--dbru-color-text);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -480,8 +476,6 @@ onMounted(() => resizeTextarea());
   align-items: center;
   gap: var(--dbru-space-1);
   padding: var(--dbru-space-1) var(--dbru-space-2);
-  font-size: var(--dbru-font-size-sm);
-  color: var(--dbru-color-text);
 }
 
 .dbru-chat-composer__audio {
@@ -489,8 +483,6 @@ onMounted(() => resizeTextarea());
   align-items: center;
   gap: var(--dbru-space-2);
   padding: var(--dbru-space-1) var(--dbru-space-2);
-  font-size: var(--dbru-font-size-sm);
-  color: var(--dbru-color-text);
 }
 
 .dbru-chat-composer__audio-btn {
@@ -499,13 +491,10 @@ onMounted(() => resizeTextarea());
   border-radius: 50%;
   border: 1px solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
-  color: var(--dbru-color-text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 12px;
-  line-height: 1;
 }
 
 .dbru-chat-composer__audio-el {
@@ -528,13 +517,10 @@ onMounted(() => resizeTextarea());
   border-radius: 50%;
   border: 1px solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
-  color: var(--dbru-color-text);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  line-height: 1;
 }
 
 .dbru-chat-composer__file-input {

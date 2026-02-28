@@ -21,13 +21,13 @@
 
     <div class="dbru-chat-item__content">
       <div class="dbru-chat-item__row">
-        <span v-if="!loading" class="dbru-chat-item__name">{{ name }}</span>
+        <span v-if="!loading" class="dbru-chat-item__name dbru-text-base dbru-text-main">{{ name }}</span>
         <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--title"></span>
 
         <div class="dbru-chat-item__meta">
           <span
             v-if="!loading && isOutgoing"
-            class="dbru-chat-item__status"
+            class="dbru-chat-item__status dbru-text-xs dbru-text-muted"
             :class="`dbru-chat-item__status--${
               messageStatus === 'read'
                 ? 'read'
@@ -42,17 +42,17 @@
               <span v-if="messageStatus === 'read'" class="dbru-chat-item__check">✓</span>
             </template>
           </span>
-          <span v-if="!loading" class="dbru-chat-item__time">{{ timeLabel }}</span>
+          <span v-if="!loading" class="dbru-chat-item__time dbru-text-sm dbru-text-muted">{{ timeLabel }}</span>
           <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--time"></span>
         </div>
       </div>
 
       <div class="dbru-chat-item__row">
         <template v-if="!loading">
-          <span v-if="isTyping" class="dbru-chat-item__typing">typing…</span>
+          <span v-if="isTyping" class="dbru-chat-item__typing dbru-text-sm">typing…</span>
           <span
             v-else
-            class="dbru-chat-item__message"
+            class="dbru-chat-item__message dbru-text-sm dbru-text-muted"
             :class="{
               'dbru-chat-item__message--unread':
                 !isOutgoing && messageStatus === 'unread' && unreadCount
@@ -65,7 +65,7 @@
           </span>
           <DbrBadge
             v-if="!isOutgoing && messageStatus === 'unread' && unreadCount"
-            class="dbru-chat-item__badge"
+            class="dbru-chat-item__badge dbru-text-xs"
             variant="primary"
             :text="String(unreadCount)"
           />
@@ -303,17 +303,13 @@ const messageIcon = (() => {
 }
 
 .dbru-chat-item__name {
-  font-size: var(--dbru-font-size-base);
   font-weight: var(--dbru-font-weight-semibold);
-  color: var(--dbru-color-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .dbru-chat-item__message {
-  font-size: var(--dbru-font-size-sm);
-  color: color-mix(in oklab, var(--dbru-color-text) 75%, transparent);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -328,7 +324,6 @@ const messageIcon = (() => {
 }
 
 .dbru-chat-item__typing {
-  font-size: var(--dbru-font-size-sm);
   color: var(--dbru-color-primary);
   font-weight: var(--dbru-font-weight-semibold);
   white-space: nowrap;
@@ -343,22 +338,11 @@ const messageIcon = (() => {
   flex-shrink: 0;
 }
 
-.dbru-chat-item__time {
-  font-size: var(--dbru-font-size-sm);
-  color: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
-}
-
 .dbru-chat-item__status {
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  color: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
-  font-size: 12px;
   line-height: var(--dbru-line-height-tight);
-}
-
-.dbru-chat-item__status--sent {
-  color: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
 }
 
 .dbru-chat-item__status--read {
@@ -376,7 +360,6 @@ const messageIcon = (() => {
 .dbru-chat-item__badge.dbru-btn {
   height: 12px;
   padding: 0 var(--dbru-space-2);
-  font-size: var(--dbru-font-size-xs);
   border-radius: 999px;
 }
 
@@ -423,8 +406,7 @@ const messageIcon = (() => {
     background-position: -200% 50%;
   }
 }
-</style>
 .dbru-chat-item__msg-icon {
-  font-size: 12px;
   line-height: var(--dbru-line-height-tight);
 }
+</style>

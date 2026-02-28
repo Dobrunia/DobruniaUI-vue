@@ -1,4 +1,10 @@
 /**
- * DbrLoader has no configurable props.
+ * Props for DbrLoader.
  */
-export interface DbrLoaderProps {}
+export interface DbrLoaderProps {
+  /**
+   * Loader size from global control scale.
+   * @default "md"
+   */
+  size?: "sm" | "md" | "lg";
+}

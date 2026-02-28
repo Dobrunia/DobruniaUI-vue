@@ -29,4 +29,9 @@ export interface DbrToggleProps {
    * @default undefined
    */
   value?: string;
+  /**
+   * Toggle size from global control scale.
+   * @default "md"
+   */
+  size?: "sm" | "md" | "lg";
 }

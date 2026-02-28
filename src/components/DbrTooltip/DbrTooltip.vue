@@ -3,8 +3,8 @@
     class="dbru-tooltip"
     :class="variant ? `dbru-tooltip--${variant}` : 'dbru-tooltip--plain'"
   >
-    <span class="dbru-tooltip__icon" aria-hidden="true">{{ icon }}</span>
-    <span class="dbru-tooltip__text">{{ text }}</span>
+    <span class="dbru-tooltip__icon dbru-text-sm" aria-hidden="true">{{ icon }}</span>
+    <span class="dbru-tooltip__text dbru-text-sm dbru-text-main">{{ text }}</span>
   </span>
 </template>
 
@@ -40,14 +40,14 @@ const props = defineProps({
 
 const { variant } = props;
 
-const icon =
-  variant === "warning"
-    ? "!"
-    : variant === "error"
-      ? "x"
-      : variant === "success"
-        ? "✓"
-        : "i";
+let icon = "i";
+if (variant === "warning") {
+  icon = "!";
+} else if (variant === "error") {
+  icon = "x";
+} else if (variant === "success") {
+  icon = "✓";
+}
 </script>
 
 <style scoped>
@@ -65,7 +65,6 @@ const icon =
 .dbru-tooltip__text {
   visibility: hidden;
   background-color: var(--dbru-color-surface);
-  color: var(--dbru-color-text);
   text-align: center;
   border-radius: 5px;
   padding: 8px 12px;
@@ -91,8 +90,6 @@ const icon =
   color: var(--dbru-color-on-primary);
   border-radius: 50%;
   text-align: center;
-  font-size: var(--dbru-font-size-sm);
-  line-height: var(--dbru-line-height-base);
 }
 
 .dbru-tooltip--plain {

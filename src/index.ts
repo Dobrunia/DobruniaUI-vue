@@ -1,4 +1,5 @@
 import "./styles/index.css";
+/// <reference path="./global-components.d.ts" />
 
 /**
  * Button component with variants and sizes.

@@ -1,5 +1,8 @@
 <template>
-  <span class="dbru-badge dbru-btn dbru-size-sm" :class="`dbru-btn--${variant}`">
+  <span
+    class="dbru-badge dbru-btn dbru-size-sm dbru-text-sm"
+    :class="[`dbru-btn--${variant}`, resolvedTextColorClass]"
+  >
     {{ text }}
   </span>
 </template>
@@ -13,6 +16,7 @@ defineOptions({
   name: "DbrBadge"
 });
 
+import { computed } from "vue";
 import type { DbrBadgeProps } from "./DbrBadge.types";
 import type { PropType } from "vue";
 
@@ -36,6 +40,14 @@ const props = defineProps({
 });
 
 const { text, variant } = props;
+
+const textColorClass: Record<NonNullable<DbrBadgeProps["variant"]>, string> = {
+  primary: "dbru-text-on-primary",
+  ghost: "dbru-text-main",
+  danger: "dbru-text-on-danger"
+};
+
+const resolvedTextColorClass = computed(() => textColorClass[variant]);
 </script>
 
 <style scoped>

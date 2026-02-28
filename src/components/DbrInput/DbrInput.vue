@@ -1,7 +1,7 @@
 <template>
   <div class="dbru-input" :class="{ 'dbru-input--disabled': disabled }">
     <input
-      class="dbru-input__field dbru-reduced-motion"
+      class="dbru-input__field dbru-reduced-motion dbru-text-base dbru-text-main"
       :class="[
         `dbru-size-${size}`,
         {
@@ -240,12 +240,9 @@ const onInput = (event: Event) => {
   border: 1px solid var(--dbru-color-border);
   background-color: var(--dbru-color-surface);
   border-radius: var(--dbru-radius-md);
-  color: var(--dbru-color-text);
-  font-family: var(--dbru-font-family);
   font-size: var(--dbru-control-font-size, var(--dbru-font-size-base));
   height: var(--dbru-control-height, var(--dbru-control-height-md));
   padding: 0 var(--dbru-control-px, var(--dbru-space-4));
-  line-height: var(--dbru-line-height-base);
   transition:
     border-color var(--dbru-duration-base) var(--dbru-ease-standard),
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard),
@@ -282,7 +279,15 @@ const onInput = (event: Event) => {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
   color: color-mix(in oklab, var(--dbru-color-text) 65%, transparent);
+}
+
+.dbru-input__icon svg {
+  display: block;
 }
 
 .dbru-input__icon--left {

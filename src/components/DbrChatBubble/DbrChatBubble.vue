@@ -1,23 +1,23 @@
 <template>
   <div
-    class="dbru-chat-bubble"
+    class="dbru-chat-bubble dbru-text-main"
     :class="[
       `dbru-chat-bubble--${direction}`,
       `dbru-chat-bubble--${kind}`,
       { 'dbru-chat-bubble--no-text': !text }
     ]"
   >
-    <div v-if="kind === 'text'" class="dbru-chat-bubble__text">{{ text }}</div>
+    <div v-if="kind === 'text'" class="dbru-chat-bubble__text dbru-text-base">{{ text }}</div>
     <div v-else-if="kind === 'image'" class="dbru-chat-bubble__media">
       <button class="dbru-chat-bubble__image-btn" type="button" @click="openImage">
         <img class="dbru-chat-bubble__image" :src="mediaSrc" :alt="text || 'Media'" />
       </button>
-      <div v-if="text" class="dbru-chat-bubble__caption">{{ text }}</div>
+      <div v-if="text" class="dbru-chat-bubble__caption dbru-text-sm dbru-text-muted">{{ text }}</div>
     </div>
     <div v-else-if="kind === 'audio'" class="dbru-chat-bubble__media">
       <div class="dbru-chat-bubble__audio">
         <button
-          class="dbru-chat-bubble__audio-btn"
+          class="dbru-chat-bubble__audio-btn dbru-text-main"
           type="button"
           @click="togglePlay"
           :aria-label="isPlaying ? 'Pause audio' : 'Play audio'"
@@ -33,7 +33,7 @@
               :style="{ width: progress + '%' }"
             ></div>
           </div>
-          <span class="dbru-chat-bubble__audio-time">{{ durationLabel }}</span>
+          <span class="dbru-chat-bubble__audio-time dbru-text-sm dbru-text-muted">{{ durationLabel }}</span>
         </div>
         <audio
           ref="audioRef"
@@ -44,16 +44,16 @@
           @ended="onEnded"
         ></audio>
       </div>
-      <div v-if="text" class="dbru-chat-bubble__caption">{{ text }}</div>
+      <div v-if="text" class="dbru-chat-bubble__caption dbru-text-sm dbru-text-muted">{{ text }}</div>
     </div>
     <div class="dbru-chat-bubble__meta">
-      <span class="dbru-chat-bubble__time">{{ time }}</span>
+      <span class="dbru-chat-bubble__time dbru-text-sm dbru-text-muted">{{ time }}</span>
       <span
         v-if="direction === 'out' && status !== 'none'"
-        class="dbru-chat-bubble__status"
+        class="dbru-chat-bubble__status dbru-text-xs dbru-text-muted"
         :class="`dbru-chat-bubble__status--${status}`"
       >
-        <span v-if="status === 'sending'" class="dbru-chat-bubble__sending">⏳</span>
+        <span v-if="status === 'sending'" class="dbru-chat-bubble__sending dbru-text-xs">⏳</span>
         <template v-else>
           <span class="dbru-chat-bubble__check">✓</span>
           <span v-if="status === 'read'" class="dbru-chat-bubble__check">✓</span>
@@ -228,7 +228,6 @@ watch(isImageOpen, (open) => {
   border-radius: var(--dbru-radius-md);
   border: 1px solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
-  color: var(--dbru-color-text);
   display: grid;
   gap: var(--dbru-space-2);
   position: relative;
@@ -288,8 +287,6 @@ watch(isImageOpen, (open) => {
 }
 
 .dbru-chat-bubble__text {
-  font-size: var(--dbru-font-size-base);
-  line-height: var(--dbru-line-height-base);
   white-space: pre-wrap;
 }
 
@@ -311,11 +308,6 @@ watch(isImageOpen, (open) => {
   border-radius: var(--dbru-radius-md);
   display: block;
   border: 1px solid var(--dbru-color-border);
-}
-
-.dbru-chat-bubble__caption {
-  font-size: var(--dbru-font-size-sm);
-  color: color-mix(in oklab, var(--dbru-color-text) 75%, transparent);
 }
 
 .dbru-chat-bubble--image,
@@ -353,7 +345,6 @@ watch(isImageOpen, (open) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--dbru-color-text);
 }
 
 .dbru-chat-bubble__audio-icon {
@@ -393,8 +384,6 @@ watch(isImageOpen, (open) => {
 }
 
 .dbru-chat-bubble__audio-time {
-  color: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
-  font-size: var(--dbru-font-size-sm);
   white-space: nowrap;
 }
 
@@ -431,17 +420,12 @@ watch(isImageOpen, (open) => {
   align-items: center;
   gap: var(--dbru-space-1);
   justify-content: flex-end;
-  font-size: var(--dbru-font-size-sm);
-  color: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
 }
 
 .dbru-chat-bubble__status {
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  color: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
-  font-size: 12px;
-  line-height: var(--dbru-line-height-tight);
 }
 
 .dbru-chat-bubble__status--sending {
@@ -452,8 +436,4 @@ watch(isImageOpen, (open) => {
   color: #22c55e;
 }
 
-.dbru-chat-bubble__sending {
-  font-size: 12px;
-  line-height: var(--dbru-line-height-tight);
-}
 </style>

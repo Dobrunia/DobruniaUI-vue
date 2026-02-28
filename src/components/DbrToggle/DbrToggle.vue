@@ -1,5 +1,9 @@
 <template>
-  <label class="dbru-toggle" :class="{ 'dbru-toggle--disabled': disabled }" :for="inputId">
+  <label
+    class="dbru-toggle"
+    :class="[`dbru-size-${size}`, { 'dbru-toggle--disabled': disabled }]"
+    :for="inputId"
+  >
     <input
       class="dbru-toggle__input dbru-reduced-motion"
       type="checkbox"
@@ -77,6 +81,14 @@ const props = defineProps({
   value: {
     type: String as PropType<DbrToggleProps["value"]>,
     default: undefined
+  },
+  /**
+   * Toggle size from global control scale.
+   * @default "md"
+   */
+  size: {
+    type: String as PropType<NonNullable<DbrToggleProps["size"]>>,
+    default: "md"
   }
 });
 
@@ -85,7 +97,7 @@ const emit = defineEmits<{
   (e: "change", value: boolean): void;
 }>();
 
-const { modelValue, disabled, name, value, label } = props;
+const { modelValue, disabled, name, value, label, size } = props;
 
 const inputId =
   props.id ?? `dbru-toggle-${Math.random().toString(36).slice(2, 9)}`;
@@ -100,8 +112,8 @@ const onChange = (event: Event) => {
 
 <style scoped>
 .dbru-toggle {
-  --_size: 40px;
-  --_bar-height: 4px;
+  --_size: var(--dbru-control-height, var(--dbru-control-height-md));
+  --_bar-height: calc(var(--_size) * 0.1);
   --_bar-radius: 4px;
   --_bar-color: var(--dbru-color-primary);
   --_bar-color-hover: color-mix(in oklab, var(--dbru-color-primary) 80%, #0000);
@@ -125,7 +137,7 @@ const onChange = (event: Event) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: calc(var(--_size) * 0.25);
   transition-duration: 0.5s;
 }
 
