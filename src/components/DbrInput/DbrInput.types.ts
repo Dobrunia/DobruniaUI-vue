@@ -13,12 +13,17 @@ export interface DbrInputProps {
    * Input size.
    * @default "md"
    */
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
   /**
    * Native input type.
    * @default "text"
    */
   type?: string;
+  /**
+   * Position of custom icon slot.
+   * @default "left"
+   */
+  iconPosition?: 'left' | 'right';
   /**
    * Native name attribute for form submission.
    * @default undefined

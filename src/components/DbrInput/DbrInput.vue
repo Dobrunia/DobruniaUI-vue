@@ -20,30 +20,7 @@
       @input="onInput"
     />
     <span v-if="hasLeftIcon" class="dbru-input__icon dbru-input__icon--left" aria-hidden="true">
-      <svg
-        v-if="isPasswordType"
-        viewBox="0 0 24 24"
-        width="16"
-        height="16"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <rect x="5" y="11" width="14" height="10" rx="2" />
-        <path d="M8 11V8a4 4 0 1 1 8 0v3" />
-      </svg>
-      <svg
-        v-else-if="isSearchType"
-        viewBox="0 0 24 24"
-        width="16"
-        height="16"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <circle cx="11" cy="11" r="7" />
-        <path d="M20 20l-3.5-3.5" />
-      </svg>
+      <slot name="icon" />
     </span>
     <button
       v-if="isPasswordType"
@@ -80,12 +57,15 @@
         <path d="M6.61 6.61A16.17 16.17 0 0 0 2 12s3.5 7 10 7a10.94 10.94 0 0 0 4.91-1.09" />
       </svg>
     </button>
+    <span v-if="hasRightCustomIcon" class="dbru-input__icon dbru-input__icon--right" aria-hidden="true">
+      <slot name="icon" />
+    </span>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { DbrInputProps } from './DbrInput.types';
-import { computed, ref } from 'vue';
+import { computed, ref, useSlots } from 'vue';
 
 defineOptions({
   name: 'DbrInput',
@@ -96,6 +76,7 @@ const props = withDefaults(defineProps<DbrInputProps>(), {
   label: undefined,
   size: 'md',
   type: 'text',
+  iconPosition: 'left',
   name: undefined,
   id: undefined,
   disabled: false,
@@ -109,15 +90,19 @@ const emit = defineEmits<{
 }>();
 
 const { modelValue, label, size, type, name, id, disabled, required, autocomplete } = props;
+const slots = useSlots();
 
 const inputId = id ?? `dbru-input-${Math.random().toString(36).slice(2, 9)}`;
 
 const showPassword = ref(false);
 
 const isPasswordType = computed(() => props.type === 'password');
-const isSearchType = computed(() => props.type === 'search');
-const hasLeftIcon = computed(() => isPasswordType.value || isSearchType.value);
-const hasRightIcon = computed(() => isPasswordType.value);
+const hasCustomIcon = computed(() => Boolean(slots.icon));
+const hasLeftIcon = computed(() => hasCustomIcon.value && props.iconPosition === 'left');
+const hasRightCustomIcon = computed(
+  () => hasCustomIcon.value && props.iconPosition === 'right' && !isPasswordType.value
+);
+const hasRightIcon = computed(() => isPasswordType.value || hasRightCustomIcon.value);
 const resolvedType = computed(() =>
   isPasswordType.value && showPassword.value ? 'text' : props.type
 );
@@ -125,8 +110,6 @@ const resolvedAutocomplete = computed(() => {
   if (props.autocomplete) return props.autocomplete;
 
   if (isPasswordType.value) return 'current-password';
-
-  if (isSearchType.value) return 'on';
 
   return 'on';
 });
