@@ -19,10 +19,6 @@
 <script setup lang="ts">
 import type { DbrLoaderProps } from './DbrLoader.types';
 
-defineOptions({
-  name: 'DbrLoader',
-});
-
 const { size = 'md' } = defineProps<DbrLoaderProps>();
 </script>
 

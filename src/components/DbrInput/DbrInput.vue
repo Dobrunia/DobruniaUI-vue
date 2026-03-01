@@ -65,11 +65,7 @@
 
 <script setup lang="ts">
 import type { DbrInputProps } from './DbrInput.types';
-import { computed, ref, useId, useSlots } from 'vue';
-
-defineOptions({
-  name: 'DbrInput',
-});
+import { computed, ref, useId } from 'vue';
 
 const { modelValue = '', label, size = 'md', type = 'text', iconPosition = 'left', name, id, disabled = false, required = false, autocomplete } = defineProps<DbrInputProps>();
 
@@ -77,7 +73,11 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
   (e: 'input', value: string): void;
 }>();
-const slots = useSlots();
+
+const slots = defineSlots<{
+  /** Custom icon displayed inside the input field. Position is controlled by the iconPosition prop. */
+  icon?: (props: {}) => any;
+}>();
 
 const inputId = id ?? useId();
 

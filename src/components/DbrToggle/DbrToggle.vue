@@ -29,9 +29,10 @@
 import { useId } from 'vue';
 import type { DbrToggleProps } from './DbrToggle.types';
 
-defineOptions({
-  name: 'DbrToggle',
-});
+defineSlots<{
+  /** Label text; falls back to the label prop if not provided */
+  default?: (props: {}) => any;
+}>();
 
 const { modelValue = false, disabled = false, label, id, name, value, size = 'md' } = defineProps<DbrToggleProps>();
 

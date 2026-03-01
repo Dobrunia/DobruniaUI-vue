@@ -13,9 +13,6 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'DbrTerminalLoader',
-});
 </script>
 
 <style scoped>

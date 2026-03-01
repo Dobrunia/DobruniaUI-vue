@@ -131,10 +131,6 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { DbrChatAttachment, DbrChatComposerProps } from './DbrChatComposer.types';
 
-defineOptions({
-  name: 'DbrChatComposer',
-});
-
 const { modelValue = '', placeholder = 'Message', ariaLabel = 'Message', disabled = false, maxHeight = 120 } = defineProps<DbrChatComposerProps>();
 
 const emit = defineEmits<{

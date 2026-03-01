@@ -3,9 +3,6 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'DbrEyesLoader',
-});
 </script>
 
 <style scoped>

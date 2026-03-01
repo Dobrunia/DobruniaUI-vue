@@ -11,10 +11,6 @@
 import { computed } from 'vue';
 import type { DbrBadgeProps } from './DbrBadge.types';
 
-defineOptions({
-  name: 'DbrBadge',
-});
-
 const { text = 'Badge', variant = 'primary' } = defineProps<DbrBadgeProps>();
 
 const textColorClass: Record<NonNullable<DbrBadgeProps['variant']>, string> = {

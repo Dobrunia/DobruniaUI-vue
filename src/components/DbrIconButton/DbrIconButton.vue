@@ -26,9 +26,12 @@
 import { computed } from 'vue';
 import type { DbrIconButtonProps } from './DbrIconButton.types';
 
-defineOptions({
-  name: 'DbrIconButton',
-});
+defineSlots<{
+  /** Icon shown on the left side (when iconPosition="start") */
+  iconBefore?: (props: {}) => any;
+  /** Icon shown on the right side (when iconPosition="end") */
+  iconAfter?: (props: {}) => any;
+}>();
 
 const { label, variant = 'primary', size = 'md', disabled = false, nativeType = 'button', iconPosition = 'start' } = defineProps<DbrIconButtonProps>();
 

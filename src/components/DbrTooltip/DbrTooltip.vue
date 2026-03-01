@@ -9,10 +9,6 @@
 import { computed } from 'vue';
 import type { DbrTooltipProps } from './DbrTooltip.types';
 
-defineOptions({
-  name: 'DbrTooltip',
-});
-
 const { text = 'This is a cool tooltip!', variant } = defineProps<DbrTooltipProps>();
 
 const ICON_MAP: Partial<Record<NonNullable<DbrTooltipProps['variant']>, string>> = {

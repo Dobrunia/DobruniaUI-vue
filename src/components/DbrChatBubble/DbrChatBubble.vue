@@ -81,10 +81,6 @@
 import type { DbrChatBubbleProps } from './DbrChatBubble.types';
 import { computed, ref, watch } from 'vue';
 
-defineOptions({
-  name: 'DbrChatBubble',
-});
-
 const { text = 'Message text', kind = 'text', mediaSrc = '', time = '12:45', direction = 'in', status = 'none' } = defineProps<DbrChatBubbleProps>();
 
 const audioRef = ref<HTMLAudioElement | null>(null);

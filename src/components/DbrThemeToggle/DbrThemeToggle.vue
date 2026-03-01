@@ -30,10 +30,6 @@
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { DbrThemeToggleProps } from './DbrThemeToggle.types';
 
-defineOptions({
-  name: 'DbrThemeToggle',
-});
-
 const { size = 'md', shape = 'circle', modelValue = false, persist = true, storageKey = 'dbru-theme' } = defineProps<DbrThemeToggleProps>();
 
 const isDark = ref(modelValue);
@@ -121,10 +117,17 @@ onBeforeUnmount(() => {
   display: grid;
   place-items: center;
   cursor: pointer;
-  box-shadow: 0 0 24px color-mix(in oklab, var(--dbru-color-text) 15%, transparent);
   border: 1px solid var(--dbru-color-border);
   line-height: 1;
   position: relative;
+  transition:
+    background-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    border-color var(--dbru-duration-base) var(--dbru-ease-standard);
+}
+
+.dbru-theme-toggle:hover {
+  background-color: color-mix(in oklab, var(--dbru-color-primary) 10%, var(--dbru-color-surface));
+  border-color: color-mix(in oklab, var(--dbru-color-primary) 45%, var(--dbru-color-border));
 }
 
 .dbru-theme-toggle--rounded {

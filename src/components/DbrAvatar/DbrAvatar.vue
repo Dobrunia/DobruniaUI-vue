@@ -9,10 +9,6 @@
 import { computed } from 'vue';
 import type { DbrAvatarProps } from './DbrAvatar.types';
 
-defineOptions({
-  name: 'DbrAvatar',
-});
-
 const { src, alt, name = '', size = 'md', shape = 'circle' } = defineProps<DbrAvatarProps>();
 
 const altText = computed(() => alt ?? (name ? `${name} avatar` : 'Avatar'));

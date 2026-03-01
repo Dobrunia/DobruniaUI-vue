@@ -20,12 +20,6 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Skeleton for chat list item.
- */
-defineOptions({
-  name: 'DbrChatListItemSkeleton',
-});
 </script>
 
 <style scoped>

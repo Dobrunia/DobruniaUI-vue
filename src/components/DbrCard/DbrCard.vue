@@ -18,9 +18,10 @@
 <script setup lang="ts">
 import type { DbrCardProps } from './DbrCard.types';
 
-defineOptions({
-  name: 'DbrCard',
-});
+defineSlots<{
+  /** Card content */
+  default?: (props: {}) => any;
+}>();
 
 const { as = 'div', variant = 'surface', disabled = false, hoverable = false } = defineProps<DbrCardProps>();
 </script>

@@ -19,9 +19,10 @@
 import { computed } from 'vue';
 import type { DbrButtonProps } from './DbrButton.types';
 
-defineOptions({
-  name: 'DbrButton',
-});
+defineSlots<{
+  /** Button content */
+  default?: (props: {}) => any;
+}>();
 
 const { variant = 'primary', size = 'md', disabled = false, pressed, nativeType = 'button' } = defineProps<DbrButtonProps>();
 

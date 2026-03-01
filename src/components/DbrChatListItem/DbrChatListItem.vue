@@ -83,10 +83,6 @@ import DbrAvatar from '../DbrAvatar/DbrAvatar.vue';
 import DbrBadge from '../DbrBadge/DbrBadge.vue';
 import DbrChatListItemSkeleton from './DbrChatListItemSkeleton.vue';
 
-defineOptions({
-  name: 'DbrChatListItem',
-});
-
 const {
   avatar,
   avatarAlt,

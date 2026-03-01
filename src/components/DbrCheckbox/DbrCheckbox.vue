@@ -18,9 +18,10 @@
 <script setup lang="ts">
 import type { DbrCheckboxProps } from './DbrCheckbox.types';
 
-defineOptions({
-  name: 'DbrCheckbox',
-});
+defineSlots<{
+  /** Label text; falls back to the label prop if not provided */
+  default?: (props: {}) => any;
+}>();
 
 const { modelValue = false, disabled = false, label, name, value } = defineProps<DbrCheckboxProps>();
 
