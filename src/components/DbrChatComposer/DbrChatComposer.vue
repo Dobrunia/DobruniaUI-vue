@@ -128,20 +128,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, toRefs, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { DbrChatAttachment, DbrChatComposerProps } from './DbrChatComposer.types';
 
 defineOptions({
   name: 'DbrChatComposer',
 });
 
-const props = withDefaults(defineProps<DbrChatComposerProps>(), {
-  modelValue: '',
-  placeholder: 'Message',
-  ariaLabel: 'Message',
-  disabled: false,
-  maxHeight: 120,
-});
+const { modelValue = '', placeholder = 'Message', ariaLabel = 'Message', disabled = false, maxHeight = 120 } = defineProps<DbrChatComposerProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
@@ -149,8 +143,6 @@ const emit = defineEmits<{
   (e: 'typing', value: boolean): void;
   (e: 'attachmentsChange', value: DbrChatAttachment[]): void;
 }>();
-
-const { modelValue, disabled, maxHeight } = toRefs(props);
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
 const fileInputRef = ref<HTMLInputElement | null>(null);
@@ -161,7 +153,7 @@ const chunks = ref<Blob[]>([]);
 const isRecording = ref(false);
 
 const canSend = computed(() => {
-  return modelValue.value.trim().length > 0 || attachments.value.length > 0;
+  return modelValue.trim().length > 0 || attachments.value.length > 0;
 });
 
 const canRecord = computed(() => {
@@ -172,9 +164,9 @@ const resizeTextarea = () => {
   const el = textareaRef.value;
   if (!el) return;
   el.style.height = 'auto';
-  const next = Math.min(el.scrollHeight, maxHeight.value);
+  const next = Math.min(el.scrollHeight, maxHeight);
   el.style.height = `${next}px`;
-  el.style.overflowY = el.scrollHeight > maxHeight.value ? 'auto' : 'hidden';
+  el.style.overflowY = el.scrollHeight > maxHeight ? 'auto' : 'hidden';
 };
 
 const onInput = (event: Event) => {
@@ -192,9 +184,9 @@ const onKeydown = (event: KeyboardEvent) => {
 };
 
 const send = () => {
-  if (!canSend.value || disabled.value) return;
+  if (!canSend.value || disabled) return;
   const payload = {
-    text: modelValue.value.trim(),
+    text: modelValue.trim(),
     attachments: attachments.value,
   };
   emit('send', payload);
@@ -205,7 +197,7 @@ const send = () => {
 };
 
 const openFilePicker = () => {
-  if (disabled.value) return;
+  if (disabled) return;
   fileInputRef.value?.click();
 };
 
@@ -277,7 +269,7 @@ const onPreviewEnded = (id: string) => {
 };
 
 const toggleRecord = async () => {
-  if (!canRecord.value || disabled.value) return;
+  if (!canRecord.value || disabled) return;
   if (isRecording.value) {
     mediaRecorder.value?.stop();
     isRecording.value = false;
@@ -318,9 +310,22 @@ const toggleRecord = async () => {
   }
 };
 
-watch(modelValue, () => resizeTextarea());
+watch(() => modelValue, () => resizeTextarea());
 
 onMounted(() => resizeTextarea());
+
+onBeforeUnmount(() => {
+  attachments.value.forEach((item) => {
+    if (item.url) URL.revokeObjectURL(item.url);
+  });
+  audioMap.value.forEach((audio) => {
+    audio.pause();
+    audio.src = '';
+  });
+  if (mediaRecorder.value?.state === 'recording') {
+    mediaRecorder.value.stop();
+  }
+});
 </script>
 
 <style scoped>

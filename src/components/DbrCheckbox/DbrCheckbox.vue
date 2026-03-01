@@ -22,20 +22,12 @@ defineOptions({
   name: 'DbrCheckbox',
 });
 
-const props = withDefaults(defineProps<DbrCheckboxProps>(), {
-  modelValue: false,
-  disabled: false,
-  label: undefined,
-  name: undefined,
-  value: undefined,
-});
+const { modelValue = false, disabled = false, label, name, value } = defineProps<DbrCheckboxProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'change', value: boolean): void;
 }>();
-
-const { modelValue, disabled, name, value, label } = props;
 
 const onChange = (event: Event) => {
   const target = event.target as HTMLInputElement;

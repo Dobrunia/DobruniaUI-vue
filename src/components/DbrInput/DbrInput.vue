@@ -65,49 +65,36 @@
 
 <script setup lang="ts">
 import type { DbrInputProps } from './DbrInput.types';
-import { computed, ref, useSlots } from 'vue';
+import { computed, ref, useId, useSlots } from 'vue';
 
 defineOptions({
   name: 'DbrInput',
 });
 
-const props = withDefaults(defineProps<DbrInputProps>(), {
-  modelValue: '',
-  label: undefined,
-  size: 'md',
-  type: 'text',
-  iconPosition: 'left',
-  name: undefined,
-  id: undefined,
-  disabled: false,
-  required: false,
-  autocomplete: undefined,
-});
+const { modelValue = '', label, size = 'md', type = 'text', iconPosition = 'left', name, id, disabled = false, required = false, autocomplete } = defineProps<DbrInputProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
   (e: 'input', value: string): void;
 }>();
-
-const { modelValue, label, size, type, name, id, disabled, required, autocomplete } = props;
 const slots = useSlots();
 
-const inputId = id ?? `dbru-input-${Math.random().toString(36).slice(2, 9)}`;
+const inputId = id ?? useId();
 
 const showPassword = ref(false);
 
-const isPasswordType = computed(() => props.type === 'password');
+const isPasswordType = computed(() => type === 'password');
 const hasCustomIcon = computed(() => Boolean(slots.icon));
-const hasLeftIcon = computed(() => hasCustomIcon.value && props.iconPosition === 'left');
+const hasLeftIcon = computed(() => hasCustomIcon.value && iconPosition === 'left');
 const hasRightCustomIcon = computed(
-  () => hasCustomIcon.value && props.iconPosition === 'right' && !isPasswordType.value
+  () => hasCustomIcon.value && iconPosition === 'right' && !isPasswordType.value
 );
 const hasRightIcon = computed(() => isPasswordType.value || hasRightCustomIcon.value);
 const resolvedType = computed(() =>
-  isPasswordType.value && showPassword.value ? 'text' : props.type
+  isPasswordType.value && showPassword.value ? 'text' : type
 );
 const resolvedAutocomplete = computed(() => {
-  if (props.autocomplete) return props.autocomplete;
+  if (autocomplete) return autocomplete;
 
   if (isPasswordType.value) return 'current-password';
 
@@ -115,7 +102,7 @@ const resolvedAutocomplete = computed(() => {
 });
 
 const togglePassword = () => {
-  if (props.disabled) return;
+  if (disabled) return;
   showPassword.value = !showPassword.value;
 };
 

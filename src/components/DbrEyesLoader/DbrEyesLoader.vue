@@ -3,13 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import type { DbrEyesLoaderProps } from './DbrEyesLoader.types';
-
 defineOptions({
   name: 'DbrEyesLoader',
 });
-
-defineProps<DbrEyesLoaderProps>();
 </script>
 
 <style scoped>

@@ -34,16 +34,9 @@ defineOptions({
   name: 'DbrThemeToggle',
 });
 
-const props = withDefaults(defineProps<DbrThemeToggleProps>(), {
-  modelValue: false,
-  size: 'md',
-  shape: 'circle',
-  persist: true,
-  storageKey: 'dbru-theme',
-});
+const { size = 'md', shape = 'circle', modelValue = false, persist = true, storageKey = 'dbru-theme' } = defineProps<DbrThemeToggleProps>();
 
-const { size, shape } = props;
-const isDark = ref(props.modelValue);
+const isDark = ref(modelValue);
 let themeObserver: MutationObserver | null = null;
 
 const emit = defineEmits<{
@@ -54,8 +47,8 @@ const emit = defineEmits<{
 const applyTheme = (isDark: boolean) => {
   if (typeof document === 'undefined') return;
   document.documentElement.classList.toggle('dbru-theme-dark', isDark);
-  if (props.persist) {
-    localStorage.setItem(props.storageKey, isDark ? 'dark' : 'light');
+  if (persist) {
+    localStorage.setItem(storageKey, isDark ? 'dark' : 'light');
   }
 };
 
@@ -77,11 +70,11 @@ onMounted(() => {
     emit('update:modelValue', next);
   };
 
-  if (!props.persist || typeof localStorage === 'undefined') {
-    isDark.value = props.modelValue;
+  if (!persist || typeof localStorage === 'undefined') {
+    isDark.value = modelValue;
     applyTheme(isDark.value);
   } else {
-    const saved = localStorage.getItem(props.storageKey);
+    const saved = localStorage.getItem(storageKey);
     if (saved === 'dark') {
       isDark.value = true;
       emit('update:modelValue', true);
@@ -91,7 +84,7 @@ onMounted(() => {
       emit('update:modelValue', false);
       applyTheme(false);
     } else {
-      isDark.value = props.modelValue;
+      isDark.value = modelValue;
       applyTheme(isDark.value);
     }
   }
@@ -106,7 +99,7 @@ onMounted(() => {
 });
 
 watch(
-  () => props.modelValue,
+  () => modelValue,
   (next) => {
     isDark.value = next;
     applyTheme(next);

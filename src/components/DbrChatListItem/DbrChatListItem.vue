@@ -77,6 +77,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { DbrChatListItemProps } from './DbrChatListItem.types';
 import DbrAvatar from '../DbrAvatar/DbrAvatar.vue';
 import DbrBadge from '../DbrBadge/DbrBadge.vue';
@@ -86,58 +87,42 @@ defineOptions({
   name: 'DbrChatListItem',
 });
 
-const props = withDefaults(defineProps<DbrChatListItemProps>(), {
-  id: undefined,
-  avatar: undefined,
-  avatarAlt: undefined,
-  avatarShape: 'circle',
-  name: 'User',
-  lastMessage: () => ({ text: 'Last message...', type: 'text' }),
-  timestamp: undefined,
-  messageStatus: 'read',
-  isOutgoing: false,
-  status: 'offline',
-  unreadCount: 0,
-  isTyping: false,
-  loading: false,
-});
-
 const {
   avatar,
   avatarAlt,
-  avatarShape,
-  name,
-  lastMessage,
+  avatarShape = 'circle',
+  name = 'User',
+  lastMessage = { text: 'Last message...', type: 'text' },
   timestamp,
-  messageStatus,
-  isOutgoing,
-  status,
-  unreadCount,
-  isTyping,
-  loading,
-} = props;
+  messageStatus = 'read',
+  isOutgoing = false,
+  status = 'offline',
+  unreadCount = 0,
+  isTyping = false,
+  loading = false,
+} = defineProps<DbrChatListItemProps>();
 
-const avatarAltText = avatarAlt ?? (name ? `${name} avatar` : 'Avatar');
+const avatarAltText = computed(() => avatarAlt ?? (name ? `${name} avatar` : 'Avatar'));
 
-const timeLabel = (() => {
+const timeLabel = computed(() => {
   if (!timestamp) return '';
   const date = typeof timestamp === 'number' ? new Date(timestamp) : timestamp;
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-})();
+});
 
-const messagePreview = (() => {
+const messagePreview = computed(() => {
   if (lastMessage?.type === 'image') return 'Photo';
   if (lastMessage?.type === 'file') return 'File';
   if (lastMessage?.type === 'voice') return 'Voice message';
   return lastMessage?.text ?? '';
-})();
+});
 
-const messageIcon = (() => {
+const messageIcon = computed(() => {
   if (lastMessage?.type === 'image') return '🖼️';
   if (lastMessage?.type === 'file') return '📎';
   if (lastMessage?.type === 'voice') return '🎙️';
   return '';
-})();
+});
 </script>
 
 <style scoped>

@@ -23,15 +23,7 @@ defineOptions({
   name: 'DbrButton',
 });
 
-const props = withDefaults(defineProps<DbrButtonProps>(), {
-  variant: 'primary',
-  size: 'md',
-  disabled: false,
-  pressed: undefined,
-  nativeType: 'button',
-});
-
-const { variant, size, disabled, pressed, nativeType } = props;
+const { variant = 'primary', size = 'md', disabled = false, pressed, nativeType = 'button' } = defineProps<DbrButtonProps>();
 
 const textSizeClass: Record<NonNullable<DbrButtonProps['size']>, string> = {
   sm: 'dbru-text-sm',

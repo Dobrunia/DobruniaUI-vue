@@ -1,61 +1,5 @@
 import "./styles/index.css";
-export { default as DbrButton } from "./components/DbrButton/DbrButton.vue";
-export type {
-  DbrButtonProps,
-  DbrButtonSize,
-  DbrButtonVariant
-} from "./components/DbrButton/DbrButton.types";
-export { default as DbrEyesLoader } from "./components/DbrEyesLoader/DbrEyesLoader.vue";
-export type { DbrEyesLoaderProps } from "./components/DbrEyesLoader/DbrEyesLoader.types";
-export { default as DbrLoader } from "./components/DbrLoader/DbrLoader.vue";
-export type { DbrLoaderProps } from "./components/DbrLoader/DbrLoader.types";
-export { default as DbrTerminalLoader } from "./components/DbrTerminalLoader/DbrTerminalLoader.vue";
-export type { DbrTerminalLoaderProps } from "./components/DbrTerminalLoader/DbrTerminalLoader.types";
-export { default as DbrCheckbox } from "./components/DbrCheckbox/DbrCheckbox.vue";
-export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.types";
-export { default as DbrToggle } from "./components/DbrToggle/DbrToggle.vue";
-export type { DbrToggleProps } from "./components/DbrToggle/DbrToggle.types";
-export { default as DbrInput } from "./components/DbrInput/DbrInput.vue";
-export type { DbrInputProps } from "./components/DbrInput/DbrInput.types";
-export { default as DbrTooltip } from "./components/DbrTooltip/DbrTooltip.vue";
-export type { DbrTooltipProps } from "./components/DbrTooltip/DbrTooltip.types";
-export { default as DbrAvatar } from "./components/DbrAvatar/DbrAvatar.vue";
-export type { DbrAvatarProps } from "./components/DbrAvatar/DbrAvatar.types";
-export { default as DbrBadge } from "./components/DbrBadge/DbrBadge.vue";
-export type {
-  DbrBadgeProps,
-  DbrBadgeVariant,
-} from "./components/DbrBadge/DbrBadge.types";
-export { default as DbrIconButton } from "./components/DbrIconButton/DbrIconButton.vue";
-export type {
-  DbrIconButtonProps,
-  DbrIconButtonSize,
-  DbrIconButtonVariant
-} from "./components/DbrIconButton/DbrIconButton.types";
-export { default as DbrChatListItem } from "./components/DbrChatListItem/DbrChatListItem.vue";
-export type {
-  DbrChatListItemProps,
-  DbrMessageStatus,
-  DbrMessageType,
-  DbrPresence
-} from "./components/DbrChatListItem/DbrChatListItem.types";
-export { default as DbrChatBubble } from "./components/DbrChatBubble/DbrChatBubble.vue";
-export type {
-  DbrChatBubbleProps,
-  DbrChatBubbleDirection,
-  DbrChatBubbleStatus,
-  DbrChatBubbleKind
-} from "./components/DbrChatBubble/DbrChatBubble.types";
-export { default as DbrChatComposer } from "./components/DbrChatComposer/DbrChatComposer.vue";
-export type {
-  DbrChatComposerProps,
-  DbrChatAttachment,
-  DbrAttachmentKind
-} from "./components/DbrChatComposer/DbrChatComposer.types";
-export { default as DbrThemeToggle } from "./components/DbrThemeToggle/DbrThemeToggle.vue";
-export type { DbrThemeToggleProps } from "./components/DbrThemeToggle/DbrThemeToggle.types";
-export { default as DbrCard } from "./components/DbrCard/DbrCard.vue";
-export type { DbrCardProps, DbrCardVariant } from "./components/DbrCard/DbrCard.types";
+import type { App } from "vue";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
@@ -74,8 +18,42 @@ import DbrChatComposer from "./components/DbrChatComposer/DbrChatComposer.vue";
 import DbrThemeToggle from "./components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrCard from "./components/DbrCard/DbrCard.vue";
 
+export {
+  DbrButton,
+  DbrEyesLoader,
+  DbrLoader,
+  DbrTerminalLoader,
+  DbrCheckbox,
+  DbrToggle,
+  DbrInput,
+  DbrTooltip,
+  DbrAvatar,
+  DbrBadge,
+  DbrIconButton,
+  DbrChatListItem,
+  DbrChatBubble,
+  DbrChatComposer,
+  DbrThemeToggle,
+  DbrCard,
+};
+
+export type { DbrButtonProps, DbrButtonSize, DbrButtonVariant } from "./components/DbrButton/DbrButton.types";
+export type { DbrLoaderProps } from "./components/DbrLoader/DbrLoader.types";
+export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.types";
+export type { DbrToggleProps } from "./components/DbrToggle/DbrToggle.types";
+export type { DbrInputProps } from "./components/DbrInput/DbrInput.types";
+export type { DbrTooltipProps } from "./components/DbrTooltip/DbrTooltip.types";
+export type { DbrAvatarProps } from "./components/DbrAvatar/DbrAvatar.types";
+export type { DbrBadgeProps, DbrBadgeVariant } from "./components/DbrBadge/DbrBadge.types";
+export type { DbrIconButtonProps, DbrIconButtonSize, DbrIconButtonVariant } from "./components/DbrIconButton/DbrIconButton.types";
+export type { DbrChatListItemProps, DbrMessageStatus, DbrMessageType, DbrPresence } from "./components/DbrChatListItem/DbrChatListItem.types";
+export type { DbrChatBubbleProps, DbrChatBubbleDirection, DbrChatBubbleStatus, DbrChatBubbleKind } from "./components/DbrChatBubble/DbrChatBubble.types";
+export type { DbrChatComposerProps, DbrChatAttachment, DbrAttachmentKind } from "./components/DbrChatComposer/DbrChatComposer.types";
+export type { DbrThemeToggleProps } from "./components/DbrThemeToggle/DbrThemeToggle.types";
+export type { DbrCardProps, DbrCardVariant } from "./components/DbrCard/DbrCard.types";
+
 export default {
-  install(app: import("vue").App) {
+  install(app: App) {
     app.component("DbrButton", DbrButton);
     app.component("DbrEyesLoader", DbrEyesLoader);
     app.component("DbrLoader", DbrLoader);
@@ -92,5 +70,5 @@ export default {
     app.component("DbrChatComposer", DbrChatComposer);
     app.component("DbrThemeToggle", DbrThemeToggle);
     app.component("DbrCard", DbrCard);
-  }
+  },
 };

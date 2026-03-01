@@ -5,11 +5,12 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({ script: { propsDestructure: true } }),
     dts({
       entryRoot: 'src',
       outDir: 'dist',
       insertTypesEntry: true,
+      tsconfigPath: './tsconfig.build.json',
       // ВАЖНО: исключаем stories и всё dev
       exclude: [
         '**/*.stories.*',

@@ -6,29 +6,22 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { DbrAvatarProps } from './DbrAvatar.types';
 
 defineOptions({
   name: 'DbrAvatar',
 });
 
-const props = withDefaults(defineProps<DbrAvatarProps>(), {
-  src: undefined,
-  alt: undefined,
-  name: '',
-  size: 'md',
-  shape: 'circle',
-});
+const { src, alt, name = '', size = 'md', shape = 'circle' } = defineProps<DbrAvatarProps>();
 
-const { src, alt, name, size, shape } = props;
+const altText = computed(() => alt ?? (name ? `${name} avatar` : 'Avatar'));
 
-const altText = alt ?? (name ? `${name} avatar` : 'Avatar');
-
-const initials = (() => {
+const initials = computed(() => {
   if (!name) return '';
   const parts = name.trim().split(/\s+/).slice(0, 2);
   return parts.map((part) => part[0]?.toUpperCase()).join('');
-})();
+});
 </script>
 
 <style scoped>

@@ -22,14 +22,7 @@ defineOptions({
   name: 'DbrCard',
 });
 
-const props = withDefaults(defineProps<DbrCardProps>(), {
-  as: 'div',
-  variant: 'surface',
-  disabled: false,
-  hoverable: false,
-});
-
-const { as, variant, disabled, hoverable } = props;
+const { as = 'div', variant = 'surface', disabled = false, hoverable = false } = defineProps<DbrCardProps>();
 </script>
 
 <style scoped>
@@ -42,13 +35,6 @@ const { as, variant, disabled, hoverable } = props;
     border-color var(--dbru-duration-base) var(--dbru-ease-standard),
     opacity var(--dbru-duration-base) var(--dbru-ease-standard),
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
-  transition-property: color, background-color, border-color, opacity, box-shadow;
-  transition-duration:
-    var(--dbru-duration-base), var(--dbru-duration-base), var(--dbru-duration-base),
-    var(--dbru-duration-base), var(--dbru-duration-base);
-  transition-timing-function:
-    var(--dbru-ease-standard), var(--dbru-ease-standard), var(--dbru-ease-standard),
-    var(--dbru-ease-standard), var(--dbru-ease-standard);
   background: var(--dbru-color-surface);
 }
 

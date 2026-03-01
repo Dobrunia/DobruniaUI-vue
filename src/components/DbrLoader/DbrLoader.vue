@@ -23,11 +23,7 @@ defineOptions({
   name: 'DbrLoader',
 });
 
-const props = withDefaults(defineProps<DbrLoaderProps>(), {
-  size: 'md',
-});
-
-const { size } = props;
+const { size = 'md' } = defineProps<DbrLoaderProps>();
 </script>
 
 <style scoped>

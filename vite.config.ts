@@ -4,7 +4,7 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({ script: { propsDestructure: true } }),
     dts({
       entryRoot: 'src',
       insertTypesEntry: true,

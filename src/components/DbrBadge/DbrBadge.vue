@@ -15,12 +15,7 @@ defineOptions({
   name: 'DbrBadge',
 });
 
-const props = withDefaults(defineProps<DbrBadgeProps>(), {
-  text: 'Badge',
-  variant: 'primary',
-});
-
-const { text, variant } = props;
+const { text = 'Badge', variant = 'primary' } = defineProps<DbrBadgeProps>();
 
 const textColorClass: Record<NonNullable<DbrBadgeProps['variant']>, string> = {
   primary: 'dbru-text-on-primary',

@@ -26,30 +26,21 @@
 </template>
 
 <script setup lang="ts">
+import { useId } from 'vue';
 import type { DbrToggleProps } from './DbrToggle.types';
 
 defineOptions({
   name: 'DbrToggle',
 });
 
-const props = withDefaults(defineProps<DbrToggleProps>(), {
-  modelValue: false,
-  disabled: false,
-  label: undefined,
-  id: undefined,
-  name: undefined,
-  value: undefined,
-  size: 'md',
-});
+const { modelValue = false, disabled = false, label, id, name, value, size = 'md' } = defineProps<DbrToggleProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'change', value: boolean): void;
 }>();
 
-const { modelValue, disabled, name, value, label, size } = props;
-
-const inputId = props.id ?? `dbru-toggle-${Math.random().toString(36).slice(2, 9)}`;
+const inputId = id ?? useId();
 
 const onChange = (event: Event) => {
   const target = event.target as HTMLInputElement;

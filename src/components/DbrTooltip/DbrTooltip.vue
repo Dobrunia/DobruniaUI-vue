@@ -6,27 +6,22 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { DbrTooltipProps } from './DbrTooltip.types';
 
 defineOptions({
   name: 'DbrTooltip',
 });
 
-const props = withDefaults(defineProps<DbrTooltipProps>(), {
-  text: 'This is a cool tooltip!',
-  variant: undefined,
-});
+const { text = 'This is a cool tooltip!', variant } = defineProps<DbrTooltipProps>();
 
-const { variant } = props;
+const ICON_MAP: Partial<Record<NonNullable<DbrTooltipProps['variant']>, string>> = {
+  warning: '!',
+  error: 'x',
+  success: '✓',
+};
 
-let icon = 'i';
-if (variant === 'warning') {
-  icon = '!';
-} else if (variant === 'error') {
-  icon = 'x';
-} else if (variant === 'success') {
-  icon = '✓';
-}
+const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
 </script>
 
 <style scoped>

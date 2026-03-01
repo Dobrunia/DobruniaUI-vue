@@ -13,13 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import type { DbrTerminalLoaderProps } from './DbrTerminalLoader.types';
-
 defineOptions({
   name: 'DbrTerminalLoader',
 });
-
-defineProps<DbrTerminalLoaderProps>();
 </script>
 
 <style scoped>

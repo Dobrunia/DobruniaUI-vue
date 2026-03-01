@@ -30,16 +30,7 @@ defineOptions({
   name: 'DbrIconButton',
 });
 
-const props = withDefaults(defineProps<DbrIconButtonProps>(), {
-  label: undefined,
-  variant: 'primary',
-  size: 'md',
-  disabled: false,
-  nativeType: 'button',
-  iconPosition: 'start',
-});
-
-const { label, variant, size, disabled, nativeType, iconPosition } = props;
+const { label, variant = 'primary', size = 'md', disabled = false, nativeType = 'button', iconPosition = 'start' } = defineProps<DbrIconButtonProps>();
 
 const textSizeClass: Record<NonNullable<DbrIconButtonProps['size']>, string> = {
   sm: 'dbru-text-sm',

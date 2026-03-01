@@ -85,16 +85,7 @@ defineOptions({
   name: 'DbrChatBubble',
 });
 
-const props = withDefaults(defineProps<DbrChatBubbleProps>(), {
-  text: 'Message text',
-  kind: 'text',
-  mediaSrc: '',
-  time: '12:45',
-  direction: 'in',
-  status: 'none',
-});
-
-const { text, kind, mediaSrc, time, direction, status } = props;
+const { text = 'Message text', kind = 'text', mediaSrc = '', time = '12:45', direction = 'in', status = 'none' } = defineProps<DbrChatBubbleProps>();
 
 const audioRef = ref<HTMLAudioElement | null>(null);
 const isPlaying = ref(false);
