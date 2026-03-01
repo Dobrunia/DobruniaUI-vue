@@ -4,6 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/dobruniaui-vue.svg)](https://www.npmjs.com/package/dobruniaui-vue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/dobrunia/DobruniaUI-vue)
 
 DobruniaUI is a comprehensive Vue 3 component library designed with a focus on modern design, performance, and developer experience.
 
