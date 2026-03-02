@@ -10,13 +10,15 @@
   --dbru-font-size-base: 14px;
   --dbru-font-size-lg: 16px;
   --dbru-font-weight-semibold: 600;
-  --dbru-line-height-base: 1;
+  --dbru-line-height-base: 1.5;
+  --dbru-line-height-tight: 1;
 
   --dbru-space-1: 4px;
   --dbru-space-2: 8px;
   --dbru-space-3: 12px;
   --dbru-space-4: 16px;
   --dbru-space-5: 20px;
+  --dbru-space-6: 24px;
 
   --dbru-control-height-sm: 32px;
   --dbru-control-height-md: 40px;
@@ -28,6 +30,11 @@
   --dbru-ease-standard: ease;
   --dbru-duration-fast: 120ms;
   --dbru-duration-base: 160ms;
+
+  --dbru-shadow-sm: 0 1px 3px color-mix(in oklab, var(--dbru-color-text) 8%, transparent),
+    0 1px 2px color-mix(in oklab, var(--dbru-color-text) 5%, transparent);
+  --dbru-shadow-md: 0 4px 12px color-mix(in oklab, var(--dbru-color-text) 12%, transparent),
+    0 2px 4px color-mix(in oklab, var(--dbru-color-text) 8%, transparent);
 
   --dbru-color-bg: #f6f4f1;
   --dbru-color-surface: #ffffff;

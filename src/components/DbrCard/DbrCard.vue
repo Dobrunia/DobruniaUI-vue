@@ -37,10 +37,12 @@ const { as = 'div', variant = 'surface', disabled = false, hoverable = false } =
     opacity var(--dbru-duration-base) var(--dbru-ease-standard),
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
   background: var(--dbru-color-surface);
+  box-shadow: var(--dbru-shadow-sm);
 }
 
 .dbru-card--surface.dbru-card--hoverable:not(.dbru-card--disabled):hover {
   border-color: var(--dbru-color-border);
+  box-shadow: var(--dbru-shadow-md);
 }
 
 .dbru-card--bordered {

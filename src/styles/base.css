@@ -126,6 +126,10 @@
   border-color: var(--dbru-color-border);
 }
 
+.dbru-btn--ghost:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--dbru-color-primary) 45%, var(--dbru-color-border));
+}
+
 .dbru-btn--primary {
   border-color: var(--_bg);
 }

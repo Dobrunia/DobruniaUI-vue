@@ -61,7 +61,9 @@ const onChange = (event: Event) => {
   border-radius: 5px;
   background: var(--_bg);
   border: 1px solid var(--_border);
-  transition: all 0.3s;
+  transition:
+    background-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    border-color var(--dbru-duration-base) var(--dbru-ease-standard);
   cursor: pointer;
   position: relative;
 }

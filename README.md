@@ -95,7 +95,7 @@ Examples:
 Available token groups:
 
 - Typography: `--dbru-font-family`, `--dbru-font-size-xs|sm|base|lg`, `--dbru-font-weight-semibold`, `--dbru-line-height-base`
-- Spacing: `--dbru-space-1|2|3|4|5`
+- Spacing: `--dbru-space-1|2|3|4|5|6`
 - Control sizes: `--dbru-control-height-sm|md|lg`
 - Radii: `--dbru-radius-sm|md`
 - Motion: `--dbru-ease-standard`, `--dbru-duration-fast|base`

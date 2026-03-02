@@ -30,23 +30,31 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
 .dbru-tooltip:hover .dbru-tooltip__text {
   visibility: visible;
   opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  transition:
+    opacity var(--dbru-duration-base) var(--dbru-ease-standard),
+    transform var(--dbru-duration-base) var(--dbru-ease-standard),
+    visibility 0s;
 }
 
 .dbru-tooltip__text {
   visibility: hidden;
   background-color: var(--dbru-color-surface);
   text-align: center;
-  border-radius: 5px;
-  padding: 8px 12px;
+  border-radius: var(--dbru-radius-sm);
+  padding: var(--dbru-space-2) var(--dbru-space-3);
   position: absolute;
   z-index: 1;
   top: 125%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(4px);
   opacity: 0;
-  transition: opacity 0.3s;
+  transition:
+    opacity var(--dbru-duration-base) var(--dbru-ease-standard),
+    transform var(--dbru-duration-base) var(--dbru-ease-standard),
+    visibility 0s var(--dbru-duration-base);
   border: 1px solid var(--dbru-color-border);
-  box-shadow: 0 8px 20px color-mix(in oklab, var(--dbru-color-text) 20%, transparent);
+  box-shadow: var(--dbru-shadow-md);
   white-space: nowrap;
 }
 
@@ -71,14 +79,14 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
 }
 
 .dbru-tooltip--warning {
-  --_icon-bg: #f59e0b;
+  --_icon-bg: #d97706;
 }
 
 .dbru-tooltip--error {
-  --_icon-bg: #ef4444;
+  --_icon-bg: var(--dbru-color-danger);
 }
 
 .dbru-tooltip--success {
-  --_icon-bg: #10b981;
+  --_icon-bg: #16a34a;
 }
 </style>
