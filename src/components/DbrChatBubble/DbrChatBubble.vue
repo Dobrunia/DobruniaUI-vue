@@ -1,6 +1,7 @@
 <template>
   <div
     class="dbru-chat-bubble dbru-text-main"
+    v-bind="attrs"
     :class="[
       `dbru-chat-bubble--${direction}`,
       `dbru-chat-bubble--${kind}`,
@@ -79,9 +80,10 @@
 
 <script setup lang="ts">
 import type { DbrChatBubbleProps } from './DbrChatBubble.types';
-import { computed, ref, watch } from 'vue';
+import { computed, ref, useAttrs, watch } from 'vue';
 
 const { text = 'Message text', kind = 'text', mediaSrc = '', time = '12:45', direction = 'in', status = 'none' } = defineProps<DbrChatBubbleProps>();
+const attrs = useAttrs();
 
 const audioRef = ref<HTMLAudioElement | null>(null);
 const isPlaying = ref(false);
@@ -233,6 +235,7 @@ watch(isImageOpen, (open) => {
 .dbru-chat-bubble__media {
   display: grid;
   gap: var(--dbru-space-2);
+  min-width: 0;
 }
 
 .dbru-chat-bubble__image-btn {
@@ -272,7 +275,9 @@ watch(isImageOpen, (open) => {
   border-radius: var(--dbru-radius-md);
   background: color-mix(in oklab, var(--dbru-color-surface) 80%, var(--dbru-color-text) 20%);
   border: 1px solid var(--dbru-color-border);
+  width: 100%;
   max-width: 320px;
+  min-width: 0;
 }
 
 .dbru-chat-bubble__audio-btn {
@@ -298,15 +303,17 @@ watch(isImageOpen, (open) => {
 }
 
 .dbru-chat-bubble__audio-controls {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--dbru-space-2);
   flex: 1;
+  min-width: 0;
 }
 
 .dbru-chat-bubble__audio-track {
-  flex: none;
-  width: 180px;
+  min-width: 0;
+  width: auto;
   height: 8px;
   background: var(--dbru-color-surface);
   border-radius: 4px;
@@ -325,6 +332,8 @@ watch(isImageOpen, (open) => {
 
 .dbru-chat-bubble__audio-time {
   white-space: nowrap;
+  flex-shrink: 0;
+  justify-self: end;
 }
 
 .dbru-chat-bubble__audio-el {

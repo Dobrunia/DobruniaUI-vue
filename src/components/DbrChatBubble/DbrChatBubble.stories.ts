@@ -106,3 +106,30 @@ export const Showcase: Story = {
     `
   })
 };
+
+export const NarrowAudio: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Regression check for narrow containers: audio bubble must stay inside boundaries without horizontal overflow."
+      }
+    }
+  },
+  render: () => ({
+    components: { DbrChatBubble },
+    setup: () => ({ audioUrl }),
+    template: `
+      <div style="width: 220px; padding: 8px; border: 1px dashed #999;">
+        <DbrChatBubble
+          text=""
+          time="20:25"
+          direction="out"
+          status="read"
+          kind="audio"
+          :mediaSrc="audioUrl"
+        />
+      </div>
+    `
+  })
+};

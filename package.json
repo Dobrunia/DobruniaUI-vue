@@ -1,6 +1,6 @@
 {
   "name": "dobruniaui-vue",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Modern Vue 3 UI component library built with TypeScript and Vite",
   "private": false,
   "type": "module",
@@ -52,7 +52,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "docs:llm": "node scripts/generate-llm-instructions.mjs"
+    "docs:llm": "node scripts/generate-llm-instructions.mjs",
+    "release:patch": "node -e \"const fs=require('node:fs');fs.rmSync('dist',{recursive:true,force:true});\" && npm version patch --no-git-tag-version && npm run build:lib && npm publish --access public"
   },
   "peerDependencies": {
     "vue": "^3.5.29"
