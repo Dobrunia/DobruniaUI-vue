@@ -65,6 +65,18 @@ const parsePropsInterface = (content) => {
   return { interfaceName, props };
 };
 
+const parseNamedTypeAliases = (content) => {
+  const aliases = [];
+  const aliasRegex = /export type\s+([A-Za-z_]\w*)\s*=\s*([^;]+);/g;
+  for (const match of content.matchAll(aliasRegex)) {
+    aliases.push({
+      name: match[1],
+      definition: match[2].replaceAll(/\s+/g, " ").trim(),
+    });
+  }
+  return aliases;
+};
+
 const collectTypesFiles = async (dir) => {
   const entries = await fs.readdir(dir, { withFileTypes: true });
   const files = [];
@@ -109,9 +121,17 @@ const reusableClasses = parseReusableClasses(baseCss);
 const designTokens = parseTokens(tokensCss);
 
 const components = [];
+const namedTypeAliases = [];
 for (const file of typesFiles) {
   const content = await fs.readFile(file, "utf8");
   const parsed = parsePropsInterface(content);
+  const aliases = parseNamedTypeAliases(content);
+  for (const alias of aliases) {
+    namedTypeAliases.push({
+      component: path.basename(file, ".types.ts"),
+      ...alias,
+    });
+  }
   if (!parsed?.props.length) continue;
   components.push({
     name: path.basename(file, ".types.ts"),
@@ -166,6 +186,26 @@ const intro = [
   "",
 ];
 
+const namedTypesSection = [];
+if (namedTypeAliases.length) {
+  namedTypesSection.push(
+    "## Named Type Aliases",
+    "",
+    "This section lists exported reusable type aliases (enums/unions) used by component props.",
+    "",
+    "| Type | Definition | Source |",
+    "| --- | --- | --- |"
+  );
+
+  for (const alias of namedTypeAliases.sort((a, b) => a.name.localeCompare(b.name))) {
+    namedTypesSection.push(
+      `| \`${escapeCell(alias.name)}\` | \`${escapeCell(alias.definition)}\` | \`${escapeCell(alias.component)}\` |`
+    );
+  }
+
+  namedTypesSection.push("");
+}
+
 const componentSections = [];
 for (const component of components) {
   componentSections.push(
@@ -186,7 +226,7 @@ for (const component of components) {
   componentSections.push("");
 }
 
-const markdown = [...intro, ...componentSections].join("\n");
+const markdown = [...intro, ...namedTypesSection, ...componentSections].join("\n");
 
 await fs.writeFile(outFile, markdown, "utf8");
 
