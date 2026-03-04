@@ -8,6 +8,8 @@
 
 DobruniaUI is a comprehensive Vue 3 component library designed with a focus on modern design, performance, and developer experience.
 
+For the always up-to-date generated reference (components, tokens, reusable classes, and named types), use [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md).
+
 ## 🎮 Demo
 
 **[Explore all components in the interactive playground →](https://dobrunia.github.io/DobruniaUI-vue/)**
@@ -60,27 +62,7 @@ library in your bundle.
 
 ## Utility And Primitive Classes
 
-Available classes:
-
-- `dbru-root` — library scope root (background + box-sizing scope)
-- `dbru-text-xs` — extra small text size
-- `dbru-text-sm` — small text size
-- `dbru-text-base` — base text size
-- `dbru-text-lg` — large text size
-- `dbru-text-main` — main text color (`--dbru-color-text`)
-- `dbru-text-muted` — muted text color
-- `dbru-text-on-primary` — text color on primary background (`--dbru-color-on-primary`)
-- `dbru-text-on-danger` — text color on danger background (`--dbru-color-on-danger`)
-- `dbru-bg` — background from `--dbru-color-bg`
-- `dbru-surface` — background from `--dbru-color-surface`
-- `dbru-focusable` — standardized focus outline on `:focus-visible`
-- `dbru-reduced-motion` — disables transitions/animations when reduced motion is requested
-- `dbru-btn` — base button structure and interaction
-- `dbru-size-sm|md|lg` — control size tokens for height, text-size variable and horizontal padding
-- `dbru-btn--primary|ghost|danger` — button visual variant
-- `dbru-btn` — base button structure and interaction
-- `dbru-size-sm|md|lg` — button control height and horizontal padding
-- `dbru-btn--primary|ghost|danger` — visual variant
+Full up-to-date class list is generated in [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md) (`Reusable Classes From base.css` section).
 
 Examples:
 
@@ -97,14 +79,7 @@ Examples:
 
 ## Design Tokens
 
-Available token groups:
-
-- Typography: `--dbru-font-family`, `--dbru-font-size-xs|sm|base|lg`, `--dbru-font-weight-semibold`, `--dbru-line-height-base`
-- Spacing: `--dbru-space-1|2|3|4|5|6`
-- Control sizes: `--dbru-control-height-sm|md|lg`
-- Radii: `--dbru-radius-sm|md`
-- Motion: `--dbru-ease-standard`, `--dbru-duration-fast|base`
-- Colors: `--dbru-color-bg`, `--dbru-color-surface`, `--dbru-color-text`, `--dbru-color-border`, `--dbru-color-primary`, `--dbru-color-on-primary`, `--dbru-color-danger`, `--dbru-color-on-danger`, `--dbru-color-focus`
+Full up-to-date token list is generated in [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md) (`Design Tokens From tokens.css` section).
 
 Dark theme overrides color tokens via `.dbru-theme-dark`.
 
@@ -132,19 +107,4 @@ Output file: `LLM_INSTRUCTIONS.md` (root level, next to `README.md`)
 
 ## Components
 
-- DbrButton
-- DbrIconButton
-- DbrBadge
-- DbrCheckbox
-- DbrToggle
-- DbrInput
-- DbrAvatar
-- DbrTooltip
-- DbrEyesLoader
-- DbrLoader
-- DbrTerminalLoader
-- DbrChatListItem
-- DbrChatBubble
-- DbrChatComposer
-- DbrThemeToggle
-- DbrCard
+Full up-to-date component list is generated in [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md) (`Components And Props` section).
