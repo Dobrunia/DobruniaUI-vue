@@ -122,13 +122,13 @@ Generate static docs:
 npm run build-storybook
 ```
 
-Generate one Markdown file with LLM instructions and all component props:
+Generate one Markdown file with LLM instructions (how LLM should work with this library) and all component props:
 
 ```bash
 npm run docs:llm
 ```
 
-Output file: `docs/llm-instructions.md`
+Output file: `LLM_INSTRUCTIONS.md` (root level, next to `README.md`)
 
 ## Components
 

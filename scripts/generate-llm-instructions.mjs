@@ -6,8 +6,7 @@ const packageFile = path.join(rootDir, "package.json");
 const componentsDir = path.join(rootDir, "src", "components");
 const baseCssFile = path.join(rootDir, "src", "styles", "base.css");
 const tokensCssFile = path.join(rootDir, "src", "styles", "tokens.css");
-const outDir = path.join(rootDir, "docs");
-const outFile = path.join(outDir, "llm-instructions.md");
+const outFile = path.join(rootDir, "LLM_INSTRUCTIONS.md");
 
 const escapedPipe = String.raw`\|`;
 const escapeCell = (text) =>
@@ -189,7 +188,6 @@ for (const component of components) {
 
 const markdown = [...intro, ...componentSections].join("\n");
 
-await fs.mkdir(outDir, { recursive: true });
 await fs.writeFile(outFile, markdown, "utf8");
 
 console.log(`Generated: ${path.relative(rootDir, outFile)}`);
