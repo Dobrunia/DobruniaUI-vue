@@ -83,10 +83,10 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
 }
 
 .dbru-tooltip--error {
-  --_icon-bg: var(--dbru-color-danger);
+  --_icon-bg: var(--dbru-color-error);
 }
 
 .dbru-tooltip--success {
-  --_icon-bg: #16a34a;
+  --_icon-bg: var(--dbru-color-success);
 }
 </style>

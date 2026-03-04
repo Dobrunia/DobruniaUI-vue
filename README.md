@@ -62,6 +62,7 @@ library in your bundle.
 
 Available classes:
 
+- `dbru-root` — library scope root (background + box-sizing scope)
 - `dbru-text-xs` — extra small text size
 - `dbru-text-sm` — small text size
 - `dbru-text-base` — base text size
@@ -72,6 +73,8 @@ Available classes:
 - `dbru-text-on-danger` — text color on danger background (`--dbru-color-on-danger`)
 - `dbru-bg` — background from `--dbru-color-bg`
 - `dbru-surface` — background from `--dbru-color-surface`
+- `dbru-focusable` — standardized focus outline on `:focus-visible`
+- `dbru-reduced-motion` — disables transitions/animations when reduced motion is requested
 - `dbru-btn` — base button structure and interaction
 - `dbru-size-sm|md|lg` — control size tokens for height, text-size variable and horizontal padding
 - `dbru-btn--primary|ghost|danger` — button visual variant
@@ -86,7 +89,9 @@ Examples:
 <span class="dbru-text-xs dbru-text-muted">Meta info</span>
 <span class="dbru-text-sm dbru-text-on-primary">Text on primary bg</span>
 <div class="dbru-surface">Surface block</div>
-<button class="dbru-btn dbru-btn--primary dbru-size-md dbru-text-base dbru-text-on-primary">Action</button>
+<button
+  class="dbru-btn dbru-btn--primary dbru-size-md dbru-text-base dbru-text-on-primary"
+>Action</button>
 <button class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-text-sm dbru-text-main">Cancel</button>
 ```
 
@@ -116,6 +121,14 @@ Generate static docs:
 ```bash
 npm run build-storybook
 ```
+
+Generate one Markdown file with LLM instructions and all component props:
+
+```bash
+npm run docs:llm
+```
+
+Output file: `docs/llm-instructions.md`
 
 ## Components
 

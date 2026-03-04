@@ -51,7 +51,8 @@
     "build:lib": "vite build --config vite.lib.config.ts && node -e \"const fs=require('node:fs');fs.copyFileSync('README.md','dist/README.md');\"",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "docs:llm": "node scripts/generate-llm-instructions.mjs"
   },
   "peerDependencies": {
     "vue": "^3.5.29"

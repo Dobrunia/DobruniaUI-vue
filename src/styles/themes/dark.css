@@ -9,6 +9,8 @@
 
   --dbru-color-danger: #f87171;
   --dbru-color-on-danger: #ffffff;
+  --dbru-color-error: #f87171;
+  --dbru-color-success: #4ade80;
 
   --dbru-color-focus: #7f6df2;
 }
