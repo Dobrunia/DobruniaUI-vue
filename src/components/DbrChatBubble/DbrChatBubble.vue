@@ -258,6 +258,10 @@ watch(isImageOpen, (open) => {
   padding: var(--dbru-space-2);
 }
 
+.dbru-chat-bubble--audio {
+  max-width: min(92%, 420px);
+}
+
 .dbru-chat-bubble--no-text .dbru-chat-bubble__meta {
   margin-top: -4px;
 }

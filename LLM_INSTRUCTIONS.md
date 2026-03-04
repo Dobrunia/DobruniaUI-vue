@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-04T17:46:16.408Z
+Generated on: 2026-03-04T17:59:30.023Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `2.0.4`
+- Version: `2.0.5`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
