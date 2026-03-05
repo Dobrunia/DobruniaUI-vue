@@ -12,7 +12,7 @@ const preview: Preview = {
       toolbar: {
         title: "Theme",
         icon: "circlehollow",
-        items: ["light", "dark"],
+        items: ["light", "dark", "gothic"],
         dynamicTitle: true
       }
     }
@@ -22,8 +22,12 @@ const preview: Preview = {
   },
   decorators: [
     (story, context) => {
-      const themeClass =
-        context.globals.theme === "dark" ? "dbru-theme-dark" : "";
+      const themeClassMap: Record<string, string> = {
+        light: "dbru-theme-light",
+        dark: "dbru-theme-dark",
+        gothic: "dbru-theme-gothic"
+      };
+      const themeClass = themeClassMap[context.globals.theme] ?? "dbru-theme-light";
       return {
         components: { story },
         template:

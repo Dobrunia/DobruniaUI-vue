@@ -1,0 +1,16 @@
+.dbru-theme-gothic {
+  --dbru-color-bg: #0e1116;
+  --dbru-color-surface: #161c23;
+  --dbru-color-text: #e6edf3;
+  --dbru-color-border: #2f3c48;
+
+  --dbru-color-primary: #2a6f73;
+  --dbru-color-on-primary: #e6edf3;
+
+  --dbru-color-danger: #8b1e2d;
+  --dbru-color-on-danger: #e6edf3;
+  --dbru-color-error: #b23a3a;
+  --dbru-color-success: #2f8f6b;
+
+  --dbru-color-focus: #4fa3ff;
+}
