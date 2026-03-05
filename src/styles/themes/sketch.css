@@ -1,0 +1,16 @@
+.dbru-theme-sketch {
+  --dbru-color-bg: #f5f6f4;
+  --dbru-color-surface: #ffffff;
+  --dbru-color-text: #20262d;
+  --dbru-color-border: #cfd6de;
+
+  --dbru-color-primary: #20262d;
+  --dbru-color-on-primary: #ffffff;
+
+  --dbru-color-danger: #b23a3a;
+  --dbru-color-on-danger: #ffffff;
+  --dbru-color-error: #b23a3a;
+  --dbru-color-success: #2f8f6b;
+
+  --dbru-color-focus: #7f9fc4;
+}
