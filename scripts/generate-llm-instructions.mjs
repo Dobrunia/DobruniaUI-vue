@@ -127,6 +127,20 @@ const parseTokens = (cssText) => {
   return [...tokens].sort((a, b) => a.localeCompare(b));
 };
 
+const parseThemeClasses = (cssText) => {
+  const classes = new Set();
+  const classRegex = /\.((?:dbru-theme-)[a-z0-9-]+)(?=[\s.:,{])/gi;
+  for (const match of cssText.matchAll(classRegex)) {
+    classes.add(match[1]);
+  }
+  return [...classes].sort((a, b) => a.localeCompare(b));
+};
+
+const formatThemeClasses = (classes) => {
+  if (!classes.length) return "no theme class found";
+  return classes.map((className) => "`" + className + "`").join(", ");
+};
+
 const pkgRaw = await fs.readFile(packageFile, "utf8");
 const pkg = JSON.parse(pkgRaw);
 const baseCss = await fs.readFile(baseCssFile, "utf8");
@@ -135,6 +149,10 @@ const themeCssFiles = await collectThemeCssFiles(themesDir);
 const themeCssContents = await Promise.all(themeCssFiles.map((file) => fs.readFile(file, "utf8")));
 const typesFiles = await collectTypesFiles(componentsDir);
 const reusableClasses = parseReusableClasses(baseCss);
+const themes = themeCssFiles.map((file, idx) => ({
+  file: path.basename(file),
+  classes: parseThemeClasses(themeCssContents[idx]),
+}));
 const designTokens = [
   ...new Set([
     ...parseTokens(tokensCss),
@@ -199,6 +217,12 @@ const intro = [
   "## Reusable Classes From base.css",
   "",
   ...reusableClasses.map((className) => `- \`${className}\``),
+  "",
+  "## Themes",
+  "",
+  ...themes.flatMap((theme) => [
+    `- \`${theme.file}\`: ${formatThemeClasses(theme.classes)}`,
+  ]),
   "",
   "## Design Tokens",
   "",

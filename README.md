@@ -83,6 +83,8 @@ Full up-to-date token list is generated in [`LLM_INSTRUCTIONS.md`](https://githu
 
 Dark theme overrides color tokens via `.dbru-theme-dark`.
 
+For the full up-to-date list of available theme classes and theme files, see [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md) (`Themes` section).
+
 ## Storybook Docs
 
 Storybook is configured with autodocs. Start it with:

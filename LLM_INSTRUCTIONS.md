@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-05T01:00:19.371Z
+Generated on: 2026-03-05T01:43:11.853Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `2.0.5`
+- Version: `2.0.6`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -54,8 +54,19 @@ import "dobruniaui-vue/styles.css";
 - `dbru-text-sm`
 - `dbru-text-xs`
 
-## Design Tokens From tokens.css and themes/*.css
+## Themes
 
+- `dark.css`: `dbru-theme-dark`
+- `fullmoon.css`: `dbru-theme-fullmoon`
+- `gothic.css`: `dbru-theme-gothic`
+- `light.css`: `dbru-theme-light`
+- `oldmoney.css`: `dbru-theme-oldmoney`
+- `sketch.css`: `dbru-theme-sketch`
+
+## Design Tokens
+
+- `--dbru-border-size-1`
+- `--dbru-border-size-2`
 - `--dbru-color-bg`
 - `--dbru-color-border`
 - `--dbru-color-danger`

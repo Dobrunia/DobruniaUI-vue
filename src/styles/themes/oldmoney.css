@@ -1,0 +1,16 @@
+.dbru-theme-oldmoney {
+  --dbru-color-bg: #f7f5f3;
+  --dbru-color-surface: #ffffff;
+  --dbru-color-text: #2c2419;
+  --dbru-color-border: #d4c4a8;
+
+  --dbru-color-primary: #8b7355;
+  --dbru-color-on-primary: #ffffff;
+
+  --dbru-color-danger: #a0674a;
+  --dbru-color-on-danger: #ffffff;
+  --dbru-color-error: #a0674a;
+  --dbru-color-success: #7d8471;
+
+  --dbru-color-focus: #8b7355;
+}
