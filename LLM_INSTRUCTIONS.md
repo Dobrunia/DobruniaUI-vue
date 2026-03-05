@@ -2,7 +2,7 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-04T17:59:30.023Z
+Generated on: 2026-03-05T01:00:19.371Z
 
 ## Package Facts
 
@@ -54,7 +54,7 @@ import "dobruniaui-vue/styles.css";
 - `dbru-text-sm`
 - `dbru-text-xs`
 
-## Design Tokens From tokens.css
+## Design Tokens From tokens.css and themes/*.css
 
 - `--dbru-color-bg`
 - `--dbru-color-border`

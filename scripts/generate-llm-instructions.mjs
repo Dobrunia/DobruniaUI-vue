@@ -6,6 +6,7 @@ const packageFile = path.join(rootDir, "package.json");
 const componentsDir = path.join(rootDir, "src", "components");
 const baseCssFile = path.join(rootDir, "src", "styles", "base.css");
 const tokensCssFile = path.join(rootDir, "src", "styles", "tokens.css");
+const themesDir = path.join(rootDir, "src", "styles", "themes");
 const outFile = path.join(rootDir, "LLM_INSTRUCTIONS.md");
 
 const escapedPipe = String.raw`\|`;
@@ -93,6 +94,20 @@ const collectTypesFiles = async (dir) => {
   return files.sort((a, b) => a.localeCompare(b));
 };
 
+const collectThemeCssFiles = async (dir) => {
+  let entries = [];
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+
+  return entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".css"))
+    .map((entry) => path.join(dir, entry.name))
+    .sort((a, b) => a.localeCompare(b));
+};
+
 const parseReusableClasses = (cssText) => {
   const classes = new Set();
   const classRegex = /\.([a-z0-9-]+)(?=[\s.:,{])/gi;
@@ -116,9 +131,16 @@ const pkgRaw = await fs.readFile(packageFile, "utf8");
 const pkg = JSON.parse(pkgRaw);
 const baseCss = await fs.readFile(baseCssFile, "utf8");
 const tokensCss = await fs.readFile(tokensCssFile, "utf8");
+const themeCssFiles = await collectThemeCssFiles(themesDir);
+const themeCssContents = await Promise.all(themeCssFiles.map((file) => fs.readFile(file, "utf8")));
 const typesFiles = await collectTypesFiles(componentsDir);
 const reusableClasses = parseReusableClasses(baseCss);
-const designTokens = parseTokens(tokensCss);
+const designTokens = [
+  ...new Set([
+    ...parseTokens(tokensCss),
+    ...themeCssContents.flatMap((cssText) => parseTokens(cssText)),
+  ]),
+].sort((a, b) => a.localeCompare(b));
 
 const components = [];
 const namedTypeAliases = [];
@@ -178,7 +200,7 @@ const intro = [
   "",
   ...reusableClasses.map((className) => `- \`${className}\``),
   "",
-  "## Design Tokens From tokens.css",
+  "## Design Tokens",
   "",
   ...designTokens.map((tokenName) => `- \`${tokenName}\``),
   "",
@@ -197,7 +219,7 @@ if (namedTypeAliases.length) {
     "| --- | --- | --- |"
   );
 
-  for (const alias of namedTypeAliases.sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const alias of namedTypeAliases.toSorted((a, b) => a.name.localeCompare(b.name))) {
     namedTypesSection.push(
       `| \`${escapeCell(alias.name)}\` | \`${escapeCell(alias.definition)}\` | \`${escapeCell(alias.component)}\` |`
     );

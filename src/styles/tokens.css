@@ -36,18 +36,4 @@
   --dbru-shadow-md: 0 4px 12px color-mix(in oklab, var(--dbru-color-text) 12%, transparent),
     0 2px 4px color-mix(in oklab, var(--dbru-color-text) 8%, transparent);
 
-  --dbru-color-bg: #f6f4f1;
-  --dbru-color-surface: #ffffff;
-  --dbru-color-text: #1b1b1b;
-  --dbru-color-border: #cdcbc8;
-
-  --dbru-color-primary: #2563eb;
-  --dbru-color-on-primary: #ffffff;
-
-  --dbru-color-danger: #dc2626;
-  --dbru-color-on-danger: #ffffff;
-  --dbru-color-error: #dc2626;
-  --dbru-color-success: #16a34a;
-
-  --dbru-color-focus: #2563eb;
 }
