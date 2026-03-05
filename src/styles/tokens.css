@@ -26,6 +26,8 @@
 
   --dbru-radius-sm: 8px;
   --dbru-radius-md: 12px;
+  --dbru-border-size-1: 1px;
+  --dbru-border-size-2: 2px;
 
   --dbru-ease-standard: ease;
   --dbru-duration-fast: 120ms;

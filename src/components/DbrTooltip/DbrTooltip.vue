@@ -53,7 +53,7 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
     opacity var(--dbru-duration-base) var(--dbru-ease-standard),
     transform var(--dbru-duration-base) var(--dbru-ease-standard),
     visibility 0s var(--dbru-duration-base);
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   box-shadow: var(--dbru-shadow-md);
   white-space: nowrap;
 }

@@ -32,7 +32,7 @@ const initials = computed(() => {
   height: var(--_size);
   border-radius: 50%;
   background-color: var(--dbru-color-surface);
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   font-size: var(--_font-size);
   font-weight: var(--dbru-font-weight-semibold);
   overflow: hidden;

@@ -82,7 +82,14 @@
 import type { DbrChatBubbleProps } from './DbrChatBubble.types';
 import { computed, ref, useAttrs, watch } from 'vue';
 
-const { text = 'Message text', kind = 'text', mediaSrc = '', time = '12:45', direction = 'in', status = 'none' } = defineProps<DbrChatBubbleProps>();
+const {
+  text = 'Message text',
+  kind = 'text',
+  mediaSrc = '',
+  time = '12:45',
+  direction = 'in',
+  status = 'none',
+} = defineProps<DbrChatBubbleProps>();
 const attrs = useAttrs();
 
 const audioRef = ref<HTMLAudioElement | null>(null);
@@ -168,7 +175,7 @@ watch(isImageOpen, (open) => {
   max-width: min(70%, 420px);
   padding: var(--dbru-space-3) var(--dbru-space-4);
   border-radius: var(--dbru-radius-md);
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
   display: grid;
   gap: var(--dbru-space-2);
@@ -250,7 +257,7 @@ watch(isImageOpen, (open) => {
   max-width: 260px;
   border-radius: var(--dbru-radius-md);
   display: block;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
 }
 
 .dbru-chat-bubble--image,
@@ -278,7 +285,7 @@ watch(isImageOpen, (open) => {
   padding: 8px 12px;
   border-radius: var(--dbru-radius-md);
   background: color-mix(in oklab, var(--dbru-color-surface) 80%, var(--dbru-color-text) 20%);
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   width: 100%;
   max-width: 320px;
   min-width: 0;

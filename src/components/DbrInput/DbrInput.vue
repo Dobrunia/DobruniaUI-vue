@@ -122,7 +122,7 @@ const onInput = (event: Event) => {
 .dbru-input__field {
   width: 100%;
   outline: none;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background-color: var(--dbru-color-surface);
   border-radius: var(--dbru-radius-md);
   font-size: var(--dbru-control-font-size, var(--dbru-font-size-base));
@@ -197,7 +197,7 @@ const onInput = (event: Event) => {
 }
 
 .dbru-input__icon-btn:focus-visible {
-  outline: 2px solid var(--dbru-color-focus);
+  outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
   outline-offset: 2px;
   border-radius: 4px;
 }

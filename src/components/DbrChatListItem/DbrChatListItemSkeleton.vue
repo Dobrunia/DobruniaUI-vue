@@ -31,7 +31,7 @@
   padding: var(--dbru-space-3);
   border-radius: var(--dbru-radius-md);
   background: var(--dbru-color-surface);
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
 }
 
 .dbru-chat-item__avatar {

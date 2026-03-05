@@ -117,7 +117,7 @@ onBeforeUnmount(() => {
   display: grid;
   place-items: center;
   cursor: pointer;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   line-height: 1;
   position: relative;
   transition:

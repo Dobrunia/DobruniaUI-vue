@@ -60,7 +60,7 @@ const onChange = (event: Event) => {
   height: 20px;
   border-radius: 5px;
   background: var(--_bg);
-  border: 1px solid var(--_border);
+  border: var(--dbru-border-size-1) solid var(--_border);
   transition:
     background-color var(--dbru-duration-base) var(--dbru-ease-standard),
     border-color var(--dbru-duration-base) var(--dbru-ease-standard);
@@ -85,8 +85,8 @@ const onChange = (event: Event) => {
   position: absolute;
   width: 4px;
   height: 7px;
-  border-right: 2px solid var(--_secondary);
-  border-bottom: 2px solid var(--_secondary);
+  border-right: var(--dbru-border-size-2) solid var(--_secondary);
+  border-bottom: var(--dbru-border-size-2) solid var(--_secondary);
   transform: translate(-50%, -50%) rotate(45deg) scale(0);
   opacity: 0;
   transition:
@@ -116,7 +116,7 @@ const onChange = (event: Event) => {
 }
 
 .dbru-checkbox__input:focus-visible {
-  outline: 2px solid var(--dbru-color-focus);
+  outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
   outline-offset: 2px;
 }
 

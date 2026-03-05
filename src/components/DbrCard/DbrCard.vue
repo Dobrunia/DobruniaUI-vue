@@ -29,7 +29,7 @@ const { as = 'div', variant = 'surface', disabled = false, hoverable = false } =
 <style scoped>
 .dbru-card {
   border-radius: var(--dbru-radius-md);
-  border: 2px solid transparent;
+  border: var(--dbru-border-size-2) solid transparent;
   transition:
     color var(--dbru-duration-base) var(--dbru-ease-standard),
     background-color var(--dbru-duration-base) var(--dbru-ease-standard),

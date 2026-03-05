@@ -330,7 +330,7 @@ onBeforeUnmount(() => {
   gap: var(--dbru-space-2);
   padding: var(--dbru-space-3);
   border-radius: var(--dbru-radius-md);
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
 }
 
@@ -346,7 +346,7 @@ onBeforeUnmount(() => {
   min-height: var(--dbru-control-height-md);
   max-height: 120px;
   resize: none;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   border-radius: var(--dbru-radius-md);
   padding: var(--dbru-space-2) var(--dbru-space-3);
   background: var(--dbru-color-surface);
@@ -366,7 +366,7 @@ onBeforeUnmount(() => {
   width: var(--dbru-control-height-md);
   height: var(--dbru-control-height-md);
   border-radius: 50%;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
   cursor: pointer;
   display: inline-flex;
@@ -424,7 +424,7 @@ onBeforeUnmount(() => {
 
 .dbru-chat-composer__attachment {
   position: relative;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   border-radius: var(--dbru-radius-md);
   padding: var(--dbru-space-1);
   background: var(--dbru-color-surface);
@@ -456,7 +456,7 @@ onBeforeUnmount(() => {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
   display: inline-flex;
   align-items: center;
@@ -482,7 +482,7 @@ onBeforeUnmount(() => {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
   cursor: pointer;
   display: inline-flex;

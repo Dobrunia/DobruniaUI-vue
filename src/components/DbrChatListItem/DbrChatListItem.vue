@@ -130,7 +130,7 @@ const messageIcon = computed(() => {
   padding: var(--dbru-space-3);
   border-radius: var(--dbru-radius-md);
   background: var(--dbru-color-surface);
-  border: 1px solid var(--dbru-color-border);
+  border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   transition:
     background-color var(--dbru-duration-base) var(--dbru-ease-standard),
     border-color var(--dbru-duration-base) var(--dbru-ease-standard),
@@ -162,7 +162,7 @@ const messageIcon = computed(() => {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 2px solid var(--dbru-color-surface);
+  border: var(--dbru-border-size-2) solid var(--dbru-color-surface);
   background: var(--dbru-color-border);
 }
 
