@@ -2,7 +2,7 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-05T01:43:11.853Z
+Generated on: 2026-03-06T18:39:35.751Z
 
 ## Package Facts
 
@@ -103,7 +103,52 @@ import "dobruniaui-vue/styles.css";
 - `--dbru-space-5`
 - `--dbru-space-6`
 
-## Components And Props
+## Component Usage Notes
+
+### DbrBadge
+
+- Use the `text` prop to set badge content; do not pass text via default slot.
+- Use `variant` for visual style only (`primary|ghost|danger`).
+
+### DbrCheckbox
+
+- Use `v-model` (boolean) for checked state.
+- Label can be passed either via `label` prop or default slot; both are supported.
+
+### DbrToggle
+
+- Use `v-model` (boolean) for open/close, show/hide, or enable/disable flows.
+- Intended as a generic state toggle control (for example: collapse/expand panels).
+
+### DbrThemeToggle
+
+- This component toggles only between light and dark themes via boolean `v-model`.
+- For custom themes (`gothic`, `sketch`, `fullmoon`, `oldmoney`) set theme class on root/html manually.
+
+### DbrInput
+
+- Use `v-model` (string) as the single source of input value.
+- For leading/trailing icon use the `icon` slot + `iconPosition` prop.
+
+### DbrIconButton
+
+- Set empty `label` for square icon-only mode.
+- Use `iconBefore`/`iconAfter` slots for icons.
+
+### DbrChatComposer
+
+- Use `v-model` (string) for draft text.
+- Listen to `send`, `typing`, and `attachmentsChange` events for behavior integration.
+
+## v-model Contracts
+
+| Component | modelValue Type | Default | Update Event |
+| --- | --- | --- | --- |
+| `DbrChatComposer` | `string` | `""` | `update:modelValue` |
+| `DbrCheckbox` | `boolean` | `false` | `update:modelValue` |
+| `DbrInput` | `string` | `""` | `update:modelValue` |
+| `DbrThemeToggle` | `boolean` | `false` | `update:modelValue` |
+| `DbrToggle` | `boolean` | `false` | `update:modelValue` |
 
 ## Named Type Aliases
 
@@ -124,6 +169,8 @@ This section lists exported reusable type aliases (enums/unions) used by compone
 | `DbrMessageStatus` | `"unread" \| "read" \| "error"` | `DbrChatListItem` |
 | `DbrMessageType` | `"text" \| "image" \| "file" \| "voice"` | `DbrChatListItem` |
 | `DbrPresence` | `"online" \| "away" \| "offline"` | `DbrChatListItem` |
+
+## Components And Props
 
 ### DbrAvatar
 

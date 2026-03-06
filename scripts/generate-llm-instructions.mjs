@@ -141,6 +141,37 @@ const formatThemeClasses = (classes) => {
   return classes.map((className) => "`" + className + "`").join(", ");
 };
 
+const COMPONENT_USAGE_NOTES = {
+  DbrBadge: [
+    "Use the `text` prop to set badge content; do not pass text via default slot.",
+    "Use `variant` for visual style only (`primary|ghost|danger`).",
+  ],
+  DbrCheckbox: [
+    "Use `v-model` (boolean) for checked state.",
+    "Label can be passed either via `label` prop or default slot; both are supported.",
+  ],
+  DbrToggle: [
+    "Use `v-model` (boolean) for open/close, show/hide, or enable/disable flows.",
+    "Intended as a generic state toggle control (for example: collapse/expand panels).",
+  ],
+  DbrThemeToggle: [
+    "This component toggles only between light and dark themes via boolean `v-model`.",
+    "For custom themes (`gothic`, `sketch`, `fullmoon`, `oldmoney`) set theme class on root/html manually.",
+  ],
+  DbrInput: [
+    "Use `v-model` (string) as the single source of input value.",
+    "For leading/trailing icon use the `icon` slot + `iconPosition` prop.",
+  ],
+  DbrIconButton: [
+    "Set empty `label` for square icon-only mode.",
+    "Use `iconBefore`/`iconAfter` slots for icons.",
+  ],
+  DbrChatComposer: [
+    "Use `v-model` (string) for draft text.",
+    "Listen to `send`, `typing`, and `attachmentsChange` events for behavior integration.",
+  ],
+};
+
 const pkgRaw = await fs.readFile(packageFile, "utf8");
 const pkg = JSON.parse(pkgRaw);
 const baseCss = await fs.readFile(baseCssFile, "utf8");
@@ -179,6 +210,18 @@ for (const file of typesFiles) {
     props: parsed.props,
   });
 }
+
+const vModelContracts = components
+  .map((component) => {
+    const modelProp = component.props.find((prop) => prop.name === "modelValue");
+    if (!modelProp) return null;
+    return {
+      component: component.name,
+      type: modelProp.type,
+      defaultValue: modelProp.defaultValue,
+    };
+  })
+  .filter(Boolean);
 
 const intro = [
   "# LLM Instructions",
@@ -228,8 +271,6 @@ const intro = [
   "",
   ...designTokens.map((tokenName) => `- \`${tokenName}\``),
   "",
-  "## Components And Props",
-  "",
 ];
 
 const namedTypesSection = [];
@@ -252,6 +293,34 @@ if (namedTypeAliases.length) {
   namedTypesSection.push("");
 }
 
+const usageNotesSection = [];
+if (Object.keys(COMPONENT_USAGE_NOTES).length) {
+  usageNotesSection.push("## Component Usage Notes", "");
+  for (const [componentName, notes] of Object.entries(COMPONENT_USAGE_NOTES)) {
+    usageNotesSection.push(`### ${componentName}`, "");
+    for (const note of notes) {
+      usageNotesSection.push(`- ${note}`);
+    }
+    usageNotesSection.push("");
+  }
+}
+
+const vModelSection = [];
+if (vModelContracts.length) {
+  vModelSection.push(
+    "## v-model Contracts",
+    "",
+    "| Component | modelValue Type | Default | Update Event |",
+    "| --- | --- | --- | --- |"
+  );
+  for (const contract of vModelContracts) {
+    vModelSection.push(
+      `| \`${escapeCell(contract.component)}\` | \`${escapeCell(contract.type)}\` | \`${escapeCell(contract.defaultValue)}\` | \`update:modelValue\` |`
+    );
+  }
+  vModelSection.push("");
+}
+
 const componentSections = [];
 for (const component of components) {
   componentSections.push(
@@ -272,7 +341,15 @@ for (const component of components) {
   componentSections.push("");
 }
 
-const markdown = [...intro, ...namedTypesSection, ...componentSections].join("\n");
+const markdown = [
+  ...intro,
+  ...usageNotesSection,
+  ...vModelSection,
+  ...namedTypesSection,
+  "## Components And Props",
+  "",
+  ...componentSections,
+].join("\n");
 
 await fs.writeFile(outFile, markdown, "utf8");
 
