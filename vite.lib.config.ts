@@ -14,6 +14,7 @@ const COMPONENT_DOCS: Record<string, string> = {
   DbrChatBubble:
     'Chat message bubble. Directions: `in` | `out`. Kinds: `text` | `image` | `audio`. Optional sender name above message via `name`.',
   DbrCheckbox: 'Checkbox with `v-model`. Label via prop or default slot.',
+  DbrRadio: 'Radio button with `v-model` and custom check icon style.',
   DbrToggle: 'Hamburger ↔ X animated toggle with `v-model`. Label via prop or default slot.',
   DbrThemeToggle: 'Light / dark theme toggle. Persists to `localStorage`, controls `[data-theme="dark"]` on `<html>`.',
   DbrInput: 'Text input with optional `icon` slot and built-in password visibility toggle.',

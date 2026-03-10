@@ -11,6 +11,7 @@ import DbrEyesLoader from "../components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrIconButton from "../components/DbrIconButton/DbrIconButton.vue";
 import DbrInput from "../components/DbrInput/DbrInput.vue";
 import DbrLoader from "../components/DbrLoader/DbrLoader.vue";
+import DbrRadio from "../components/DbrRadio/DbrRadio.vue";
 import DbrTerminalLoader from "../components/DbrTerminalLoader/DbrTerminalLoader.vue";
 import DbrThemeToggle from "../components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrToggle from "../components/DbrToggle/DbrToggle.vue";
@@ -39,6 +40,7 @@ export const AllComponents: Story = {
       DbrIconButton,
       DbrInput,
       DbrLoader,
+      DbrRadio,
       DbrTerminalLoader,
       DbrThemeToggle,
       DbrToggle,
@@ -71,6 +73,11 @@ export const AllComponents: Story = {
             <div style="display:flex; flex-wrap:wrap; gap:10px;">
               <DbrCheckbox label="Remember me" />
               <DbrToggle label="Notifications" />
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+              <DbrRadio name="theme-playground-shape" value="line" label="Line" />
+              <DbrRadio name="theme-playground-shape" value="rectangle" label="Rectangle" />
+              <DbrRadio name="theme-playground-shape" value="ellipse" label="Ellipse" />
             </div>
           </div>
         </section>

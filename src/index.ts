@@ -17,6 +17,7 @@ import DbrChatBubble from "./components/DbrChatBubble/DbrChatBubble.vue";
 import DbrChatComposer from "./components/DbrChatComposer/DbrChatComposer.vue";
 import DbrThemeToggle from "./components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrCard from "./components/DbrCard/DbrCard.vue";
+import DbrRadio from "./components/DbrRadio/DbrRadio.vue";
 
 export {
   DbrButton,
@@ -35,6 +36,7 @@ export {
   DbrChatComposer,
   DbrThemeToggle,
   DbrCard,
+  DbrRadio,
 };
 
 export type { DbrButtonProps, DbrButtonSize, DbrButtonVariant } from "./components/DbrButton/DbrButton.types";
@@ -51,6 +53,7 @@ export type { DbrChatBubbleProps, DbrChatBubbleDirection, DbrChatBubbleStatus, D
 export type { DbrChatComposerProps, DbrChatAttachment, DbrAttachmentKind } from "./components/DbrChatComposer/DbrChatComposer.types";
 export type { DbrThemeToggleProps } from "./components/DbrThemeToggle/DbrThemeToggle.types";
 export type { DbrCardProps, DbrCardVariant } from "./components/DbrCard/DbrCard.types";
+export type { DbrRadioProps, DbrRadioValue } from "./components/DbrRadio/DbrRadio.types";
 
 export default {
   install(app: App) {
@@ -70,5 +73,6 @@ export default {
     app.component("DbrChatComposer", DbrChatComposer);
     app.component("DbrThemeToggle", DbrThemeToggle);
     app.component("DbrCard", DbrCard);
+    app.component("DbrRadio", DbrRadio);
   },
 };
