@@ -1,0 +1,16 @@
+.dbru-theme-grey {
+    --dbru-color-bg: #000000;
+    --dbru-color-surface: #16181c;
+    --dbru-color-text: #e7e9ea;
+    --dbru-color-border: #2f3336;
+
+    --dbru-color-primary: #4f535d;
+    --dbru-color-on-primary: #e7e9ea;
+
+    --dbru-color-danger: #8b1e1e;
+    --dbru-color-on-danger: #ffffff;
+    --dbru-color-error: #c0392b;
+    --dbru-color-success: #2ea573;
+
+    --dbru-color-focus: #4da3ff;
+}
