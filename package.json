@@ -48,7 +48,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && vue-tsc -p tsconfig.build.json",
-    "build:lib": "vite build --config vite.lib.config.ts && node -e \"const fs=require('node:fs');fs.copyFileSync('README.md','dist/README.md');\"",
+    "build:lib": "vite build --config vite.lib.config.ts",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
