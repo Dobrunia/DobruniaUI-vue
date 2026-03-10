@@ -35,9 +35,16 @@ export const Variants: Story = {
     components: { DbrCheckbox },
     template: `
       <div style="display:grid; gap:12px;">
+        <div style="font-weight:600;">With label</div>
         <DbrCheckbox label="Unchecked" />
         <DbrCheckbox :modelValue="true" label="Checked" />
         <DbrCheckbox :modelValue="true" label="Disabled" :disabled="true" />
+        <div style="font-weight:600; margin-top: 6px;">Without label</div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <DbrCheckbox />
+          <DbrCheckbox :modelValue="true" />
+          <DbrCheckbox :disabled="true" />
+        </div>
       </div>
     `
   })
