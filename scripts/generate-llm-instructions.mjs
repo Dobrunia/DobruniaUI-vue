@@ -151,9 +151,9 @@ const COMPONENT_USAGE_NOTES = {
     'Use `v-model` (boolean) for checked state.',
     'Label can be passed either via `label` prop or default slot; both are supported.',
   ],
-  DbrToggle: [
-    'Use `v-model` (boolean) for open/close, show/hide, or enable/disable flows.',
-    'Intended as a generic state toggle control (for example: collapse/expand panels).',
+  DbrMenuToggle: [
+    'Use `v-model` (boolean) as menu/sidebar open state.',
+    'Primary use case: mobile navigation menu and collapsible side panel toggle.',
   ],
   DbrThemeToggle: [
     'This component toggles only between light and dark themes via boolean `v-model`.',

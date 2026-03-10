@@ -5,6 +5,7 @@ import { resolve } from 'path';
 
 const COMPONENT_DOCS: Record<string, string> = {
   DbrButton: 'Button. Variants: `primary` | `ghost` | `danger`. Sizes: `sm` | `md` | `lg`.',
+  DbrButtonGroup: 'Single-select segmented button group with active state via `v-model`.',
   DbrBadge: 'Pill badge label. Variants: `primary` | `ghost` | `danger`.',
   DbrLoader: 'Animated 8-dot spinner. Sizes: `sm` | `md` | `lg`.',
   DbrCard: 'Card container. Variants: `surface` | `bordered`. Enable `hoverable` for a hover highlight.',
@@ -14,7 +15,8 @@ const COMPONENT_DOCS: Record<string, string> = {
     'Chat message bubble. Directions: `in` | `out`. Kinds: `text` | `image` | `audio`. Optional sender name above message via `name`.',
   DbrCheckbox: 'Checkbox with `v-model`. Label via prop or default slot.',
   DbrRadio: 'Radio button with `v-model` and custom check icon style.',
-  DbrToggle: 'Hamburger ↔ X animated toggle with `v-model`. Label via prop or default slot.',
+  DbrMenuToggle:
+    'Hamburger ↔ X animated menu toggle for mobile navigation and collapsible sidebars. Uses `v-model` as open/closed state.',
   DbrThemeToggle: 'Light / dark theme toggle. Persists to `localStorage`, controls `[data-theme="dark"]` on `<html>`.',
   DbrInput: 'Text input with optional `icon` slot and built-in password visibility toggle.',
   DbrChatComposer: 'Chat message composer — auto-growing textarea, file attachments, audio recording.',

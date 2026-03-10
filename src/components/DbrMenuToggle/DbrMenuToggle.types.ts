@@ -1,11 +1,11 @@
-export interface DbrToggleProps {
+export interface DbrMenuToggleProps {
   /**
-   * Checked state for v-model.
+   * Open/closed state for menu or side panel (v-model).
    * @default false
    */
   modelValue?: boolean;
   /**
-   * Disables the toggle and removes pointer interaction.
+   * Disables the control and removes pointer interaction.
    * @default false
    */
   disabled?: boolean;
@@ -30,7 +30,7 @@ export interface DbrToggleProps {
    */
   value?: string;
   /**
-   * Toggle size from global control scale.
+   * Control size from global control scale.
    * @default "md"
    */
   size?: "sm" | "md" | "lg";

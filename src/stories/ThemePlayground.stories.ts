@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrAvatar from "../components/DbrAvatar/DbrAvatar.vue";
 import DbrBadge from "../components/DbrBadge/DbrBadge.vue";
 import DbrButton from "../components/DbrButton/DbrButton.vue";
+import DbrButtonGroup from "../components/DbrButtonGroup/DbrButtonGroup.vue";
 import DbrCard from "../components/DbrCard/DbrCard.vue";
 import DbrChatBubble from "../components/DbrChatBubble/DbrChatBubble.vue";
 import DbrChatComposer from "../components/DbrChatComposer/DbrChatComposer.vue";
@@ -10,11 +11,11 @@ import DbrCheckbox from "../components/DbrCheckbox/DbrCheckbox.vue";
 import DbrEyesLoader from "../components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrInput from "../components/DbrInput/DbrInput.vue";
 import DbrLoader from "../components/DbrLoader/DbrLoader.vue";
+import DbrMenuToggle from "../components/DbrMenuToggle/DbrMenuToggle.vue";
 import DbrRadio from "../components/DbrRadio/DbrRadio.vue";
 import DbrSkeleton from "../components/DbrSkeleton/DbrSkeleton.vue";
 import DbrTerminalLoader from "../components/DbrTerminalLoader/DbrTerminalLoader.vue";
 import DbrThemeToggle from "../components/DbrThemeToggle/DbrThemeToggle.vue";
-import DbrToggle from "../components/DbrToggle/DbrToggle.vue";
 import DbrTooltip from "../components/DbrTooltip/DbrTooltip.vue";
 
 const meta: Meta = {
@@ -31,6 +32,7 @@ export const AllComponents: Story = {
       DbrAvatar,
       DbrBadge,
       DbrButton,
+      DbrButtonGroup,
       DbrCard,
       DbrChatBubble,
       DbrChatComposer,
@@ -39,11 +41,11 @@ export const AllComponents: Story = {
       DbrEyesLoader,
       DbrInput,
       DbrLoader,
+      DbrMenuToggle,
       DbrRadio,
       DbrSkeleton,
       DbrTerminalLoader,
       DbrThemeToggle,
-      DbrToggle,
       DbrTooltip,
     },
     template: `
@@ -54,6 +56,16 @@ export const AllComponents: Story = {
             <DbrButton variant="primary">Primary</DbrButton>
             <DbrButton variant="ghost">Ghost</DbrButton>
             <DbrButton variant="danger">Danger</DbrButton>
+          </div>
+          <div style="margin-top:10px;">
+            <DbrButtonGroup
+              :model-value="'ellipse'"
+              :options="[
+                { label: 'Line', value: 'line' },
+                { label: 'Rectangle', value: 'rectangle' },
+                { label: 'Ellipse', value: 'ellipse' }
+              ]"
+            />
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
             <DbrButton variant="primary">
@@ -75,7 +87,7 @@ export const AllComponents: Story = {
             <DbrInput label="Password" type="password" model-value="secret123" />
             <div style="display:flex; flex-wrap:wrap; gap:10px;">
               <DbrCheckbox label="Remember me" />
-              <DbrToggle label="Notifications" />
+              <DbrMenuToggle label="Mobile menu" />
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
               <DbrRadio name="theme-playground-shape" value="line" label="Line" />

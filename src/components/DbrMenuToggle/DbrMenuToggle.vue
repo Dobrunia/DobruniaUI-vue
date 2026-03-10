@@ -1,11 +1,11 @@
 <template>
   <label
-    class="dbru-toggle"
-    :class="[`dbru-size-${size}`, { 'dbru-toggle--disabled': disabled }]"
+    class="dbru-menu-toggle"
+    :class="[`dbru-size-${size}`, { 'dbru-menu-toggle--disabled': disabled }]"
     :for="inputId"
   >
     <input
-      class="dbru-toggle__input dbru-reduced-motion"
+      class="dbru-menu-toggle__input dbru-reduced-motion"
       type="checkbox"
       :id="inputId"
       :checked="modelValue"
@@ -14,12 +14,12 @@
       :value="value"
       @change="onChange"
     />
-    <span class="dbru-toggle__icon" aria-hidden="true">
-      <span class="dbru-toggle__bar dbru-toggle__bar--1"></span>
-      <span class="dbru-toggle__bar dbru-toggle__bar--2"></span>
-      <span class="dbru-toggle__bar dbru-toggle__bar--3"></span>
+    <span class="dbru-menu-toggle__icon" aria-hidden="true">
+      <span class="dbru-menu-toggle__bar dbru-menu-toggle__bar--1"></span>
+      <span class="dbru-menu-toggle__bar dbru-menu-toggle__bar--2"></span>
+      <span class="dbru-menu-toggle__bar dbru-menu-toggle__bar--3"></span>
     </span>
-    <span v-if="label || $slots.default" class="dbru-toggle__label">
+    <span v-if="label || $slots.default" class="dbru-menu-toggle__label">
       <slot>{{ label }}</slot>
     </span>
   </label>
@@ -27,14 +27,14 @@
 
 <script setup lang="ts">
 import { useId } from 'vue';
-import type { DbrToggleProps } from './DbrToggle.types';
+import type { DbrMenuToggleProps } from './DbrMenuToggle.types';
 
 defineSlots<{
-  /** Label text; falls back to the label prop if not provided */
   default?: (props: {}) => any;
 }>();
 
-const { modelValue = false, disabled = false, label, id, name, value, size = 'md' } = defineProps<DbrToggleProps>();
+const { modelValue = false, disabled = false, label, id, name, value, size = 'md' } =
+  defineProps<DbrMenuToggleProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
@@ -52,7 +52,7 @@ const onChange = (event: Event) => {
 </script>
 
 <style scoped>
-.dbru-toggle {
+.dbru-menu-toggle {
   --_size: var(--dbru-control-height, var(--dbru-control-height-md));
   --_bar-height: calc(var(--_size) * 0.1);
   --_bar-radius: 4px;
@@ -65,11 +65,11 @@ const onChange = (event: Event) => {
   cursor: pointer;
 }
 
-.dbru-toggle__input {
+.dbru-menu-toggle__input {
   display: none;
 }
 
-.dbru-toggle__icon {
+.dbru-menu-toggle__icon {
   position: relative;
   width: var(--_size);
   height: var(--_size);
@@ -82,59 +82,59 @@ const onChange = (event: Event) => {
   transition-duration: 0.5s;
 }
 
-.dbru-toggle__bar {
+.dbru-menu-toggle__bar {
   width: 100%;
   height: var(--_bar-height);
   background-color: var(--_bar-color);
   border-radius: var(--_bar-radius);
 }
 
-.dbru-toggle__icon:hover .dbru-toggle__bar {
+.dbru-menu-toggle__icon:hover .dbru-menu-toggle__bar {
   background-color: var(--_bar-color-hover);
 }
 
-.dbru-toggle__bar--2 {
+.dbru-menu-toggle__bar--2 {
   transition-duration: 0.8s;
 }
 
-.dbru-toggle__bar--1,
-.dbru-toggle__bar--3 {
+.dbru-menu-toggle__bar--1,
+.dbru-menu-toggle__bar--3 {
   width: 70%;
 }
 
-.dbru-toggle__input:checked + .dbru-toggle__icon .dbru-toggle__bar {
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar {
   position: absolute;
   transition-duration: 0.5s;
 }
 
-.dbru-toggle__input:checked + .dbru-toggle__icon .dbru-toggle__bar--2 {
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--2 {
   transform: scaleX(0);
   transition-duration: 0.5s;
 }
 
-.dbru-toggle__input:checked + .dbru-toggle__icon .dbru-toggle__bar--1 {
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--1 {
   width: 100%;
   transform: rotate(45deg);
   transition-duration: 0.5s;
 }
 
-.dbru-toggle__input:checked + .dbru-toggle__icon .dbru-toggle__bar--3 {
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--3 {
   width: 100%;
   transform: rotate(-45deg);
   transition-duration: 0.5s;
 }
 
-.dbru-toggle__input:checked + .dbru-toggle__icon {
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon {
   transition-duration: 0.5s;
   transform: rotate(180deg);
 }
 
-.dbru-toggle--disabled {
+.dbru-menu-toggle--disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.dbru-toggle--disabled .dbru-toggle__icon {
+.dbru-menu-toggle--disabled .dbru-menu-toggle__icon {
   cursor: not-allowed;
 }
 </style>

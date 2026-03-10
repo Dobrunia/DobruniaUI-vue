@@ -2,11 +2,12 @@ import "./styles/index.css";
 import type { App } from "vue";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
+import DbrButtonGroup from "./components/DbrButtonGroup/DbrButtonGroup.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrLoader from "./components/DbrLoader/DbrLoader.vue";
 import DbrTerminalLoader from "./components/DbrTerminalLoader/DbrTerminalLoader.vue";
 import DbrCheckbox from "./components/DbrCheckbox/DbrCheckbox.vue";
-import DbrToggle from "./components/DbrToggle/DbrToggle.vue";
+import DbrMenuToggle from "./components/DbrMenuToggle/DbrMenuToggle.vue";
 import DbrInput from "./components/DbrInput/DbrInput.vue";
 import DbrTooltip from "./components/DbrTooltip/DbrTooltip.vue";
 import DbrAvatar from "./components/DbrAvatar/DbrAvatar.vue";
@@ -21,11 +22,12 @@ import DbrSkeleton from "./components/DbrSkeleton/DbrSkeleton.vue";
 
 export {
   DbrButton,
+  DbrButtonGroup,
   DbrEyesLoader,
   DbrLoader,
   DbrTerminalLoader,
   DbrCheckbox,
-  DbrToggle,
+  DbrMenuToggle,
   DbrInput,
   DbrTooltip,
   DbrAvatar,
@@ -40,9 +42,10 @@ export {
 };
 
 export type { DbrButtonProps, DbrButtonSize, DbrButtonVariant } from "./components/DbrButton/DbrButton.types";
+export type { DbrButtonGroupProps, DbrButtonGroupOption, DbrButtonGroupSize, DbrButtonGroupValue } from "./components/DbrButtonGroup/DbrButtonGroup.types";
 export type { DbrLoaderProps } from "./components/DbrLoader/DbrLoader.types";
 export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.types";
-export type { DbrToggleProps } from "./components/DbrToggle/DbrToggle.types";
+export type { DbrMenuToggleProps } from "./components/DbrMenuToggle/DbrMenuToggle.types";
 export type { DbrInputProps } from "./components/DbrInput/DbrInput.types";
 export type { DbrTooltipProps } from "./components/DbrTooltip/DbrTooltip.types";
 export type { DbrAvatarProps } from "./components/DbrAvatar/DbrAvatar.types";
@@ -58,11 +61,12 @@ export type { DbrSkeletonProps } from "./components/DbrSkeleton/DbrSkeleton.type
 export default {
   install(app: App) {
     app.component("DbrButton", DbrButton);
+    app.component("DbrButtonGroup", DbrButtonGroup);
     app.component("DbrEyesLoader", DbrEyesLoader);
     app.component("DbrLoader", DbrLoader);
     app.component("DbrTerminalLoader", DbrTerminalLoader);
     app.component("DbrCheckbox", DbrCheckbox);
-    app.component("DbrToggle", DbrToggle);
+    app.component("DbrMenuToggle", DbrMenuToggle);
     app.component("DbrInput", DbrInput);
     app.component("DbrTooltip", DbrTooltip);
     app.component("DbrAvatar", DbrAvatar);
