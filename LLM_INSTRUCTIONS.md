@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-06T18:39:35.751Z
+Generated on: 2026-03-10T03:15:31.794Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `2.0.6`
+- Version: `2.1.0`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -59,6 +59,7 @@ import "dobruniaui-vue/styles.css";
 - `dark.css`: `dbru-theme-dark`
 - `fullmoon.css`: `dbru-theme-fullmoon`
 - `gothic.css`: `dbru-theme-gothic`
+- `grey.css`: `dbru-theme-grey`
 - `light.css`: `dbru-theme-light`
 - `oldmoney.css`: `dbru-theme-oldmoney`
 - `sketch.css`: `dbru-theme-sketch`
@@ -107,7 +108,12 @@ import "dobruniaui-vue/styles.css";
 
 ### DbrBadge
 
-- Use the `text` prop to set badge content; do not pass text via default slot.
+- Use as overlay notification: wrap target content inside default slot.
+- Pass badge marker via `badge` slot or use `dot` for dot-only mode. Default position is top-right.
+
+### DbrChip
+
+- Pass chip content via default slot (text, icon, or mixed content).
 - Use `variant` for visual style only (`primary|ghost|danger`).
 
 ### DbrCheckbox
@@ -115,10 +121,10 @@ import "dobruniaui-vue/styles.css";
 - Use `v-model` (boolean) for checked state.
 - Label can be passed either via `label` prop or default slot; both are supported.
 
-### DbrToggle
+### DbrMenuToggle
 
-- Use `v-model` (boolean) for open/close, show/hide, or enable/disable flows.
-- Intended as a generic state toggle control (for example: collapse/expand panels).
+- Use `v-model` (boolean) as menu/sidebar open state.
+- Primary use case: mobile navigation menu and collapsible side panel toggle.
 
 ### DbrThemeToggle
 
@@ -130,11 +136,6 @@ import "dobruniaui-vue/styles.css";
 - Use `v-model` (string) as the single source of input value.
 - For leading/trailing icon use the `icon` slot + `iconPosition` prop.
 
-### DbrIconButton
-
-- Set empty `label` for square icon-only mode.
-- Use `iconBefore`/`iconAfter` slots for icons.
-
 ### DbrChatComposer
 
 - Use `v-model` (string) for draft text.
@@ -144,11 +145,13 @@ import "dobruniaui-vue/styles.css";
 
 | Component | modelValue Type | Default | Update Event |
 | --- | --- | --- | --- |
+| `DbrButtonGroup` | `DbrButtonGroupValue` | `undefined` | `update:modelValue` |
 | `DbrChatComposer` | `string` | `""` | `update:modelValue` |
 | `DbrCheckbox` | `boolean` | `false` | `update:modelValue` |
 | `DbrInput` | `string` | `""` | `update:modelValue` |
+| `DbrMenuToggle` | `boolean` | `false` | `update:modelValue` |
+| `DbrRadio` | `DbrRadioValue` | `undefined` | `update:modelValue` |
 | `DbrThemeToggle` | `boolean` | `false` | `update:modelValue` |
-| `DbrToggle` | `boolean` | `false` | `update:modelValue` |
 
 ## Named Type Aliases
 
@@ -157,18 +160,21 @@ This section lists exported reusable type aliases (enums/unions) used by compone
 | Type | Definition | Source |
 | --- | --- | --- |
 | `DbrAttachmentKind` | `"image" \| "file" \| "audio"` | `DbrChatComposer` |
-| `DbrBadgeVariant` | `"primary" \| "ghost" \| "danger"` | `DbrBadge` |
+| `DbrBadgeVariant` | `"primary" \| "danger" \| "neutral"` | `DbrBadge` |
+| `DbrButtonGroupSize` | `'sm' \| 'md' \| 'lg'` | `DbrButtonGroup` |
+| `DbrButtonGroupValue` | `string \| number` | `DbrButtonGroup` |
 | `DbrButtonSize` | `"sm" \| "md" \| "lg"` | `DbrButton` |
 | `DbrButtonVariant` | `"primary" \| "ghost" \| "danger"` | `DbrButton` |
 | `DbrCardVariant` | `"surface" \| "bordered"` | `DbrCard` |
 | `DbrChatBubbleDirection` | `"in" \| "out"` | `DbrChatBubble` |
 | `DbrChatBubbleKind` | `"text" \| "image" \| "audio"` | `DbrChatBubble` |
 | `DbrChatBubbleStatus` | `"none" \| "sending" \| "sent" \| "read"` | `DbrChatBubble` |
-| `DbrIconButtonSize` | `"sm" \| "md" \| "lg"` | `DbrIconButton` |
-| `DbrIconButtonVariant` | `"primary" \| "ghost" \| "danger"` | `DbrIconButton` |
+| `DbrChipType` | `"default" \| "removable"` | `DbrChip` |
+| `DbrChipVariant` | `"primary" \| "ghost" \| "danger"` | `DbrChip` |
 | `DbrMessageStatus` | `"unread" \| "read" \| "error"` | `DbrChatListItem` |
 | `DbrMessageType` | `"text" \| "image" \| "file" \| "voice"` | `DbrChatListItem` |
 | `DbrPresence` | `"online" \| "away" \| "offline"` | `DbrChatListItem` |
+| `DbrRadioValue` | `string \| number \| boolean` | `DbrRadio` |
 
 ## Components And Props
 
@@ -190,8 +196,10 @@ Source interface: `DbrBadgeProps`
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `text` | `string` | `"Badge"` | /** Badge text. / |
-| `variant` | `DbrBadgeVariant` | `"primary"` | /** Visual style of the badge. / |
+| `variant` | `DbrBadgeVariant` | `"primary"` | /** Badge color style. / |
+| `dot` | `boolean` | `false` | /** Show dot-only badge. / |
+| `offsetX` | `string` | `"-6px"` | /** Horizontal offset from right edge. / |
+| `offsetY` | `string` | `"-6px"` | /** Vertical offset from top edge. / |
 
 ### DbrButton
 
@@ -204,6 +212,17 @@ Source interface: `DbrButtonProps`
 | `disabled` | `boolean` | `false` | /** Disables the button and removes pointer interaction. / |
 | `pressed` | `boolean` | `undefined` | /** Use for toggle buttons to communicate pressed state to screen readers. / |
 | `nativeType` | `"button" \| "submit" \| "reset"` | `"button"` | /** Native HTML button type. / |
+
+### DbrButtonGroup
+
+Source interface: `DbrButtonGroupProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modelValue` | `DbrButtonGroupValue` | `undefined` | /** Current selected value (v-model). / |
+| `options` | `DbrButtonGroupOption[]` | `[]` | /** Available group options. / |
+| `size` | `DbrButtonGroupSize` | `"md"` | /** Control size. / |
+| `disabled` | `boolean` | `false` | /** Disables whole group. / |
 
 ### DbrCard
 
@@ -222,6 +241,7 @@ Source interface: `DbrChatBubbleProps`
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
+| `name` | `string` | `""` | /** Sender name shown above message. / |
 | `text` | `string` | `"Message text"` | /** Message text. / |
 | `kind` | `DbrChatBubbleKind` | `"text"` | /** Message kind. / |
 | `mediaSrc` | `string` | `""` | /** Media source (image or audio). / |
@@ -275,18 +295,16 @@ Source interface: `DbrCheckboxProps`
 | `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
 | `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
 
-### DbrIconButton
+### DbrChip
 
-Source interface: `DbrIconButtonProps`
+Source interface: `DbrChipProps`
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | `undefined` | /** Button text label. Leave empty for square icon-only mode. / |
-| `variant` | `DbrIconButtonVariant` | `"primary"` | /** Visual style of the button. / |
-| `size` | `DbrIconButtonSize` | `"md"` | /** Button size. / |
-| `disabled` | `boolean` | `false` | /** Disables the button and removes pointer interaction. / |
-| `nativeType` | `"button" \| "submit" \| "reset"` | `"button"` | /** Native HTML button type. / |
-| `iconPosition` | `"start" \| "end"` | `"start"` | /** Icon position relative to text. / |
+| `variant` | `DbrChipVariant` | `"primary"` | /** Visual style of the chip. / |
+| `type` | `DbrChipType` | `"default"` | /** Chip behavior type. / |
+| `disabled` | `boolean` | `false` | /** Removes interaction from the remove action button. / |
+| `removeAriaLabel` | `string` | `"Remove chip"` | /** Accessibility label for remove button. / |
 
 ### DbrInput
 
@@ -313,6 +331,42 @@ Source interface: `DbrLoaderProps`
 | --- | --- | --- | --- |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Loader size from global control scale. / |
 
+### DbrMenuToggle
+
+Source interface: `DbrMenuToggleProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modelValue` | `boolean` | `false` | /** Open/closed state for menu or side panel (v-model). / |
+| `disabled` | `boolean` | `false` | /** Disables the control and removes pointer interaction. / |
+| `label` | `string` | `undefined` | /** Optional label text. You can also use the default slot. / |
+| `id` | `string` | `undefined` | /** Native id used to connect input and label. / |
+| `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
+| `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Control size from global control scale. / |
+
+### DbrRadio
+
+Source interface: `DbrRadioProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modelValue` | `DbrRadioValue` | `undefined` | /** Selected value in radio group. / |
+| `value` | `DbrRadioValue` | `"on"` | /** Value emitted when radio gets selected. / |
+| `label` | `string` | `undefined` | /** Optional label text. You can also use the default slot. / |
+| `name` | `string` | `undefined` | /** Native name attribute for grouping radios. / |
+| `disabled` | `boolean` | `false` | /** Disables radio interaction. / |
+
+### DbrSkeleton
+
+Source interface: `DbrSkeletonProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `width` | `string` | `"100%"` | /** Skeleton width (any valid CSS length). / |
+| `height` | `string` | `"0"` | /** Skeleton height (any valid CSS length). / |
+| `radius` | `string` | `"0"` | /** Skeleton border radius (any valid CSS radius). / |
+
 ### DbrThemeToggle
 
 Source interface: `DbrThemeToggleProps`
@@ -324,20 +378,6 @@ Source interface: `DbrThemeToggleProps`
 | `shape` | `"circle" \| "rounded"` | `"circle"` | /** Toggle button shape. / |
 | `persist` | `boolean` | `true` | /** Persist choice to localStorage. / |
 | `storageKey` | `string` | `"dbru-theme"` | /** Storage key for persistence. / |
-
-### DbrToggle
-
-Source interface: `DbrToggleProps`
-
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `modelValue` | `boolean` | `false` | /** Checked state for v-model. / |
-| `disabled` | `boolean` | `false` | /** Disables the toggle and removes pointer interaction. / |
-| `label` | `string` | `undefined` | /** Optional label text. You can also use the default slot. / |
-| `id` | `string` | `undefined` | /** Native id used to connect input and label. / |
-| `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
-| `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Toggle size from global control scale. / |
 
 ### DbrTooltip
 
