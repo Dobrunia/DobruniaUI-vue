@@ -11,7 +11,8 @@ const COMPONENT_DOCS: Record<string, string> = {
   DbrCard: 'Card container. Variants: `surface` | `bordered`. Enable `hoverable` for a hover highlight.',
   DbrTooltip: 'Hover tooltip with icon. Variants: `info` | `warning` | `error` | `success`.',
   DbrAvatar: 'User avatar — shows image or auto-generated initials. Shapes: `circle` | `rounded`.',
-  DbrChatBubble: 'Chat message bubble. Directions: `in` | `out`. Kinds: `text` | `image` | `audio`.',
+  DbrChatBubble:
+    'Chat message bubble. Directions: `in` | `out`. Kinds: `text` | `image` | `audio`. Optional sender name above message via `name`.',
   DbrCheckbox: 'Checkbox with `v-model`. Label via prop or default slot.',
   DbrToggle: 'Hamburger ↔ X animated toggle with `v-model`. Label via prop or default slot.',
   DbrThemeToggle: 'Light / dark theme toggle. Persists to `localStorage`, controls `[data-theme="dark"]` on `<html>`.',

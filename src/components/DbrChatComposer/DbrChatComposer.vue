@@ -26,9 +26,21 @@
             :src="item.url"
             @ended="onPreviewEnded(item.id)"
           ></audio>
-          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{
-            item.name
-          }}</span>
+          <div class="dbru-chat-composer__audio-preview">
+            <input
+              class="dbru-chat-composer__audio-range"
+              type="range"
+              min="0"
+              :max="item.duration || 1"
+              :value="item.currentTime || 0"
+              step="0.1"
+              :aria-label="`Audio position: ${item.name}`"
+              @input="seekPreview(item.id, $event)"
+            />
+            <span class="dbru-chat-composer__audio-time dbru-text-xs dbru-text-muted">
+              {{ formatTime(item.currentTime || 0) }} / {{ formatTime(item.duration || 0) }}
+            </span>
+          </div>
         </div>
         <div v-else class="dbru-chat-composer__file dbru-text-sm dbru-text-main">
           <span class="dbru-chat-composer__file-icon">📎</span>
@@ -142,7 +154,9 @@ const emit = defineEmits<{
 
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
 const fileInputRef = ref<HTMLInputElement | null>(null);
-const attachments = ref<(DbrChatAttachment & { playing?: boolean })[]>([]);
+const attachments = ref<
+  (DbrChatAttachment & { playing?: boolean; duration?: number; currentTime?: number })[]
+>([]);
 const audioMap = ref(new Map<string, HTMLAudioElement>());
 const mediaRecorder = ref<MediaRecorder | null>(null);
 const chunks = ref<Blob[]>([]);
@@ -221,6 +235,11 @@ const onFilesSelected = (event: Event) => {
   });
 
   attachments.value = [...attachments.value, ...mapped];
+  mapped.forEach((item) => {
+    if (item.kind === 'audio' && item.url) {
+      getOrCreatePreviewAudio(item.id, item);
+    }
+  });
   emit('attachmentsChange', attachments.value);
   input.value = '';
 };
@@ -242,14 +261,41 @@ const clearAttachments = () => {
   emit('attachmentsChange', attachments.value);
 };
 
+const formatTime = (value: number) => {
+  if (!Number.isFinite(value) || value < 0) return '0:00';
+  const total = Math.floor(value);
+  const mins = Math.floor(total / 60);
+  const secs = String(total % 60).padStart(2, '0');
+  return `${mins}:${secs}`;
+};
+
+const getOrCreatePreviewAudio = (
+  id: string,
+  item: DbrChatAttachment & { playing?: boolean; duration?: number; currentTime?: number }
+) => {
+  let audio = audioMap.value.get(id);
+  if (audio) return audio;
+
+  audio = new Audio(item.url);
+  audio.addEventListener('loadedmetadata', () => {
+    item.duration = audio?.duration || 0;
+  });
+  audio.addEventListener('timeupdate', () => {
+    item.currentTime = audio?.currentTime || 0;
+  });
+  audio.addEventListener('ended', () => {
+    item.playing = false;
+    item.currentTime = 0;
+  });
+
+  audioMap.value.set(id, audio);
+  return audio;
+};
+
 const togglePreview = (id: string) => {
   const item = attachments.value.find((att) => att.id === id);
   if (!item || !item.url) return;
-  let audio = audioMap.value.get(id);
-  if (!audio) {
-    audio = new Audio(item.url);
-    audioMap.value.set(id, audio);
-  }
+  const audio = getOrCreatePreviewAudio(id, item);
   if (audio.paused) {
     audio.play();
     item.playing = true;
@@ -261,7 +307,20 @@ const togglePreview = (id: string) => {
 
 const onPreviewEnded = (id: string) => {
   const item = attachments.value.find((att) => att.id === id);
-  if (item) item.playing = false;
+  if (item) {
+    item.playing = false;
+    item.currentTime = 0;
+  }
+};
+
+const seekPreview = (id: string, event: Event) => {
+  const item = attachments.value.find((att) => att.id === id);
+  if (!item || !item.url) return;
+  const target = event.target as HTMLInputElement;
+  const nextTime = Number(target.value);
+  const audio = getOrCreatePreviewAudio(id, item);
+  audio.currentTime = Number.isFinite(nextTime) ? nextTime : 0;
+  item.currentTime = audio.currentTime;
 };
 
 const toggleRecord = async () => {
@@ -296,6 +355,10 @@ const toggleRecord = async () => {
           file,
         },
       ];
+      const created = attachments.value[attachments.value.length - 1];
+      if (created?.kind === 'audio' && created.url) {
+        getOrCreatePreviewAudio(created.id, created);
+      }
       emit('attachmentsChange', attachments.value);
       stream.getTracks().forEach((track) => track.stop());
     };
@@ -450,6 +513,24 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: var(--dbru-space-2);
   padding: var(--dbru-space-1) var(--dbru-space-2);
+}
+
+.dbru-chat-composer__audio-preview {
+  display: inline-grid;
+  grid-template-columns: minmax(64px, 1fr) auto;
+  align-items: center;
+  gap: var(--dbru-space-1);
+  min-width: 150px;
+}
+
+.dbru-chat-composer__audio-range {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--dbru-color-primary);
+}
+
+.dbru-chat-composer__audio-time {
+  white-space: nowrap;
 }
 
 .dbru-chat-composer__audio-btn {

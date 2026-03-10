@@ -1,40 +1,42 @@
-import { promises as fs } from "node:fs";
-import path from "node:path";
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 
 const rootDir = process.cwd();
-const packageFile = path.join(rootDir, "package.json");
-const componentsDir = path.join(rootDir, "src", "components");
-const baseCssFile = path.join(rootDir, "src", "styles", "base.css");
-const tokensCssFile = path.join(rootDir, "src", "styles", "tokens.css");
-const themesDir = path.join(rootDir, "src", "styles", "themes");
-const outFile = path.join(rootDir, "LLM_INSTRUCTIONS.md");
+const packageFile = path.join(rootDir, 'package.json');
+const componentsDir = path.join(rootDir, 'src', 'components');
+const baseCssFile = path.join(rootDir, 'src', 'styles', 'base.css');
+const tokensCssFile = path.join(rootDir, 'src', 'styles', 'tokens.css');
+const themesDir = path.join(rootDir, 'src', 'styles', 'themes');
+const outFile = path.join(rootDir, 'LLM_INSTRUCTIONS.md');
 
 const escapedPipe = String.raw`\|`;
 const escapeCell = (text) =>
-  String(text ?? "").replaceAll("|", escapedPipe).replaceAll("\n", "<br/>");
+  String(text ?? '')
+    .replaceAll('|', escapedPipe)
+    .replaceAll('\n', '<br/>');
 
 const cleanJsDoc = (raw) => {
-  if (!raw) return { description: "", defaultValue: "—" };
+  if (!raw) return { description: '', defaultValue: '—' };
   const lines = raw
-    .replace(/^\/\*\*/, "")
-    .replace(/\*\/$/, "")
-    .split("\n")
-    .map((line) => line.replace(/^\s*\*\s?/, "").trim());
+    .replace(/^\/\*\*/, '')
+    .replace(/\*\/$/, '')
+    .split('\n')
+    .map((line) => line.replace(/^\s*\*\s?/, '').trim());
 
-  let defaultValue = "—";
+  let defaultValue = '—';
   const descriptionParts = [];
 
   for (const line of lines) {
     if (!line) continue;
-    if (line.startsWith("@default")) {
-      defaultValue = line.replace("@default", "").trim() || "—";
+    if (line.startsWith('@default')) {
+      defaultValue = line.replace('@default', '').trim() || '—';
       continue;
     }
-    if (!line.startsWith("@")) descriptionParts.push(line);
+    if (!line.startsWith('@')) descriptionParts.push(line);
   }
 
   return {
-    description: descriptionParts.join(" "),
+    description: descriptionParts.join(' '),
     defaultValue,
   };
 };
@@ -43,23 +45,22 @@ const parsePropsInterface = (content) => {
   const interfaces = [...content.matchAll(/export interface\s+(\w+)\s*\{([\s\S]*?)\n\}/g)];
   if (!interfaces.length) return null;
 
-  const preferred = interfaces.find((match) => match[1].endsWith("Props")) ?? interfaces[0];
+  const preferred = interfaces.find((match) => match[1].endsWith('Props')) ?? interfaces[0];
   const interfaceName = preferred[1];
   const body = preferred[2];
   const props = [];
-  const propRegex =
-    /((?:\s*\/\*\*[\s\S]*?\*\/\s*)?)\s*([A-Za-z_]\w*)\??:\s*([^;]+);/g;
+  const propRegex = /((?:\s*\/\*\*[\s\S]*?\*\/\s*)?)\s*([A-Za-z_]\w*)\??:\s*([^;]+);/g;
 
   for (const match of body.matchAll(propRegex)) {
-    const jsdoc = cleanJsDoc(match[1] ?? "");
+    const jsdoc = cleanJsDoc(match[1] ?? '');
     const propName = match[2];
-    const propType = match[3].replaceAll(/\s+/g, " ").trim();
+    const propType = match[3].replaceAll(/\s+/g, ' ').trim();
 
     props.push({
       name: propName,
       type: propType,
       defaultValue: jsdoc.defaultValue,
-      description: jsdoc.description || "—",
+      description: jsdoc.description || '—',
     });
   }
 
@@ -72,7 +73,7 @@ const parseNamedTypeAliases = (content) => {
   for (const match of content.matchAll(aliasRegex)) {
     aliases.push({
       name: match[1],
-      definition: match[2].replaceAll(/\s+/g, " ").trim(),
+      definition: match[2].replaceAll(/\s+/g, ' ').trim(),
     });
   }
   return aliases;
@@ -88,7 +89,7 @@ const collectTypesFiles = async (dir) => {
       files.push(...(await collectTypesFiles(fullPath)));
       continue;
     }
-    if (entry.isFile() && entry.name.endsWith(".types.ts")) files.push(fullPath);
+    if (entry.isFile() && entry.name.endsWith('.types.ts')) files.push(fullPath);
   }
 
   return files.sort((a, b) => a.localeCompare(b));
@@ -103,7 +104,7 @@ const collectThemeCssFiles = async (dir) => {
   }
 
   return entries
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".css"))
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.css'))
     .map((entry) => path.join(dir, entry.name))
     .sort((a, b) => a.localeCompare(b));
 };
@@ -113,7 +114,7 @@ const parseReusableClasses = (cssText) => {
   const classRegex = /\.([a-z0-9-]+)(?=[\s.:,{])/gi;
   for (const match of cssText.matchAll(classRegex)) {
     const className = match[1];
-    if (className.startsWith("dbru-")) classes.add(className);
+    if (className.startsWith('dbru-')) classes.add(className);
   }
   return [...classes].sort((a, b) => a.localeCompare(b));
 };
@@ -137,47 +138,47 @@ const parseThemeClasses = (cssText) => {
 };
 
 const formatThemeClasses = (classes) => {
-  if (!classes.length) return "no theme class found";
-  return classes.map((className) => "`" + className + "`").join(", ");
+  if (!classes.length) return 'no theme class found';
+  return classes.map((className) => '`' + className + '`').join(', ');
 };
 
 const COMPONENT_USAGE_NOTES = {
   DbrBadge: [
-    "Use the `text` prop to set badge content; do not pass text via default slot.",
-    "Use `variant` for visual style only (`primary|ghost|danger`).",
+    'Use the `text` prop to set badge content; do not pass text via default slot.',
+    'Use `variant` for visual style only (`primary|ghost|danger`).',
   ],
   DbrCheckbox: [
-    "Use `v-model` (boolean) for checked state.",
-    "Label can be passed either via `label` prop or default slot; both are supported.",
+    'Use `v-model` (boolean) for checked state.',
+    'Label can be passed either via `label` prop or default slot; both are supported.',
   ],
   DbrToggle: [
-    "Use `v-model` (boolean) for open/close, show/hide, or enable/disable flows.",
-    "Intended as a generic state toggle control (for example: collapse/expand panels).",
+    'Use `v-model` (boolean) for open/close, show/hide, or enable/disable flows.',
+    'Intended as a generic state toggle control (for example: collapse/expand panels).',
   ],
   DbrThemeToggle: [
-    "This component toggles only between light and dark themes via boolean `v-model`.",
-    "For custom themes (`gothic`, `sketch`, `fullmoon`, `oldmoney`) set theme class on root/html manually.",
+    'This component toggles only between light and dark themes via boolean `v-model`.',
+    'For custom themes (`gothic`, `sketch`, `fullmoon`, `oldmoney`) set theme class on root/html manually.',
   ],
   DbrInput: [
-    "Use `v-model` (string) as the single source of input value.",
-    "For leading/trailing icon use the `icon` slot + `iconPosition` prop.",
+    'Use `v-model` (string) as the single source of input value.',
+    'For leading/trailing icon use the `icon` slot + `iconPosition` prop.',
   ],
   DbrIconButton: [
-    "Set empty `label` for square icon-only mode.",
-    "Use `iconBefore`/`iconAfter` slots for icons.",
+    'Set empty `label` for square icon-only mode.',
+    'Use `iconBefore`/`iconAfter` slots for icons.',
   ],
   DbrChatComposer: [
-    "Use `v-model` (string) for draft text.",
-    "Listen to `send`, `typing`, and `attachmentsChange` events for behavior integration.",
+    'Use `v-model` (string) for draft text.',
+    'Listen to `send`, `typing`, and `attachmentsChange` events for behavior integration.',
   ],
 };
 
-const pkgRaw = await fs.readFile(packageFile, "utf8");
+const pkgRaw = await fs.readFile(packageFile, 'utf8');
 const pkg = JSON.parse(pkgRaw);
-const baseCss = await fs.readFile(baseCssFile, "utf8");
-const tokensCss = await fs.readFile(tokensCssFile, "utf8");
+const baseCss = await fs.readFile(baseCssFile, 'utf8');
+const tokensCss = await fs.readFile(tokensCssFile, 'utf8');
 const themeCssFiles = await collectThemeCssFiles(themesDir);
-const themeCssContents = await Promise.all(themeCssFiles.map((file) => fs.readFile(file, "utf8")));
+const themeCssContents = await Promise.all(themeCssFiles.map((file) => fs.readFile(file, 'utf8')));
 const typesFiles = await collectTypesFiles(componentsDir);
 const reusableClasses = parseReusableClasses(baseCss);
 const themes = themeCssFiles.map((file, idx) => ({
@@ -194,18 +195,18 @@ const designTokens = [
 const components = [];
 const namedTypeAliases = [];
 for (const file of typesFiles) {
-  const content = await fs.readFile(file, "utf8");
+  const content = await fs.readFile(file, 'utf8');
   const parsed = parsePropsInterface(content);
   const aliases = parseNamedTypeAliases(content);
   for (const alias of aliases) {
     namedTypeAliases.push({
-      component: path.basename(file, ".types.ts"),
+      component: path.basename(file, '.types.ts'),
       ...alias,
     });
   }
   if (!parsed?.props.length) continue;
   components.push({
-    name: path.basename(file, ".types.ts"),
+    name: path.basename(file, '.types.ts'),
     interfaceName: parsed.interfaceName,
     props: parsed.props,
   });
@@ -213,7 +214,7 @@ for (const file of typesFiles) {
 
 const vModelContracts = components
   .map((component) => {
-    const modelProp = component.props.find((prop) => prop.name === "modelValue");
+    const modelProp = component.props.find((prop) => prop.name === 'modelValue');
     if (!modelProp) return null;
     return {
       component: component.name,
@@ -224,64 +225,62 @@ const vModelContracts = components
   .filter(Boolean);
 
 const intro = [
-  "# LLM Instructions",
-  "",
-  "This file is generated and intended for AI assistants and automation tools.",
-  "",
+  '# LLM Instructions',
+  '',
+  'This file is generated and intended for AI assistants and automation tools.',
+  '',
   `Generated on: ${new Date().toISOString()}`,
-  "",
-  "## Package Facts",
-  "",
+  '',
+  '## Package Facts',
+  '',
   `- Package: \`${pkg.name}\``,
   `- Version: \`${pkg.version}\``,
-  `- ESM import entry: \`${pkg.exports?.["."]?.import ?? "n/a"}\``,
-  `- CJS require entry: \`${pkg.exports?.["."]?.require ?? "n/a"}\``,
-  `- Types entry: \`${pkg.types ?? "n/a"}\``,
-  "",
-  "## Recommended Usage For Consumers",
-  "",
-  "- Strong recommendation: use named imports for tree-shaking by default.",
-  "- Preferred import pattern: `import { DbrButton, DbrInput } from \"dobruniaui-vue\"`.",
-  "- Import styles once: `import \"dobruniaui-vue/styles.css\"`.",
-  "- Avoid `app.use(DobruniaUI)` unless you explicitly want global registration of all components.",
-  "",
-  "```ts",
-  "import { DbrButton, DbrInput } from \"dobruniaui-vue\";",
-  "import \"dobruniaui-vue/styles.css\";",
-  "```",
-  "",
-  "## Design System Rules (Short)",
-  "",
-  "- Reuse primitives and variants; avoid page-specific shortcuts.",
-  "- Colors/radii/spacing should come from CSS variables and tokens.",
-  "- Prefer existing utility classes (`dbru-text-*`, `dbru-btn*`, `dbru-size-*`).",
-  "- Keep semantic shortcuts alias-only (no unique visual styles).",
-  "",
-  "## Reusable Classes From base.css",
-  "",
+  `- ESM import entry: \`${pkg.exports?.['.']?.import ?? 'n/a'}\``,
+  `- CJS require entry: \`${pkg.exports?.['.']?.require ?? 'n/a'}\``,
+  `- Types entry: \`${pkg.types ?? 'n/a'}\``,
+  '',
+  '## Recommended Usage For Consumers',
+  '',
+  '- Strong recommendation: use named imports for tree-shaking by default.',
+  '- Preferred import pattern: `import { DbrButton, DbrInput } from "dobruniaui-vue"`.',
+  '- Import styles once: `import "dobruniaui-vue/styles.css"`.',
+  '- Avoid `app.use(DobruniaUI)` unless you explicitly want global registration of all components.',
+  '',
+  '```ts',
+  'import { DbrButton, DbrInput } from "dobruniaui-vue";',
+  'import "dobruniaui-vue/styles.css";',
+  '```',
+  '',
+  '## Design System Rules (Short)',
+  '',
+  '- Reuse primitives and variants; avoid page-specific shortcuts.',
+  '- Colors/radii/spacing should come from CSS variables and tokens.',
+  '- Prefer existing utility classes (`dbru-text-*`, `dbru-btn*`, `dbru-size-*`).',
+  '- Keep semantic shortcuts alias-only (no unique visual styles).',
+  '',
+  '## Reusable Classes From base.css',
+  '',
   ...reusableClasses.map((className) => `- \`${className}\``),
-  "",
-  "## Themes",
-  "",
-  ...themes.flatMap((theme) => [
-    `- \`${theme.file}\`: ${formatThemeClasses(theme.classes)}`,
-  ]),
-  "",
-  "## Design Tokens",
-  "",
+  '',
+  '## Themes',
+  '',
+  ...themes.flatMap((theme) => [`- \`${theme.file}\`: ${formatThemeClasses(theme.classes)}`]),
+  '',
+  '## Design Tokens',
+  '',
   ...designTokens.map((tokenName) => `- \`${tokenName}\``),
-  "",
+  '',
 ];
 
 const namedTypesSection = [];
 if (namedTypeAliases.length) {
   namedTypesSection.push(
-    "## Named Type Aliases",
-    "",
-    "This section lists exported reusable type aliases (enums/unions) used by component props.",
-    "",
-    "| Type | Definition | Source |",
-    "| --- | --- | --- |"
+    '## Named Type Aliases',
+    '',
+    'This section lists exported reusable type aliases (enums/unions) used by component props.',
+    '',
+    '| Type | Definition | Source |',
+    '| --- | --- | --- |'
   );
 
   for (const alias of namedTypeAliases.toSorted((a, b) => a.name.localeCompare(b.name))) {
@@ -290,46 +289,46 @@ if (namedTypeAliases.length) {
     );
   }
 
-  namedTypesSection.push("");
+  namedTypesSection.push('');
 }
 
 const usageNotesSection = [];
 if (Object.keys(COMPONENT_USAGE_NOTES).length) {
-  usageNotesSection.push("## Component Usage Notes", "");
+  usageNotesSection.push('## Component Usage Notes', '');
   for (const [componentName, notes] of Object.entries(COMPONENT_USAGE_NOTES)) {
-    usageNotesSection.push(`### ${componentName}`, "");
+    usageNotesSection.push(`### ${componentName}`, '');
     for (const note of notes) {
       usageNotesSection.push(`- ${note}`);
     }
-    usageNotesSection.push("");
+    usageNotesSection.push('');
   }
 }
 
 const vModelSection = [];
 if (vModelContracts.length) {
   vModelSection.push(
-    "## v-model Contracts",
-    "",
-    "| Component | modelValue Type | Default | Update Event |",
-    "| --- | --- | --- | --- |"
+    '## v-model Contracts',
+    '',
+    '| Component | modelValue Type | Default | Update Event |',
+    '| --- | --- | --- | --- |'
   );
   for (const contract of vModelContracts) {
     vModelSection.push(
       `| \`${escapeCell(contract.component)}\` | \`${escapeCell(contract.type)}\` | \`${escapeCell(contract.defaultValue)}\` | \`update:modelValue\` |`
     );
   }
-  vModelSection.push("");
+  vModelSection.push('');
 }
 
 const componentSections = [];
 for (const component of components) {
   componentSections.push(
     `### ${component.name}`,
-    "",
+    '',
     `Source interface: \`${component.interfaceName}\``,
-    "",
-    "| Prop | Type | Default | Description |",
-    "| --- | --- | --- | --- |"
+    '',
+    '| Prop | Type | Default | Description |',
+    '| --- | --- | --- | --- |'
   );
 
   for (const prop of component.props) {
@@ -338,7 +337,7 @@ for (const component of components) {
     );
   }
 
-  componentSections.push("");
+  componentSections.push('');
 }
 
 const markdown = [
@@ -346,11 +345,11 @@ const markdown = [
   ...usageNotesSection,
   ...vModelSection,
   ...namedTypesSection,
-  "## Components And Props",
-  "",
+  '## Components And Props',
+  '',
   ...componentSections,
-].join("\n");
+].join('\n');
 
-await fs.writeFile(outFile, markdown, "utf8");
+await fs.writeFile(outFile, markdown, 'utf8');
 
 console.log(`Generated: ${path.relative(rootDir, outFile)}`);

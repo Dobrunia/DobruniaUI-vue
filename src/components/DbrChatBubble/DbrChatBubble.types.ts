@@ -4,6 +4,11 @@ export type DbrChatBubbleKind = "text" | "image" | "audio";
 
 export interface DbrChatBubbleProps {
   /**
+   * Sender name shown above message.
+   * @default ""
+   */
+  name?: string;
+  /**
    * Message text.
    * @default "Message text"
    */

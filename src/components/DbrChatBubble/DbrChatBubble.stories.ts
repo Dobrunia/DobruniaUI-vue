@@ -9,6 +9,7 @@ const meta: Meta<typeof DbrChatBubble> = {
   component: DbrChatBubble,
   tags: ['autodocs'],
   args: {
+    name: "Alex",
     text: "Hey! Are you coming today?",
     time: "12:45",
     direction: "in",
@@ -17,6 +18,7 @@ const meta: Meta<typeof DbrChatBubble> = {
     mediaSrc: ""
   },
   argTypes: {
+    name: { control: "text" },
     text: { control: "text" },
     time: { control: "text" },
     kind: {
@@ -65,7 +67,27 @@ export const Showcase: Story = {
     template: `
       <div style="display:flex; flex-direction: column; gap:16px; max-width: 720px;">
         <div style="font-weight: 600;">Text</div>
-        <DbrChatBubble text="Hello!" time="11:20" direction="in" status="none" />
+        <DbrChatBubble
+          name="Alex"
+          text="Hello!"
+          time="11:20"
+          direction="in"
+          status="none"
+        />
+        <DbrChatBubble
+          name="You"
+          text="Got it, sending now."
+          time="11:21"
+          direction="out"
+          status="sent"
+        />
+        <DbrChatBubble
+          name="You"
+          text="Second outgoing right after first."
+          time="11:22"
+          direction="out"
+          status="read"
+        />
         <DbrChatBubble text="Hi, on my way." time="11:23" direction="out" status="sending" />
 
         <div style="font-weight: 600; margin-top: 8px;">Media</div>
@@ -112,7 +134,7 @@ export const NarrowAudio: Story = {
     docs: {
       description: {
         story:
-          "Regression check for narrow containers: audio bubble must stay inside boundaries without horizontal overflow."
+          "Deliberately squeezed audio bubble regression case (legacy visual check)."
       }
     }
   },
@@ -120,7 +142,7 @@ export const NarrowAudio: Story = {
     components: { DbrChatBubble },
     setup: () => ({ audioUrl }),
     template: `
-      <div style="width: 220px; padding: 8px; border: 1px dashed #999;">
+      <div style="width: 160px; padding: 8px; border: 1px dashed #999;">
         <DbrChatBubble
           text=""
           time="20:25"
