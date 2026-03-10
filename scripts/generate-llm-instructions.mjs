@@ -163,10 +163,6 @@ const COMPONENT_USAGE_NOTES = {
     'Use `v-model` (string) as the single source of input value.',
     'For leading/trailing icon use the `icon` slot + `iconPosition` prop.',
   ],
-  DbrIconButton: [
-    'Set empty `label` for square icon-only mode.',
-    'Use `iconBefore`/`iconAfter` slots for icons.',
-  ],
   DbrChatComposer: [
     'Use `v-model` (string) for draft text.',
     'Listen to `send`, `typing`, and `attachmentsChange` events for behavior integration.',

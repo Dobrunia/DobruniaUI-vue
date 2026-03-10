@@ -8,7 +8,6 @@ import DbrChatComposer from "../components/DbrChatComposer/DbrChatComposer.vue";
 import DbrChatListItem from "../components/DbrChatListItem/DbrChatListItem.vue";
 import DbrCheckbox from "../components/DbrCheckbox/DbrCheckbox.vue";
 import DbrEyesLoader from "../components/DbrEyesLoader/DbrEyesLoader.vue";
-import DbrIconButton from "../components/DbrIconButton/DbrIconButton.vue";
 import DbrInput from "../components/DbrInput/DbrInput.vue";
 import DbrLoader from "../components/DbrLoader/DbrLoader.vue";
 import DbrRadio from "../components/DbrRadio/DbrRadio.vue";
@@ -38,7 +37,6 @@ export const AllComponents: Story = {
       DbrChatListItem,
       DbrCheckbox,
       DbrEyesLoader,
-      DbrIconButton,
       DbrInput,
       DbrLoader,
       DbrRadio,
@@ -58,12 +56,15 @@ export const AllComponents: Story = {
             <DbrButton variant="danger">Danger</DbrButton>
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
-            <DbrIconButton variant="primary" label="Edit">
-              <template #iconBefore>✏️</template>
-            </DbrIconButton>
-            <DbrIconButton variant="ghost" label="">
-              <template #iconBefore>⚙️</template>
-            </DbrIconButton>
+            <DbrButton variant="primary">
+              <span style="display:inline-flex; align-items:center; gap:8px;">
+                <span>✏️</span>
+                <span>Edit</span>
+              </span>
+            </DbrButton>
+            <DbrButton variant="ghost" style="width: 40px; padding: 0;">
+              ⚙️
+            </DbrButton>
           </div>
         </section>
 

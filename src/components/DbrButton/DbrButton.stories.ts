@@ -74,6 +74,48 @@ export const Variants: Story = {
             </template>
           </div>
         </div>
+        <div style="display:grid; gap:12px;">
+          <div style="font-weight: 600;">With icons</div>
+          <div style="display:flex; gap:12px; flex-wrap: wrap;">
+            <DbrButton variant="primary" size="sm">
+              <span style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12h16M12 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Start</span>
+              </span>
+            </DbrButton>
+            <DbrButton variant="primary" size="md">
+              <span style="display:inline-flex; align-items:center; gap:8px;">
+                <span>End</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12h16M12 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </DbrButton>
+            <DbrButton variant="ghost" size="lg">
+              <span style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12h16M12 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Ghost</span>
+              </span>
+            </DbrButton>
+            <DbrButton variant="danger" size="md">
+              <span style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12h16M12 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Danger</span>
+              </span>
+            </DbrButton>
+            <DbrButton variant="primary" size="md" style="width: 40px; padding: 0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M4 12h16M12 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </DbrButton>
+          </div>
+        </div>
       </div>
     `
   })

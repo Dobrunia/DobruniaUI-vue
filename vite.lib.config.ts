@@ -5,7 +5,6 @@ import { resolve } from 'path';
 
 const COMPONENT_DOCS: Record<string, string> = {
   DbrButton: 'Button. Variants: `primary` | `ghost` | `danger`. Sizes: `sm` | `md` | `lg`.',
-  DbrIconButton: 'Icon button — square icon-only or with a text label. Use `iconPosition` to control icon placement.',
   DbrBadge: 'Pill badge label. Variants: `primary` | `ghost` | `danger`.',
   DbrLoader: 'Animated 8-dot spinner. Sizes: `sm` | `md` | `lg`.',
   DbrCard: 'Card container. Variants: `surface` | `bordered`. Enable `hoverable` for a hover highlight.',
