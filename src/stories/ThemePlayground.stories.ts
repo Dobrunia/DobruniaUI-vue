@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrAvatar from "../components/DbrAvatar/DbrAvatar.vue";
 import DbrBadge from "../components/DbrBadge/DbrBadge.vue";
+import DbrChip from "../components/DbrChip/DbrChip.vue";
 import DbrButton from "../components/DbrButton/DbrButton.vue";
 import DbrButtonGroup from "../components/DbrButtonGroup/DbrButtonGroup.vue";
 import DbrCard from "../components/DbrCard/DbrCard.vue";
@@ -31,6 +32,7 @@ export const AllComponents: Story = {
     components: {
       DbrAvatar,
       DbrBadge,
+      DbrChip,
       DbrButton,
       DbrButtonGroup,
       DbrCard,
@@ -103,7 +105,11 @@ export const AllComponents: Story = {
             <DbrAvatar name="Jane Doe" size="sm" />
             <DbrAvatar name="Jane Doe" size="md" shape="rounded" />
             <DbrAvatar name="Jane Doe" size="lg" />
-            <DbrBadge text="New" variant="primary" />
+            <DbrChip variant="primary">New</DbrChip>
+            <DbrBadge variant="danger">
+              <DbrButton variant="ghost" size="sm">Inbox</DbrButton>
+              <template #badge>3</template>
+            </DbrBadge>
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; align-items:center;">
             <DbrTooltip text="Theme helper" variant="info" />

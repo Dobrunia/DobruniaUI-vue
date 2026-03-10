@@ -144,7 +144,11 @@ const formatThemeClasses = (classes) => {
 
 const COMPONENT_USAGE_NOTES = {
   DbrBadge: [
-    'Use the `text` prop to set badge content; do not pass text via default slot.',
+    'Use as overlay notification: wrap target content inside default slot.',
+    'Pass badge marker via `badge` slot or use `dot` for dot-only mode. Default position is top-right.',
+  ],
+  DbrChip: [
+    'Pass chip content via default slot (text, icon, or mixed content).',
     'Use `variant` for visual style only (`primary|ghost|danger`).',
   ],
   DbrCheckbox: [

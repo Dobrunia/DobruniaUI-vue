@@ -63,12 +63,13 @@
             </span>
             {{ messagePreview }}
           </span>
-          <DbrBadge
+          <DbrChip
             v-if="!isOutgoing && messageStatus === 'unread' && unreadCount"
             class="dbru-chat-item__badge dbru-text-xs"
             variant="primary"
-            :text="String(unreadCount)"
-          />
+          >
+            {{ String(unreadCount) }}
+          </DbrChip>
         </template>
         <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--line"></span>
       </div>
@@ -80,7 +81,7 @@
 import { computed } from 'vue';
 import type { DbrChatListItemProps } from './DbrChatListItem.types';
 import DbrAvatar from '../DbrAvatar/DbrAvatar.vue';
-import DbrBadge from '../DbrBadge/DbrBadge.vue';
+import DbrChip from '../DbrChip/DbrChip.vue';
 import DbrChatListItemSkeleton from './DbrChatListItemSkeleton.vue';
 
 const {
@@ -246,7 +247,7 @@ const messageIcon = computed(() => {
   margin-left: auto;
 }
 
-.dbru-chat-item__badge.dbru-btn {
+.dbru-chat-item__badge.dbru-chip {
   height: 12px;
   padding: 0 var(--dbru-space-2);
   border-radius: 999px;

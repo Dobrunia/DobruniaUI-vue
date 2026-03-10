@@ -6,7 +6,10 @@ import { resolve } from 'path';
 const COMPONENT_DOCS: Record<string, string> = {
   DbrButton: 'Button. Variants: `primary` | `ghost` | `danger`. Sizes: `sm` | `md` | `lg`.',
   DbrButtonGroup: 'Single-select segmented button group with active state via `v-model`.',
-  DbrBadge: 'Pill badge label. Variants: `primary` | `ghost` | `danger`.',
+  DbrBadge:
+    'Notification badge overlay for attached content. Positioned top-right via default offsets and supports dot mode.',
+  DbrChip:
+    'Compact pill chip with slot content. Variants: `primary` | `ghost` | `danger`, optional removable mode.',
   DbrLoader: 'Animated 8-dot spinner. Sizes: `sm` | `md` | `lg`.',
   DbrCard: 'Card container. Variants: `surface` | `bordered`. Enable `hoverable` for a hover highlight.',
   DbrTooltip: 'Hover tooltip with icon. Variants: `info` | `warning` | `error` | `success`.',
