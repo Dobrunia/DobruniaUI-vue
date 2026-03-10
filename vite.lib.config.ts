@@ -20,6 +20,7 @@ const COMPONENT_DOCS: Record<string, string> = {
   DbrInput: 'Text input with optional `icon` slot and built-in password visibility toggle.',
   DbrChatComposer: 'Chat message composer — auto-growing textarea, file attachments, audio recording.',
   DbrChatListItem: 'Chat list row — avatar, name, last message preview, timestamp, unread badge, presence.',
+  DbrSkeleton: 'Generic skeleton loader with configurable `width`, `height`, and `radius`.',
   DbrEyesLoader: 'Decorative eye-tracking loader animation.',
   DbrTerminalLoader: 'Decorative terminal-style loading animation.',
 };

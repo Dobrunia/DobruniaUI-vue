@@ -1,25 +1,32 @@
 <template>
   <div class="dbru-chat-item dbru-chat-item--loading">
     <div class="dbru-chat-item__avatar">
-      <span class="dbru-chat-item__skeleton dbru-chat-item__skeleton--avatar"></span>
+      <DbrSkeleton width="100%" height="100%" radius="50%" />
     </div>
 
     <div class="dbru-chat-item__content">
       <div class="dbru-chat-item__row">
-        <span class="dbru-chat-item__skeleton dbru-chat-item__skeleton--title"></span>
+        <span class="dbru-chat-item__name-slot">
+          <DbrSkeleton width="120px" height="12px" radius="var(--dbru-radius-sm)" />
+        </span>
         <div class="dbru-chat-item__meta">
-          <span class="dbru-chat-item__skeleton dbru-chat-item__skeleton--time"></span>
+          <span class="dbru-chat-item__meta-slot">
+            <DbrSkeleton width="48px" height="10px" radius="var(--dbru-radius-sm)" />
+          </span>
         </div>
       </div>
 
       <div class="dbru-chat-item__row">
-        <span class="dbru-chat-item__skeleton dbru-chat-item__skeleton--line"></span>
+        <span class="dbru-chat-item__message-slot">
+          <DbrSkeleton width="180px" height="10px" radius="var(--dbru-radius-sm)" />
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import DbrSkeleton from '../DbrSkeleton/DbrSkeleton.vue';
 </script>
 
 <style scoped>
@@ -32,11 +39,16 @@
   border-radius: var(--dbru-radius-md);
   background: var(--dbru-color-surface);
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
+  transition:
+    background-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    border-color var(--dbru-duration-base) var(--dbru-ease-standard),
+    box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
 }
 
 .dbru-chat-item__avatar {
   width: var(--dbru-control-height-md);
   height: var(--dbru-control-height-md);
+  position: relative;
 }
 
 .dbru-chat-item__content {
@@ -59,47 +71,17 @@
   flex-shrink: 0;
 }
 
-.dbru-chat-item__skeleton {
-  display: inline-block;
-  height: 10px;
-  background: linear-gradient(
-    90deg,
-    color-mix(in oklab, var(--dbru-color-border) 35%, transparent) 0%,
-    color-mix(in oklab, var(--dbru-color-border) 60%, transparent) 50%,
-    color-mix(in oklab, var(--dbru-color-border) 35%, transparent) 100%
-  );
-  background-size: 200% 100%;
-  animation: dbru-skeleton 1.2s ease-in-out infinite;
-  border-radius: var(--dbru-radius-sm);
+.dbru-chat-item__name-slot {
+  min-height: 21px;
+  display: inline-flex;
+  align-items: center;
 }
 
-.dbru-chat-item__skeleton--avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
+.dbru-chat-item__message-slot,
+.dbru-chat-item__meta-slot {
+  min-height: 18px;
+  display: inline-flex;
+  align-items: center;
 }
 
-.dbru-chat-item__skeleton--title {
-  width: 120px;
-  height: 12px;
-}
-
-.dbru-chat-item__skeleton--line {
-  width: 180px;
-  height: 10px;
-}
-
-.dbru-chat-item__skeleton--time {
-  width: 48px;
-  height: 10px;
-}
-
-@keyframes dbru-skeleton {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: -200% 50%;
-  }
-}
 </style>

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { ref } from "vue";
 import DbrChatListItem from "./DbrChatListItem.vue";
 
 const meta: Meta<typeof DbrChatListItem> = {
@@ -59,17 +60,21 @@ export const Playground: Story = {
   })
 };
 
-export const Showcase: Story = {
+export const Variants: Story = {
   parameters: {
     docs: {
       description: {
         story:
-          "Incoming vs outgoing with read/unread, typing, error, and unread badge."
+          "Incoming vs outgoing with read/unread, typing, error, unread badge, and loading toggle."
       }
     }
   },
   render: () => ({
     components: { DbrChatListItem },
+    setup: () => {
+      const loading = ref(false);
+      return { loading };
+    },
     template: `
       <div style="display:grid; gap:12px; max-width: 420px;">
         <div style="font-weight: 600;">Incoming</div>
@@ -135,8 +140,25 @@ export const Showcase: Story = {
           status="online"
         />
 
-        <div style="font-weight: 600; margin-top: 8px;">Loading</div>
-        <DbrChatListItem :loading="true" />
+        <div style="font-weight: 600; margin-top: 8px;">Loading Toggle</div>
+        <button
+          type="button"
+          class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-text-sm dbru-text-main"
+          @click="loading = !loading"
+        >
+          {{ loading ? 'Show regular' : 'Show skeleton' }}
+        </button>
+        <DbrChatListItem
+          :loading="loading"
+          name="Alex Johnson"
+          :lastMessage="{ text: 'Hey! Are you coming today?', type: 'text' }"
+          :timestamp="new Date()"
+          :messageStatus="'read'"
+          :isOutgoing="true"
+          status="online"
+          :unreadCount="0"
+          :isTyping="false"
+        />
       </div>
     `
   })

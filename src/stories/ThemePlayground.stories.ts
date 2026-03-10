@@ -12,6 +12,7 @@ import DbrIconButton from "../components/DbrIconButton/DbrIconButton.vue";
 import DbrInput from "../components/DbrInput/DbrInput.vue";
 import DbrLoader from "../components/DbrLoader/DbrLoader.vue";
 import DbrRadio from "../components/DbrRadio/DbrRadio.vue";
+import DbrSkeleton from "../components/DbrSkeleton/DbrSkeleton.vue";
 import DbrTerminalLoader from "../components/DbrTerminalLoader/DbrTerminalLoader.vue";
 import DbrThemeToggle from "../components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrToggle from "../components/DbrToggle/DbrToggle.vue";
@@ -41,6 +42,7 @@ export const AllComponents: Story = {
       DbrInput,
       DbrLoader,
       DbrRadio,
+      DbrSkeleton,
       DbrTerminalLoader,
       DbrThemeToggle,
       DbrToggle,
@@ -105,6 +107,7 @@ export const AllComponents: Story = {
                 <DbrLoader size="sm" />
                 <DbrEyesLoader />
                 <DbrTerminalLoader />
+                <DbrSkeleton width="64px" height="10px" radius="6px" />
               </div>
             </div>
           </DbrCard>

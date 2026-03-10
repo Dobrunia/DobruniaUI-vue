@@ -18,6 +18,7 @@ import DbrChatComposer from "./components/DbrChatComposer/DbrChatComposer.vue";
 import DbrThemeToggle from "./components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrCard from "./components/DbrCard/DbrCard.vue";
 import DbrRadio from "./components/DbrRadio/DbrRadio.vue";
+import DbrSkeleton from "./components/DbrSkeleton/DbrSkeleton.vue";
 
 export {
   DbrButton,
@@ -37,6 +38,7 @@ export {
   DbrThemeToggle,
   DbrCard,
   DbrRadio,
+  DbrSkeleton,
 };
 
 export type { DbrButtonProps, DbrButtonSize, DbrButtonVariant } from "./components/DbrButton/DbrButton.types";
@@ -54,6 +56,7 @@ export type { DbrChatComposerProps, DbrChatAttachment, DbrAttachmentKind } from 
 export type { DbrThemeToggleProps } from "./components/DbrThemeToggle/DbrThemeToggle.types";
 export type { DbrCardProps, DbrCardVariant } from "./components/DbrCard/DbrCard.types";
 export type { DbrRadioProps, DbrRadioValue } from "./components/DbrRadio/DbrRadio.types";
+export type { DbrSkeletonProps } from "./components/DbrSkeleton/DbrSkeleton.types";
 
 export default {
   install(app: App) {
@@ -74,5 +77,6 @@ export default {
     app.component("DbrThemeToggle", DbrThemeToggle);
     app.component("DbrCard", DbrCard);
     app.component("DbrRadio", DbrRadio);
+    app.component("DbrSkeleton", DbrSkeleton);
   },
 };
