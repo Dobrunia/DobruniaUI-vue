@@ -148,16 +148,6 @@ const onInput = (event: Event) => {
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--dbru-color-primary) 25%, #0000);
 }
 
-.dbru-input__field:-webkit-autofill,
-.dbru-input__field:-webkit-autofill:hover,
-.dbru-input__field:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--dbru-color-text);
-  caret-color: var(--dbru-color-text);
-  -webkit-box-shadow: 0 0 0 1000px var(--dbru-color-surface) inset;
-  box-shadow: 0 0 0 1000px var(--dbru-color-surface) inset;
-  transition: background-color 9999s ease-out 0s;
-}
-
 .dbru-input--disabled {
   opacity: 0.6;
 }
