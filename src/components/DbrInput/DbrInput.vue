@@ -95,10 +95,7 @@ const resolvedType = computed(() =>
 );
 const resolvedAutocomplete = computed(() => {
   if (autocomplete) return autocomplete;
-
-  if (isPasswordType.value) return 'current-password';
-
-  return 'on';
+  return 'off';
 });
 
 const togglePassword = () => {
@@ -149,6 +146,16 @@ const onInput = (event: Event) => {
 .dbru-input__field:focus {
   border-color: var(--dbru-color-primary);
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--dbru-color-primary) 25%, #0000);
+}
+
+.dbru-input__field:-webkit-autofill,
+.dbru-input__field:-webkit-autofill:hover,
+.dbru-input__field:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--dbru-color-text);
+  caret-color: var(--dbru-color-text);
+  -webkit-box-shadow: 0 0 0 1000px var(--dbru-color-surface) inset;
+  box-shadow: 0 0 0 1000px var(--dbru-color-surface) inset;
+  transition: background-color 9999s ease-out 0s;
 }
 
 .dbru-input--disabled {
