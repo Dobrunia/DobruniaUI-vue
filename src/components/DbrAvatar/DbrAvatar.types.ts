@@ -24,4 +24,9 @@ export interface DbrAvatarProps {
    * @default "circle"
    */
   shape?: "circle" | "rounded";
+  /**
+   * Highlights avatar as active.
+   * @default false
+   */
+  active?: boolean;
 }

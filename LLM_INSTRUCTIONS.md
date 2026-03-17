@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-10T03:15:31.794Z
+Generated on: 2026-03-17T11:15:36.999Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `2.1.0`
+- Version: `2.1.3`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -189,6 +189,7 @@ Source interface: `DbrAvatarProps`
 | `name` | `string` | `""` | /** Name used to generate initials fallback. / |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Avatar size. / |
 | `shape` | `"circle" \| "rounded"` | `"circle"` | /** Avatar shape. / |
+| `active` | `boolean` | `false` | /** Highlights avatar as active. / |
 
 ### DbrBadge
 

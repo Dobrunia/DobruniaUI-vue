@@ -1,5 +1,8 @@
 <template>
-  <span class="dbru-avatar dbru-text-main" :class="[`dbru-size-${size}`, `dbru-avatar--${shape}`]">
+  <span
+    class="dbru-avatar dbru-text-main"
+    :class="[`dbru-size-${size}`, `dbru-avatar--${shape}`, { 'dbru-avatar--active': active }]"
+  >
     <img v-if="src" class="dbru-avatar__img" :src="src" :alt="altText" />
     <span v-else class="dbru-avatar__initials dbru-text-main">{{ initials }}</span>
   </span>
@@ -9,7 +12,8 @@
 import { computed } from 'vue';
 import type { DbrAvatarProps } from './DbrAvatar.types';
 
-const { src, alt, name = '', size = 'md', shape = 'circle' } = defineProps<DbrAvatarProps>();
+const { src, alt, name = '', size = 'md', shape = 'circle', active = false } =
+  defineProps<DbrAvatarProps>();
 
 const altText = computed(() => alt ?? (name ? `${name} avatar` : 'Avatar'));
 
@@ -40,6 +44,10 @@ const initials = computed(() => {
 
 .dbru-avatar--rounded {
   border-radius: var(--dbru-radius-md);
+}
+
+.dbru-avatar--active {
+  border-color: var(--dbru-color-primary);
 }
 
 .dbru-avatar__img {

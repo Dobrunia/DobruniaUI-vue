@@ -8,11 +8,13 @@ const meta: Meta<typeof DbrAvatar> = {
   args: {
     name: "Jane Doe",
     size: "md",
-    shape: "circle"
+    shape: "circle",
+    active: false
   },
   argTypes: {
     src: { control: "text" },
     name: { control: "text" },
+    active: { control: "boolean" },
     size: {
       control: "select",
       options: ["sm", "md", "lg"]
@@ -43,8 +45,9 @@ export const Variants: Story = {
     template: `
       <div style="display:flex; gap:16px; align-items:center;">
         <DbrAvatar name="A B" size="sm" />
-        <DbrAvatar name="Jane Doe" size="md" shape="rounded" />
+        <DbrAvatar name="Jane Doe" size="md" shape="rounded" :active="true" />
         <DbrAvatar name="Samuel Green" size="lg" />
+        <DbrAvatar name="Taylor Blue" size="lg" :active="true" />
       </div>
     `
   })
