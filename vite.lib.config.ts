@@ -17,6 +17,7 @@ const COMPONENT_DOCS: Record<string, string> = {
   DbrChatBubble:
     'Chat message bubble. Directions: `in` | `out`. Kinds: `text` | `image` | `audio`. Optional sender name above message via `name`.',
   DbrCheckbox: 'Checkbox with `v-model`. Label via prop or default slot.',
+  DbrToggle: 'Switch toggle with left/right thumb animation. Uses boolean `v-model` and supports sizes `sm|md|lg`.',
   DbrRadio: 'Radio button with `v-model` and custom check icon style.',
   DbrMenuToggle:
     'Hamburger ↔ X animated menu toggle for mobile navigation and collapsible sidebars. Uses `v-model` as open/closed state.',

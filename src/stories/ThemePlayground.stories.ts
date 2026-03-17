@@ -13,6 +13,7 @@ import DbrEyesLoader from "../components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrInput from "../components/DbrInput/DbrInput.vue";
 import DbrLoader from "../components/DbrLoader/DbrLoader.vue";
 import DbrMenuToggle from "../components/DbrMenuToggle/DbrMenuToggle.vue";
+import DbrToggle from "../components/DbrToggle/DbrToggle.vue";
 import DbrRadio from "../components/DbrRadio/DbrRadio.vue";
 import DbrSkeleton from "../components/DbrSkeleton/DbrSkeleton.vue";
 import DbrTerminalLoader from "../components/DbrTerminalLoader/DbrTerminalLoader.vue";
@@ -44,6 +45,7 @@ export const AllComponents: Story = {
       DbrInput,
       DbrLoader,
       DbrMenuToggle,
+      DbrToggle,
       DbrRadio,
       DbrSkeleton,
       DbrTerminalLoader,
@@ -89,6 +91,7 @@ export const AllComponents: Story = {
             <DbrInput label="Password" type="password" model-value="secret123" />
             <div style="display:flex; flex-wrap:wrap; gap:10px;">
               <DbrCheckbox label="Remember me" />
+              <DbrToggle label="Auto updates" />
               <DbrMenuToggle label="Mobile menu" />
             </div>
             <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">

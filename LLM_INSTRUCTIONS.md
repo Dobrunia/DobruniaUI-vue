@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-17T11:15:36.999Z
+Generated on: 2026-03-17T22:23:11.699Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `2.1.3`
+- Version: `2.2.0`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -121,6 +121,11 @@ import "dobruniaui-vue/styles.css";
 - Use `v-model` (boolean) for checked state.
 - Label can be passed either via `label` prop or default slot; both are supported.
 
+### DbrToggle
+
+- Use `v-model` (boolean) for on/off state.
+- Use `size` (`sm|md|lg`) for control scale, with optional label prop or default slot.
+
 ### DbrMenuToggle
 
 - Use `v-model` (boolean) as menu/sidebar open state.
@@ -152,6 +157,7 @@ import "dobruniaui-vue/styles.css";
 | `DbrMenuToggle` | `boolean` | `false` | `update:modelValue` |
 | `DbrRadio` | `DbrRadioValue` | `undefined` | `update:modelValue` |
 | `DbrThemeToggle` | `boolean` | `false` | `update:modelValue` |
+| `DbrToggle` | `boolean` | `false` | `update:modelValue` |
 
 ## Named Type Aliases
 
@@ -379,6 +385,19 @@ Source interface: `DbrThemeToggleProps`
 | `shape` | `"circle" \| "rounded"` | `"circle"` | /** Toggle button shape. / |
 | `persist` | `boolean` | `true` | /** Persist choice to localStorage. / |
 | `storageKey` | `string` | `"dbru-theme"` | /** Storage key for persistence. / |
+
+### DbrToggle
+
+Source interface: `DbrToggleProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modelValue` | `boolean` | `false` | /** Checked state for v-model. / |
+| `disabled` | `boolean` | `false` | /** Disables the toggle and removes pointer interaction. / |
+| `label` | `string` | `undefined` | /** Optional label text. You can also use the default slot. / |
+| `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
+| `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Toggle size from global control scale. / |
 
 ### DbrTooltip
 

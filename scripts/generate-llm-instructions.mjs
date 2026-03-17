@@ -155,6 +155,10 @@ const COMPONENT_USAGE_NOTES = {
     'Use `v-model` (boolean) for checked state.',
     'Label can be passed either via `label` prop or default slot; both are supported.',
   ],
+  DbrToggle: [
+    'Use `v-model` (boolean) for on/off state.',
+    'Use `size` (`sm|md|lg`) for control scale, with optional label prop or default slot.',
+  ],
   DbrMenuToggle: [
     'Use `v-model` (boolean) as menu/sidebar open state.',
     'Primary use case: mobile navigation menu and collapsible side panel toggle.',

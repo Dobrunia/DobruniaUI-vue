@@ -8,6 +8,7 @@ import DbrLoader from "./components/DbrLoader/DbrLoader.vue";
 import DbrTerminalLoader from "./components/DbrTerminalLoader/DbrTerminalLoader.vue";
 import DbrCheckbox from "./components/DbrCheckbox/DbrCheckbox.vue";
 import DbrMenuToggle from "./components/DbrMenuToggle/DbrMenuToggle.vue";
+import DbrToggle from "./components/DbrToggle/DbrToggle.vue";
 import DbrInput from "./components/DbrInput/DbrInput.vue";
 import DbrTooltip from "./components/DbrTooltip/DbrTooltip.vue";
 import DbrAvatar from "./components/DbrAvatar/DbrAvatar.vue";
@@ -29,6 +30,7 @@ export {
   DbrTerminalLoader,
   DbrCheckbox,
   DbrMenuToggle,
+  DbrToggle,
   DbrInput,
   DbrTooltip,
   DbrAvatar,
@@ -48,6 +50,7 @@ export type { DbrButtonGroupProps, DbrButtonGroupOption, DbrButtonGroupSize, Dbr
 export type { DbrLoaderProps } from "./components/DbrLoader/DbrLoader.types";
 export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.types";
 export type { DbrMenuToggleProps } from "./components/DbrMenuToggle/DbrMenuToggle.types";
+export type { DbrToggleProps } from "./components/DbrToggle/DbrToggle.types";
 export type { DbrInputProps } from "./components/DbrInput/DbrInput.types";
 export type { DbrTooltipProps } from "./components/DbrTooltip/DbrTooltip.types";
 export type { DbrAvatarProps } from "./components/DbrAvatar/DbrAvatar.types";
@@ -70,6 +73,7 @@ export default {
     app.component("DbrTerminalLoader", DbrTerminalLoader);
     app.component("DbrCheckbox", DbrCheckbox);
     app.component("DbrMenuToggle", DbrMenuToggle);
+    app.component("DbrToggle", DbrToggle);
     app.component("DbrInput", DbrInput);
     app.component("DbrTooltip", DbrTooltip);
     app.component("DbrAvatar", DbrAvatar);
