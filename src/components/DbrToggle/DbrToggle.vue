@@ -2,7 +2,7 @@
   <label
     class="dbru-toggle"
     :class="[
-      `dbru-size-${size}`,
+      size === 'xs' ? 'dbru-toggle--xs' : `dbru-size-${size}`,
       { 'dbru-toggle--checked': modelValue, 'dbru-toggle--disabled': disabled },
     ]"
   >
@@ -61,6 +61,10 @@ const onChange = (event: Event) => {
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
+}
+
+.dbru-toggle--xs {
+  --dbru-control-height: 20px;
 }
 
 .dbru-toggle__input {

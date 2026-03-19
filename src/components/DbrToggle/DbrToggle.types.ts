@@ -26,7 +26,8 @@ export interface DbrToggleProps {
   value?: string;
   /**
    * Toggle size from global control scale.
+   * `xs` is local to this component and visually matches checkbox height.
    * @default "md"
    */
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
 }

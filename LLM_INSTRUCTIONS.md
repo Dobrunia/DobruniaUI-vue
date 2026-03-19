@@ -2,7 +2,7 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-17T22:23:11.699Z
+Generated on: 2026-03-19T21:12:17.597Z
 
 ## Package Facts
 
@@ -397,7 +397,7 @@ Source interface: `DbrToggleProps`
 | `label` | `string` | `undefined` | /** Optional label text. You can also use the default slot. / |
 | `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
 | `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Toggle size from global control scale. / |
+| `size` | `"xs" \| "sm" \| "md" \| "lg"` | `"md"` | /** Toggle size from global control scale. `xs` is local to this component and visually matches checkbox height. / |
 
 ### DbrTooltip
 

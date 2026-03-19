@@ -16,7 +16,7 @@ const meta: Meta<typeof DbrToggle> = {
     modelValue: { control: "boolean" },
     size: {
       control: "select",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
     },
     disabled: { control: "boolean" },
     label: { control: "text" },
@@ -45,15 +45,21 @@ export const Variants: Story = {
   render: () => ({
     components: { DbrToggle },
     setup: () => {
+      const x = ref(false);
       const a = ref(false);
       const b = ref(true);
       const c = ref(false);
       const d = ref(true);
       const e = ref(false);
-      return { a, b, c, d, e };
+      const f = ref(true);
+      return { x, a, b, c, d, e, f };
     },
     template: `
       <div style="display:grid; gap:16px;">
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
+          <DbrToggle v-model="x" size="xs" label="Extra small off" />
+          <DbrToggle v-model="f" size="xs" label="Extra small on" />
+        </div>
         <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
           <DbrToggle v-model="a" size="sm" label="Small off" />
           <DbrToggle v-model="b" size="sm" label="Small on" />
