@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-03-19T21:12:17.597Z
+Generated on: 2026-05-27T10:28:24.349Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `2.2.0`
+- Version: `2.2.2`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -52,6 +52,7 @@ import "dobruniaui-vue/styles.css";
 - `dbru-text-on-danger`
 - `dbru-text-on-primary`
 - `dbru-text-sm`
+- `dbru-text-xl`
 - `dbru-text-xs`
 
 ## Themes
@@ -89,6 +90,7 @@ import "dobruniaui-vue/styles.css";
 - `--dbru-font-size-base`
 - `--dbru-font-size-lg`
 - `--dbru-font-size-sm`
+- `--dbru-font-size-xl`
 - `--dbru-font-size-xs`
 - `--dbru-font-weight-semibold`
 - `--dbru-line-height-base`

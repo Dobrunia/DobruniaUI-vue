@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-:where(.dbru-text-xs, .dbru-text-sm, .dbru-text-base, .dbru-text-lg, .dbru-text-main, .dbru-text-muted, .dbru-text-on-primary, .dbru-text-on-danger) {
+:where(.dbru-text-xs, .dbru-text-sm, .dbru-text-base, .dbru-text-lg, .dbru-text-xl, .dbru-text-main, .dbru-text-muted, .dbru-text-on-primary, .dbru-text-on-danger) {
   font-family: var(--dbru-font-family);
   text-rendering: optimizeLegibility;
   font-kerning: normal;
@@ -33,6 +33,12 @@
 .dbru-text-lg {
   font-size: var(--dbru-font-size-lg);
   line-height: var(--dbru-line-height-base);
+}
+
+.dbru-text-xl {
+  font-size: var(--dbru-font-size-xl);
+  line-height: var(--dbru-line-height-base);
+  font-weight: var(--dbru-font-weight-semibold);
 }
 
 .dbru-text-main {
