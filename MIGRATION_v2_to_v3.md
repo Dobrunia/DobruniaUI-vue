@@ -138,7 +138,28 @@ import { DbrIconButton } from "dobruniaui-vue";
 | Variants | `variant="ghost"` (default) \| `variant="border"` |
 | Icon color | `iconColor`: `base` \| `muted` \| `primary` |
 | Sizes | `sm` / `md` / `lg` → 32 / 40 / 48 px (same as `DbrButton` / `DbrAvatar`) |
-| Slot SVG | Sized by the component (`:deep(svg)`); omit fixed `width`/`height` when possible |
+| Slot SVG | Put **root `<svg>` or icon `.vue` (root `<svg>`)** in the default slot — no wrappers |
+
+### Icon slot (do not use `v-html`)
+
+Ghost stretches the slot **`<svg>` element** to 32 / 40 / 48 px (`.dbru-icon-btn__icon :deep(svg) { width: 100%; height: 100%; }`). The library does **not** crop `viewBox` — prepare icons in **your app** (`assets/icons/*.vue`).
+
+| Glyph | Goal in ghost | In the icon file |
+|--------|----------------|------------------|
+| Square (panel, plus, …) | Visible art fills the square button | **Crop `viewBox`** to path bounds (same coordinates); remove `width`/`height`. Or `preserveAspectRatio="xMidYMid slice"` on square icons only. |
+| Wide / horizontal | Full **width** of the button | Wide `viewBox` (e.g. `0 0 36 16`); art spans the width. Height letterboxes — align strokes in design. |
+| Tall / narrow | Fits inside square, centered | Tall `viewBox`; width will not fill. |
+
+- **Do:** `<PanelCollapseIcon />` — root `<svg>`, no wrappers, no `v-html`.
+- **Do not:** loose square canvas (21×21 art in `0 0 38 38`) — the `<svg>` box is 40×40 but the drawn rect looks ~24 px.
+
+```vue
+<!-- recommended: icon SFCs in assets/icons/, root element is <svg> -->
+<DbrIconButton :aria-label="panelOpen ? 'Collapse' : 'Expand'" size="md">
+  <PanelCollapseIcon v-if="panelOpen" />
+  <PanelExpandIcon v-else />
+</DbrIconButton>
+```
 
 ---
 

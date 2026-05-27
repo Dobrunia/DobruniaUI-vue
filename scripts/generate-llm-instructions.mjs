@@ -255,10 +255,57 @@ const COMPONENT_USAGE_NOTES = {
     'Optional `pressEffect` enables slight downward shift on click; default is no shift.',
   ],
   DbrIconButton: [
-    'Pass icon markup via default slot (`ariaLabel` is required).',
-    'Sizing: `dbru-size-*` + square `height`/`width` = `--dbru-control-height` (32 / 40 / 48); slot SVG scaled via `--_icon-scale` (sm / md / lg).',
-    'Default `variant="ghost"`: icon fills the control; hover — icon color only (`iconColor`: `base|muted|primary`).',
-    '`variant="border"`: fixed border; scaled centered icon; hover — icon color only (border unchanged).',
+    'Icon-only square button. `ariaLabel` is required. Sizes `sm|md|lg` → **32 / 40 / 48 px** square (`dbru-size-*`, same as `DbrButton` / `DbrAvatar`).',
+    'Variants: **`ghost`** (default) — no border; library stretches the slot `<svg>` to the full square; hover = icon color only. **`border`** — fixed border; smaller centered icon (`--_icon-scale`); hover = icon color only.',
+    '`iconColor`: `base|muted|primary`; use `stroke="currentColor"` / `fill="currentColor"` on paths.',
+    '',
+    '**What the library does (do not reimplement in the app):**',
+    '- Ghost: `.dbru-icon-btn__icon :deep(svg) { width: 100%; height: 100%; }` — the **SVG element** always matches the button (32/40/48).',
+    '- Border: SVG size = control height × scale factor per `size`.',
+    '- The library does **not** crop `viewBox`, move paths, or auto-detect icon shape. **Visible glyph size = your SVG source `viewBox` + path bounds.**',
+    '',
+    '**What the app / icon author must do (consumer responsibility):**',
+    'Prepare each icon file (`assets/icons/*.vue` or inline `<svg>`) so the **drawn artwork**, not just the `<svg>` tag, matches the intent below. Change **`viewBox`** (and remove export `width`/`height`) — **no changes to `DbrIconButton` props** for this.',
+    '',
+    '**Ghost sizing goals (LLM checklist):**',
+    '| Icon shape | Goal in ghost button | How to achieve in the SVG file |',
+    '| --- | --- | --- |',
+    '| **Square glyph** (panel, plus, settings) | Visible art fills the square control edge-to-edge (≈32/40/48 px glyph) | **Tight `viewBox`** around paths (crop empty margin). Prefer `viewBox="0 0 24 24"` with art inset ~1–2px for stroke. Do **not** leave a large canvas (e.g. 21×21 art inside `0 0 38 38`) — the `<svg>` will be full size but the **rect/paths look ~55%**. |',
+    '| **Wide / horizontal** (chevron bar, menu dots, search) | **Full width** of the button; height scales proportionally, centered vertically | Use a **wide `viewBox`** (e.g. `0 0 36 16`) with art spanning most of the width. Ghost `width/height: 100%` + default `preserveAspectRatio` (`meet`) letterboxes height — that is correct. Align horizontal strokes in design. |',
+    '| **Tall / narrow** | Fits inside square; height limited, centered | Tall `viewBox` (e.g. `0 0 10 28`); do not expect width fill. |',
+    '',
+    '**Square icon — cropped `viewBox` (recommended):** keep path coordinates; only change `viewBox` + drop `width`/`height`:',
+    `\`\`\`xml
+<!-- BAD: square <svg>, small visible rect (~21×21 in 38×38) -->
+<svg viewBox="0 0 38 38" width="38" height="38">
+  <rect x="8.5" y="8.5" width="21" height="21" ... />
+</svg>
+
+<!-- GOOD: same rect/path coords, cropped viewBox -->
+<svg viewBox="7 7 24 24" fill="none" aria-hidden="true">
+  <rect x="8.5" y="8.5" width="21" height="21" ... />
+</svg>
+\`\`\``,
+    '',
+    '**Square icon — alternative:** loose viewBox + `preserveAspectRatio="xMidYMid slice"` on root `<svg>` (zoom-to-fill; **only for square icons**, never on wide icons).',
+    '',
+    '**Slot wiring (critical):**',
+    '- **DO:** default slot = root `<svg>` or icon SFC with `<svg>` as template root.',
+    '- **DO NOT:** `<span v-html>`, wrappers, `<img src="*.svg">` — breaks `:deep(svg)` sizing.',
+    '- **DO NOT:** `width`/`height` on `<svg>` in ghost (library sets 100%).',
+    '',
+    '**Usage pattern:**',
+    `\`\`\`vue
+<DbrIconButton aria-label="Collapse panel" size="md" variant="ghost">
+  <PanelCollapseIcon />
+</DbrIconButton>
+\`\`\``,
+    'Icon SFC: `<template><svg viewBox="7 7 24 24" aria-hidden="true">…</svg></template>` — paths unchanged, viewBox cropped in the **app icon file**, not in the library.',
+    '',
+    '**Wrong:**',
+    `\`\`\`vue
+<DbrIconButton aria-label="Settings"><span v-html="svgString" /></DbrIconButton>
+\`\`\``,
   ],
   DbrCheckbox: [
     'Use `v-model` (boolean) for checked state.',
@@ -419,6 +466,24 @@ if (namedTypeAliases.length) {
   namedTypesSection.push('');
 }
 
+/** @param {string} note */
+function pushUsageNote(section, note) {
+  if (note === '') {
+    section.push('');
+    return;
+  }
+  if (
+    note.startsWith('```') ||
+    note.startsWith('**') ||
+    note.startsWith('- ') ||
+    note.startsWith('|')
+  ) {
+    section.push(note);
+    return;
+  }
+  section.push(`- ${note}`);
+}
+
 const usageNotesSection = [];
 if (Object.keys(COMPONENT_USAGE_NOTES).length) {
   usageNotesSection.push('## Component Usage Notes', '');
@@ -426,7 +491,7 @@ if (Object.keys(COMPONENT_USAGE_NOTES).length) {
     const notes = COMPONENT_USAGE_NOTES[componentName];
     usageNotesSection.push(`### ${componentName}`, '');
     for (const note of notes) {
-      usageNotesSection.push(`- ${note}`);
+      pushUsageNote(usageNotesSection, note);
     }
     usageNotesSection.push('');
   }

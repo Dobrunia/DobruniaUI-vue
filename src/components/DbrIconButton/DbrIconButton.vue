@@ -22,7 +22,10 @@ import { computed } from 'vue';
 import type { DbrIconButtonIconColor, DbrIconButtonProps } from './DbrIconButton.types';
 
 defineSlots<{
-  /** Icon markup (SVG or other inline content) */
+  /**
+   * Icon only: root `<svg>` or a Vue component whose template root is `<svg>`.
+   * Crop `viewBox` to artwork (loose boxes look small). No `v-html` / wrapper elements.
+   */
   default?: (props: {}) => any;
 }>();
 
