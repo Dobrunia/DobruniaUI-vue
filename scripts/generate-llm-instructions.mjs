@@ -15,6 +15,102 @@ const escapeCell = (text) =>
     .replaceAll('|', escapedPipe)
     .replaceAll('\n', '<br/>');
 
+const SCALE_SUFFIX_ORDER = ['xs', 'sm', 'base', 'md', 'lg', 'xl'];
+const COLOR_TOKEN_ORDER = [
+  'bg',
+  'surface',
+  'text',
+  'border',
+  'primary',
+  'on-primary',
+  'danger',
+  'on-danger',
+  'focus',
+  'error',
+  'success',
+];
+
+const REUSABLE_CLASS_ORDER = [
+  'dbru-root',
+  'dbru-bg',
+  'dbru-surface',
+  ...SCALE_SUFFIX_ORDER.map((size) => `dbru-text-${size}`),
+  'dbru-text-main',
+  'dbru-text-muted',
+  'dbru-text-on-primary',
+  'dbru-text-on-danger',
+  ...SCALE_SUFFIX_ORDER.filter((size) => size !== 'base' && size !== 'xl').map((size) => `dbru-size-${size}`),
+  'dbru-btn',
+  'dbru-btn--primary',
+  'dbru-btn--ghost',
+  'dbru-btn--danger',
+  'dbru-focusable',
+  'dbru-reduced-motion',
+];
+
+const THEME_FILE_ORDER = ['light.css', 'dark.css'];
+
+const sortByExplicitOrder = (items, order) => {
+  const rank = new Map(order.map((item, index) => [item, index]));
+  return [...items].sort((a, b) => {
+    const rankA = rank.get(a);
+    const rankB = rank.get(b);
+    const indexA = rankA ?? Number.MAX_SAFE_INTEGER;
+    const indexB = rankB ?? Number.MAX_SAFE_INTEGER;
+    if (indexA !== indexB) return indexA - indexB;
+    return a.localeCompare(b);
+  });
+};
+
+const suffixRank = (value, order = SCALE_SUFFIX_ORDER) => {
+  const index = order.indexOf(value);
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+};
+
+const getDesignTokenSortKey = (token) => {
+  const name = token.replace(/^--dbru-/, '');
+
+  if (name === 'font-family') return [0, 0, token];
+  if (name.startsWith('font-size-')) return [1, suffixRank(name.replace('font-size-', '')), token];
+  if (name.startsWith('font-weight-')) return [2, 0, token];
+  if (name.startsWith('line-height-')) {
+    return [3, name === 'line-height-tight' ? 0 : 1, token];
+  }
+  if (name.startsWith('space-')) {
+    const spaceIndex = Number(name.replace('space-', ''));
+    return [4, Number.isFinite(spaceIndex) ? spaceIndex : Number.MAX_SAFE_INTEGER, token];
+  }
+  if (name.startsWith('control-height-')) {
+    return [5, suffixRank(name.replace('control-height-', ''), ['sm', 'md', 'lg']), token];
+  }
+  if (name.startsWith('radius-')) return [6, suffixRank(name.replace('radius-', ''), ['sm', 'md']), token];
+  if (name.startsWith('border-size-')) {
+    const borderIndex = Number(name.replace('border-size-', ''));
+    return [7, Number.isFinite(borderIndex) ? borderIndex : Number.MAX_SAFE_INTEGER, token];
+  }
+  if (['ease-standard', 'duration-fast', 'duration-base'].includes(name)) {
+    return [8, ['ease-standard', 'duration-fast', 'duration-base'].indexOf(name), token];
+  }
+  if (name.startsWith('shadow-')) return [9, suffixRank(name.replace('shadow-', ''), ['sm', 'md']), token];
+  if (name.startsWith('color-')) {
+    return [10, suffixRank(name.replace('color-', ''), COLOR_TOKEN_ORDER), token];
+  }
+
+  return [99, 0, token];
+};
+
+const sortDesignTokens = (tokens) =>
+  [...tokens].sort((a, b) => {
+    const keyA = getDesignTokenSortKey(a);
+    const keyB = getDesignTokenSortKey(b);
+    for (let i = 0; i < keyA.length; i += 1) {
+      if (keyA[i] !== keyB[i]) return keyA[i] < keyB[i] ? -1 : 1;
+    }
+    return 0;
+  });
+
+const sortThemeFiles = (files) => sortByExplicitOrder(files.map((file) => path.basename(file)), THEME_FILE_ORDER).map((basename) => files.find((file) => path.basename(file) === basename)).filter(Boolean);
+
 const cleanJsDoc = (raw) => {
   if (!raw) return { description: '', defaultValue: '—' };
   const lines = raw
@@ -116,7 +212,7 @@ const parseReusableClasses = (cssText) => {
     const className = match[1];
     if (className.startsWith('dbru-')) classes.add(className);
   }
-  return [...classes].sort((a, b) => a.localeCompare(b));
+  return sortByExplicitOrder([...classes], REUSABLE_CLASS_ORDER);
 };
 
 const parseTokens = (cssText) => {
@@ -125,7 +221,7 @@ const parseTokens = (cssText) => {
   for (const match of cssText.matchAll(tokenRegex)) {
     tokens.add(match[1]);
   }
-  return [...tokens].sort((a, b) => a.localeCompare(b));
+  return [...tokens];
 };
 
 const parseThemeClasses = (cssText) => {
@@ -134,7 +230,7 @@ const parseThemeClasses = (cssText) => {
   for (const match of cssText.matchAll(classRegex)) {
     classes.add(match[1]);
   }
-  return [...classes].sort((a, b) => a.localeCompare(b));
+  return sortByExplicitOrder([...classes], ['dbru-theme-light', 'dbru-theme-dark']);
 };
 
 const formatThemeClasses = (classes) => {
@@ -181,7 +277,8 @@ const pkgRaw = await fs.readFile(packageFile, 'utf8');
 const pkg = JSON.parse(pkgRaw);
 const baseCss = await fs.readFile(baseCssFile, 'utf8');
 const tokensCss = await fs.readFile(tokensCssFile, 'utf8');
-const themeCssFiles = await collectThemeCssFiles(themesDir);
+const themeCssFilesRaw = await collectThemeCssFiles(themesDir);
+const themeCssFiles = sortThemeFiles(themeCssFilesRaw);
 const themeCssContents = await Promise.all(themeCssFiles.map((file) => fs.readFile(file, 'utf8')));
 const typesFiles = await collectTypesFiles(componentsDir);
 const reusableClasses = parseReusableClasses(baseCss);
@@ -189,12 +286,12 @@ const themes = themeCssFiles.map((file, idx) => ({
   file: path.basename(file),
   classes: parseThemeClasses(themeCssContents[idx]),
 }));
-const designTokens = [
+const designTokens = sortDesignTokens([
   ...new Set([
     ...parseTokens(tokensCss),
     ...themeCssContents.flatMap((cssText) => parseTokens(cssText)),
   ]),
-].sort((a, b) => a.localeCompare(b));
+]);
 
 const components = [];
 const namedTypeAliases = [];
@@ -216,6 +313,8 @@ for (const file of typesFiles) {
   });
 }
 
+components.sort((a, b) => a.name.localeCompare(b.name));
+
 const vModelContracts = components
   .map((component) => {
     const modelProp = component.props.find((prop) => prop.name === 'modelValue');
@@ -226,7 +325,8 @@ const vModelContracts = components
       defaultValue: modelProp.defaultValue,
     };
   })
-  .filter(Boolean);
+  .filter(Boolean)
+  .sort((a, b) => a.component.localeCompare(b.component));
 
 const intro = [
   '# LLM Instructions',
@@ -299,7 +399,8 @@ if (namedTypeAliases.length) {
 const usageNotesSection = [];
 if (Object.keys(COMPONENT_USAGE_NOTES).length) {
   usageNotesSection.push('## Component Usage Notes', '');
-  for (const [componentName, notes] of Object.entries(COMPONENT_USAGE_NOTES)) {
+  for (const componentName of Object.keys(COMPONENT_USAGE_NOTES).sort((a, b) => a.localeCompare(b))) {
+    const notes = COMPONENT_USAGE_NOTES[componentName];
     usageNotesSection.push(`### ${componentName}`, '');
     for (const note of notes) {
       usageNotesSection.push(`- ${note}`);

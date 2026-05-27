@@ -2,7 +2,7 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-05-27T10:28:24.349Z
+Generated on: 2026-05-27T14:17:39.253Z
 
 ## Package Facts
 
@@ -33,78 +33,78 @@ import "dobruniaui-vue/styles.css";
 
 ## Reusable Classes From base.css
 
-- `dbru-bg`
-- `dbru-btn`
-- `dbru-btn--danger`
-- `dbru-btn--ghost`
-- `dbru-btn--primary`
-- `dbru-focusable`
-- `dbru-reduced-motion`
 - `dbru-root`
-- `dbru-size-lg`
-- `dbru-size-md`
-- `dbru-size-sm`
+- `dbru-bg`
 - `dbru-surface`
+- `dbru-text-xs`
+- `dbru-text-sm`
 - `dbru-text-base`
 - `dbru-text-lg`
+- `dbru-text-xl`
 - `dbru-text-main`
 - `dbru-text-muted`
-- `dbru-text-on-danger`
 - `dbru-text-on-primary`
-- `dbru-text-sm`
-- `dbru-text-xl`
-- `dbru-text-xs`
+- `dbru-text-on-danger`
+- `dbru-size-sm`
+- `dbru-size-md`
+- `dbru-size-lg`
+- `dbru-btn`
+- `dbru-btn--primary`
+- `dbru-btn--ghost`
+- `dbru-btn--danger`
+- `dbru-focusable`
+- `dbru-reduced-motion`
 
 ## Themes
 
+- `light.css`: `dbru-theme-light`
 - `dark.css`: `dbru-theme-dark`
 - `fullmoon.css`: `dbru-theme-fullmoon`
 - `gothic.css`: `dbru-theme-gothic`
 - `grey.css`: `dbru-theme-grey`
-- `light.css`: `dbru-theme-light`
 - `oldmoney.css`: `dbru-theme-oldmoney`
 - `sketch.css`: `dbru-theme-sketch`
 
 ## Design Tokens
 
-- `--dbru-border-size-1`
-- `--dbru-border-size-2`
-- `--dbru-color-bg`
-- `--dbru-color-border`
-- `--dbru-color-danger`
-- `--dbru-color-error`
-- `--dbru-color-focus`
-- `--dbru-color-on-danger`
-- `--dbru-color-on-primary`
-- `--dbru-color-primary`
-- `--dbru-color-success`
-- `--dbru-color-surface`
-- `--dbru-color-text`
-- `--dbru-control-height-lg`
-- `--dbru-control-height-md`
-- `--dbru-control-height-sm`
-- `--dbru-duration-base`
-- `--dbru-duration-fast`
-- `--dbru-ease-standard`
 - `--dbru-font-family`
+- `--dbru-font-size-xs`
+- `--dbru-font-size-sm`
 - `--dbru-font-size-base`
 - `--dbru-font-size-lg`
-- `--dbru-font-size-sm`
 - `--dbru-font-size-xl`
-- `--dbru-font-size-xs`
 - `--dbru-font-weight-semibold`
-- `--dbru-line-height-base`
 - `--dbru-line-height-tight`
-- `--dbru-radius-md`
-- `--dbru-radius-sm`
-- `--dbru-shadow-md`
-- `--dbru-shadow-sm`
+- `--dbru-line-height-base`
 - `--dbru-space-1`
 - `--dbru-space-2`
 - `--dbru-space-3`
 - `--dbru-space-4`
 - `--dbru-space-5`
 - `--dbru-space-6`
+- `--dbru-control-height-sm`
+- `--dbru-control-height-md`
+- `--dbru-control-height-lg`
+- `--dbru-radius-sm`
+- `--dbru-radius-md`
+- `--dbru-border-size-1`
+- `--dbru-border-size-2`
+- `--dbru-ease-standard`
+- `--dbru-duration-fast`
+- `--dbru-duration-base`
+- `--dbru-shadow-sm`
+- `--dbru-shadow-md`
+- `--dbru-color-bg`
+- `--dbru-color-surface`
+- `--dbru-color-text`
+- `--dbru-color-border`
+- `--dbru-color-primary`
+- `--dbru-color-on-primary`
+- `--dbru-color-danger`
+- `--dbru-color-on-danger`
+- `--dbru-color-focus`
+- `--dbru-color-error`
+- `--dbru-color-success`
 
 ## Component Usage Notes
 
@@ -113,20 +113,25 @@ import "dobruniaui-vue/styles.css";
 - Use as overlay notification: wrap target content inside default slot.
 - Pass badge marker via `badge` slot or use `dot` for dot-only mode. Default position is top-right.
 
-### DbrChip
+### DbrChatComposer
 
-- Pass chip content via default slot (text, icon, or mixed content).
-- Use `variant` for visual style only (`primary|ghost|danger`).
+- Use `v-model` (string) for draft text.
+- Listen to `send`, `typing`, and `attachmentsChange` events for behavior integration.
 
 ### DbrCheckbox
 
 - Use `v-model` (boolean) for checked state.
 - Label can be passed either via `label` prop or default slot; both are supported.
 
-### DbrToggle
+### DbrChip
 
-- Use `v-model` (boolean) for on/off state.
-- Use `size` (`sm|md|lg`) for control scale, with optional label prop or default slot.
+- Pass chip content via default slot (text, icon, or mixed content).
+- Use `variant` for visual style only (`primary|ghost|danger`).
+
+### DbrInput
+
+- Use `v-model` (string) as the single source of input value.
+- For leading/trailing icon use the `icon` slot + `iconPosition` prop.
 
 ### DbrMenuToggle
 
@@ -138,15 +143,10 @@ import "dobruniaui-vue/styles.css";
 - This component toggles only between light and dark themes via boolean `v-model`.
 - For custom themes (`gothic`, `sketch`, `fullmoon`, `oldmoney`) set theme class on root/html manually.
 
-### DbrInput
+### DbrToggle
 
-- Use `v-model` (string) as the single source of input value.
-- For leading/trailing icon use the `icon` slot + `iconPosition` prop.
-
-### DbrChatComposer
-
-- Use `v-model` (string) for draft text.
-- Listen to `send`, `typing`, and `attachmentsChange` events for behavior integration.
+- Use `v-model` (boolean) for on/off state.
+- Use `size` (`sm|md|lg`) for control scale, with optional label prop or default slot.
 
 ## v-model Contracts
 
