@@ -54,7 +54,10 @@ const onChange = (event: Event) => {
 <style scoped>
 .dbru-menu-toggle {
   --_size: var(--dbru-control-height, var(--dbru-control-height-md));
+  --_x-bar-width: calc(var(--_size) * 1.42);
   --_bar-height: calc(var(--_size) * 0.1);
+  --_bar-gap: calc(var(--_size) * 0.25);
+  --_bar-offset-y: calc(var(--_bar-height) + var(--_bar-gap));
   --_bar-radius: 4px;
   --_bar-color: var(--dbru-color-primary);
   --_bar-color-hover: color-mix(in oklab, var(--dbru-color-primary) 80%, #0000);
@@ -62,6 +65,7 @@ const onChange = (event: Event) => {
   display: inline-flex;
   align-items: center;
   gap: var(--dbru-space-2);
+  flex-shrink: 0;
   cursor: pointer;
 }
 
@@ -71,61 +75,68 @@ const onChange = (event: Event) => {
 
 .dbru-menu-toggle__icon {
   position: relative;
+  flex-shrink: 0;
   width: var(--_size);
   height: var(--_size);
+  min-width: var(--_size);
+  min-height: var(--_size);
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: calc(var(--_size) * 0.25);
-  transition-duration: 0.5s;
+  contain: layout style;
+  transition: transform 0.5s;
 }
 
 .dbru-menu-toggle__bar {
-  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   height: var(--_bar-height);
   background-color: var(--_bar-color);
   border-radius: var(--_bar-radius);
+  transform-origin: center;
+  transition:
+    transform 0.5s,
+    width 0.5s,
+    background-color var(--dbru-duration-base) var(--dbru-ease-standard);
 }
 
 .dbru-menu-toggle__icon:hover .dbru-menu-toggle__bar {
   background-color: var(--_bar-color-hover);
 }
 
+.dbru-menu-toggle__bar--1 {
+  width: calc(var(--_size) * 0.7);
+  transform: translate(-50%, -50%) translateY(calc(-1 * var(--_bar-offset-y)));
+}
+
 .dbru-menu-toggle__bar--2 {
+  width: 100%;
+  transform: translate(-50%, -50%);
   transition-duration: 0.8s;
 }
 
-.dbru-menu-toggle__bar--1,
 .dbru-menu-toggle__bar--3 {
-  width: 70%;
+  width: calc(var(--_size) * 0.7);
+  transform: translate(-50%, -50%) translateY(var(--_bar-offset-y));
 }
 
-.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar {
-  position: absolute;
-  transition-duration: 0.5s;
-}
-
-.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--2 {
-  transform: scaleX(0);
-  transition-duration: 0.5s;
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--1,
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--3 {
+  width: var(--_x-bar-width);
 }
 
 .dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--1 {
-  width: 100%;
-  transform: rotate(45deg);
-  transition-duration: 0.5s;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--2 {
+  transform: translate(-50%, -50%) scaleX(0);
 }
 
 .dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon .dbru-menu-toggle__bar--3 {
-  width: 100%;
-  transform: rotate(-45deg);
-  transition-duration: 0.5s;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .dbru-menu-toggle__input:checked + .dbru-menu-toggle__icon {
-  transition-duration: 0.5s;
   transform: rotate(180deg);
 }
 
