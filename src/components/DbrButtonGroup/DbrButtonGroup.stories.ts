@@ -96,7 +96,7 @@ export const Variants: Story = {
             options[3],
           ]"
         />
-        <div class="dbru-text-base dbru-text-main">Active: <b>{{ shape }}</b></div>
+        <div class="dbru-font-size-base dbru-font-color-base">Active: <b>{{ shape }}</b></div>
       </div>
     `,
   }),

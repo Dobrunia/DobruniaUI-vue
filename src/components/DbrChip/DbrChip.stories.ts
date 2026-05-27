@@ -110,7 +110,7 @@ export const WithInputTags: Story = {
           </DbrChip>
           <input
             v-model="draft"
-            class="dbru-text-base dbru-text-main"
+            class="dbru-font-size-base dbru-font-color-base"
             placeholder="Type tag and press Enter"
             style="
               border: none;

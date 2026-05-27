@@ -1,10 +1,10 @@
 <template>
   <span
-    class="dbru-avatar dbru-text-main"
+    class="dbru-avatar dbru-font-color-base"
     :class="[`dbru-size-${size}`, `dbru-avatar--${shape}`, { 'dbru-avatar--active': active }]"
   >
     <img v-if="src" class="dbru-avatar__img" :src="src" :alt="altText" />
-    <span v-else class="dbru-avatar__initials dbru-text-main">{{ initials }}</span>
+    <span v-else class="dbru-avatar__initials dbru-font-color-base">{{ initials }}</span>
   </span>
 </template>
 

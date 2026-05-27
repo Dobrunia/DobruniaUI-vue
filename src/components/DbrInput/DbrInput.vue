@@ -1,7 +1,7 @@
 <template>
   <div class="dbru-input" :class="{ 'dbru-input--disabled': disabled }">
     <input
-      class="dbru-input__field dbru-reduced-motion dbru-text-base dbru-text-main"
+      class="dbru-input__field dbru-focus-visible dbru-reduced-motion dbru-font-size-base dbru-font-color-base"
       :class="[
         `dbru-size-${size}`,
         {
@@ -25,9 +25,10 @@
     <button
       v-if="isPasswordType"
       type="button"
-      class="dbru-input__icon-btn dbru-input__icon--right"
+      class="dbru-input__icon-btn dbru-focus-visible dbru-input__icon--right"
       :disabled="disabled"
       :aria-label="showPassword ? 'Hide password' : 'Show password'"
+      @mousedown.prevent
       @click="togglePassword"
     >
       <svg
@@ -57,7 +58,11 @@
         <path d="M6.61 6.61A16.17 16.17 0 0 0 2 12s3.5 7 10 7a10.94 10.94 0 0 0 4.91-1.09" />
       </svg>
     </button>
-    <span v-if="hasRightCustomIcon" class="dbru-input__icon dbru-input__icon--right" aria-hidden="true">
+    <span
+      v-if="hasRightCustomIcon"
+      class="dbru-input__icon dbru-input__icon--right"
+      aria-hidden="true"
+    >
       <slot name="icon" />
     </span>
   </div>
@@ -67,7 +72,18 @@
 import type { DbrInputProps } from './DbrInput.types';
 import { computed, ref, useId } from 'vue';
 
-const { modelValue = '', label, size = 'md', type = 'text', iconPosition = 'left', name, id, disabled = false, required = false, autocomplete } = defineProps<DbrInputProps>();
+const {
+  modelValue = '',
+  label,
+  size = 'md',
+  type = 'text',
+  iconPosition = 'left',
+  name,
+  id,
+  disabled = false,
+  required = false,
+  autocomplete,
+} = defineProps<DbrInputProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
@@ -90,9 +106,7 @@ const hasRightCustomIcon = computed(
   () => hasCustomIcon.value && iconPosition === 'right' && !isPasswordType.value
 );
 const hasRightIcon = computed(() => isPasswordType.value || hasRightCustomIcon.value);
-const resolvedType = computed(() =>
-  isPasswordType.value && showPassword.value ? 'text' : type
-);
+const resolvedType = computed(() => (isPasswordType.value && showPassword.value ? 'text' : type));
 const resolvedAutocomplete = computed(() => {
   if (autocomplete) return autocomplete;
   return 'off';
@@ -118,7 +132,6 @@ const onInput = (event: Event) => {
 
 .dbru-input__field {
   width: 100%;
-  outline: none;
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background-color: var(--dbru-color-surface);
   border-radius: var(--dbru-radius-md);
@@ -140,12 +153,7 @@ const onInput = (event: Event) => {
 }
 
 .dbru-input__field:hover:not(:disabled) {
-  border-color: color-mix(in oklab, var(--dbru-color-primary) 55%, #0000);
-}
-
-.dbru-input__field:focus {
   border-color: var(--dbru-color-primary);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--dbru-color-primary) 25%, #0000);
 }
 
 .dbru-input--disabled {
@@ -187,16 +195,11 @@ const onInput = (event: Event) => {
   padding: 0;
   width: 18px;
   height: 18px;
+  border-radius: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-}
-
-.dbru-input__icon-btn:focus-visible {
-  outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
-  outline-offset: 2px;
-  border-radius: 4px;
 }
 
 .dbru-input--disabled .dbru-input__icon-btn {

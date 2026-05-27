@@ -1,21 +1,23 @@
 <template>
   <label class="dbru-checkbox" :class="{ 'dbru-checkbox--disabled': disabled }">
     <input
-      class="dbru-checkbox__input dbru-reduced-motion"
+      class="dbru-checkbox__input dbru-focus-visible dbru-reduced-motion"
       type="checkbox"
-      :checked="modelValue"
+      v-model="checked"
       :disabled="disabled"
       :name="name"
       :value="value"
+      @keydown.enter.prevent="toggleFromKeyboard"
       @change="onChange"
     />
-    <span v-if="label || $slots.default" class="dbru-text-base dbru-text-main">
+    <span v-if="label || $slots.default" class="dbru-font-size-base dbru-font-color-base">
       <slot>{{ label }}</slot>
     </span>
   </label>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { DbrCheckboxProps } from './DbrCheckbox.types';
 
 defineSlots<{
@@ -29,6 +31,19 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'change', value: boolean): void;
 }>();
+
+const checked = computed({
+  get: () => modelValue,
+  set: (next: boolean) => {
+    emit('update:modelValue', next);
+    emit('change', next);
+  },
+});
+
+const toggleFromKeyboard = () => {
+  if (disabled) return;
+  checked.value = !checked.value;
+};
 
 const onChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -113,11 +128,6 @@ const onChange = (event: Event) => {
   transition: none;
   box-shadow: none;
   opacity: 1;
-}
-
-.dbru-checkbox__input:focus-visible {
-  outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
-  outline-offset: 2px;
 }
 
 .dbru-checkbox--disabled {

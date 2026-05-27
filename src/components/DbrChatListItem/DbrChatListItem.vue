@@ -21,7 +21,7 @@
 
     <div class="dbru-chat-item__content">
       <div class="dbru-chat-item__row">
-        <span v-if="!loading" class="dbru-chat-item__name dbru-text-base dbru-text-main">{{
+        <span v-if="!loading" class="dbru-chat-item__name dbru-font-size-base dbru-font-color-base">{{
           name
         }}</span>
         <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--title"></span>
@@ -29,7 +29,7 @@
         <div class="dbru-chat-item__meta">
           <span
             v-if="!loading && isOutgoing"
-            class="dbru-chat-item__status dbru-text-xs dbru-text-muted"
+            class="dbru-chat-item__status dbru-font-size-xs dbru-font-color-muted"
             :class="`dbru-chat-item__status--${
               messageStatus === 'read' ? 'read' : messageStatus === 'error' ? 'error' : 'sent'
             }`"
@@ -40,7 +40,7 @@
               <span v-if="messageStatus === 'read'" class="dbru-chat-item__check">✓</span>
             </template>
           </span>
-          <span v-if="!loading" class="dbru-chat-item__time dbru-text-sm dbru-text-muted">{{
+          <span v-if="!loading" class="dbru-chat-item__time dbru-font-size-sm dbru-font-color-muted">{{
             timeLabel
           }}</span>
           <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--time"></span>
@@ -49,10 +49,10 @@
 
       <div class="dbru-chat-item__row">
         <template v-if="!loading">
-          <span v-if="isTyping" class="dbru-chat-item__typing dbru-text-sm">typing…</span>
+          <span v-if="isTyping" class="dbru-chat-item__typing dbru-font-size-sm">typing…</span>
           <span
             v-else
-            class="dbru-chat-item__message dbru-text-sm dbru-text-muted"
+            class="dbru-chat-item__message dbru-font-size-sm dbru-font-color-muted"
             :class="{
               'dbru-chat-item__message--unread':
                 !isOutgoing && messageStatus === 'unread' && unreadCount,
@@ -65,7 +65,7 @@
           </span>
           <DbrChip
             v-if="!isOutgoing && messageStatus === 'unread' && unreadCount"
-            class="dbru-chat-item__badge dbru-text-xs"
+            class="dbru-chat-item__badge dbru-font-size-xs"
             variant="primary"
           >
             {{ String(unreadCount) }}

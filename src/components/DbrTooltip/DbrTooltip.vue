@@ -1,7 +1,7 @@
 <template>
   <span class="dbru-tooltip" :class="variant ? `dbru-tooltip--${variant}` : 'dbru-tooltip--plain'">
-    <span class="dbru-tooltip__icon dbru-text-sm" aria-hidden="true">{{ icon }}</span>
-    <span class="dbru-tooltip__text dbru-text-sm dbru-text-main">{{ text }}</span>
+    <span class="dbru-tooltip__icon dbru-font-size-sm" aria-hidden="true">{{ icon }}</span>
+    <span class="dbru-tooltip__text dbru-font-size-sm dbru-font-color-base">{{ text }}</span>
   </span>
 </template>
 

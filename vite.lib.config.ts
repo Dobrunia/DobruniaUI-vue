@@ -4,7 +4,10 @@ import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
 const COMPONENT_DOCS: Record<string, string> = {
-  DbrButton: 'Button. Variants: `primary` | `ghost` | `danger`. Sizes: `sm` | `md` | `lg`.',
+  DbrButton:
+    'Button. Variants: `primary` | `ghost` | `danger`. Sizes: `sm` | `md` | `lg`. Optional `pressEffect` for click shift.',
+  DbrIconButton:
+    'Square icon-only button. Sizes: `sm` | `md` | `lg`. `border` shows ghost border always; otherwise on hover/focus/active. Icon via default slot.',
   DbrButtonGroup: 'Single-select segmented button group with active state via `v-model`.',
   DbrBadge:
     'Notification badge overlay for attached content. Positioned top-right via default offsets and supports dot mode.',

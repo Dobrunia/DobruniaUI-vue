@@ -21,6 +21,7 @@ const meta: Meta<typeof DbrButton> = {
       options: ["sm", "md", "lg"]
     },
     disabled: { control: "boolean" },
+    pressEffect: { control: "boolean" },
     nativeType: {
       control: "select",
       options: ["button", "submit", "reset"]
@@ -70,6 +71,9 @@ export const Variants: Story = {
               <DbrButton :variant="variant" :size="size">{{ size }}</DbrButton>
               <DbrButton :variant="variant" :size="size" :disabled="true">
                 {{ size }} disabled
+              </DbrButton>
+              <DbrButton :variant="variant" :size="size" press-effect>
+                {{ size }} press
               </DbrButton>
             </template>
           </div>

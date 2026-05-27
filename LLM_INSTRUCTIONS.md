@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-05-27T19:43:14.997Z
+Generated on: 2026-05-27T22:01:51.386Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `2.2.3`
+- Version: `3.0.0`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -28,23 +28,33 @@ import "dobruniaui-vue/styles.css";
 
 - Reuse primitives and variants; avoid page-specific shortcuts.
 - Colors/radii/spacing should come from CSS variables and tokens.
-- Prefer existing utility classes (`dbru-text-*`, `dbru-btn*`, `dbru-size-*`).
+- Prefer existing utility classes (`dbru-font-size-*`, `dbru-font-color-*`, `dbru-btn*`, `dbru-size-*`).
 - Keep semantic shortcuts alias-only (no unique visual styles).
+
+## Focus Utilities
+
+- Wrap app UI in `dbru-root` (required). Root sets default typography (`font-family`, `font-size-base`, `line-height-base`, `color-text`) for the subtree.
+- Inside root, `:focus:not(:focus-visible)` clears outline on mouse click; `.dbru-focus-visible:focus-visible` shows the ring on Tab.
+- Add `dbru-focus-visible` on each focusable control that should show the ring (buttons, inputs, textareas).
+- Do not use `dbru-focus-visible` on `DbrButtonGroup` items — group uses its own `:focus-visible` background (same as active).
+- Hidden input + visible control (`DbrRadio`, `DbrToggle`, `DbrThemeToggle`): scoped `:has(input:focus-visible)` draws the ring on the visible track/control/label (input keeps `outline: none`).
+- `--dbru-color-focus` is separate from `--dbru-color-primary` in every theme so the Tab ring stays visible.
+- `DbrRadio` group: one Tab stop per `name`; arrow keys move selection; Enter selects focused option.
 
 ## Reusable Classes From base.css
 
 - `dbru-root`
 - `dbru-bg`
 - `dbru-surface`
-- `dbru-text-xs`
-- `dbru-text-sm`
-- `dbru-text-base`
-- `dbru-text-lg`
-- `dbru-text-xl`
-- `dbru-text-main`
-- `dbru-text-muted`
-- `dbru-text-on-primary`
-- `dbru-text-on-danger`
+- `dbru-font-size-xs`
+- `dbru-font-size-sm`
+- `dbru-font-size-base`
+- `dbru-font-size-lg`
+- `dbru-font-size-xl`
+- `dbru-font-color-base`
+- `dbru-font-color-muted`
+- `dbru-font-color-on-primary`
+- `dbru-font-color-on-danger`
 - `dbru-size-sm`
 - `dbru-size-md`
 - `dbru-size-lg`
@@ -52,7 +62,7 @@ import "dobruniaui-vue/styles.css";
 - `dbru-btn--primary`
 - `dbru-btn--ghost`
 - `dbru-btn--danger`
-- `dbru-focusable`
+- `dbru-focus-visible`
 - `dbru-reduced-motion`
 
 ## Themes
@@ -97,6 +107,7 @@ import "dobruniaui-vue/styles.css";
 - `--dbru-color-bg`
 - `--dbru-color-surface`
 - `--dbru-color-text`
+- `--dbru-color-text-muted`
 - `--dbru-color-border`
 - `--dbru-color-primary`
 - `--dbru-color-on-primary`
@@ -113,6 +124,10 @@ import "dobruniaui-vue/styles.css";
 - Use as overlay notification: wrap target content inside default slot.
 - Pass badge marker via `badge` slot or use `dot` for dot-only mode. Default position is top-right.
 
+### DbrButton
+
+- Optional `pressEffect` enables slight downward shift on click; default is no shift.
+
 ### DbrChatComposer
 
 - Use `v-model` (string) for draft text.
@@ -127,6 +142,13 @@ import "dobruniaui-vue/styles.css";
 
 - Pass chip content via default slot (text, icon, or mixed content).
 - Use `variant` for visual style only (`primary|ghost|danger`).
+
+### DbrIconButton
+
+- Pass icon markup via default slot (`ariaLabel` is required).
+- Sizing: `dbru-size-*` + square `height`/`width` = `--dbru-control-height` (32 / 40 / 48); slot SVG scaled via `--_icon-scale` (sm / md / lg).
+- Default `variant="ghost"`: icon fills the control; hover — icon color only (`iconColor`: `base|muted|primary`).
+- `variant="border"`: fixed border; scaled centered icon; hover — icon color only (border unchanged).
 
 ### DbrInput
 
@@ -179,6 +201,9 @@ This section lists exported reusable type aliases (enums/unions) used by compone
 | `DbrChatBubbleStatus` | `"none" \| "sending" \| "sent" \| "read"` | `DbrChatBubble` |
 | `DbrChipType` | `"default" \| "removable"` | `DbrChip` |
 | `DbrChipVariant` | `"primary" \| "ghost" \| "danger"` | `DbrChip` |
+| `DbrIconButtonIconColor` | `'base' \| 'muted' \| 'primary'` | `DbrIconButton` |
+| `DbrIconButtonSize` | `'sm' \| 'md' \| 'lg'` | `DbrIconButton` |
+| `DbrIconButtonVariant` | `'ghost' \| 'border'` | `DbrIconButton` |
 | `DbrMessageStatus` | `"unread" \| "read" \| "error"` | `DbrChatListItem` |
 | `DbrMessageType` | `"text" \| "image" \| "file" \| "voice"` | `DbrChatListItem` |
 | `DbrPresence` | `"online" \| "away" \| "offline"` | `DbrChatListItem` |
@@ -221,6 +246,7 @@ Source interface: `DbrButtonProps`
 | `disabled` | `boolean` | `false` | /** Disables the button and removes pointer interaction. / |
 | `pressed` | `boolean` | `undefined` | /** Use for toggle buttons to communicate pressed state to screen readers. / |
 | `nativeType` | `"button" \| "submit" \| "reset"` | `"button"` | /** Native HTML button type. / |
+| `pressEffect` | `boolean` | `false` | /** Slight downward shift on click (active state). / |
 
 ### DbrButtonGroup
 
@@ -314,6 +340,19 @@ Source interface: `DbrChipProps`
 | `type` | `DbrChipType` | `"default"` | /** Chip behavior type. / |
 | `disabled` | `boolean` | `false` | /** Removes interaction from the remove action button. / |
 | `removeAriaLabel` | `string` | `"Remove chip"` | /** Accessibility label for remove button. / |
+
+### DbrIconButton
+
+Source interface: `DbrIconButtonProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ariaLabel` | `string` | `—` | /** Accessible label for icon-only button (required for screen readers). / |
+| `size` | `DbrIconButtonSize` | `"md"` | /** Button size scale (matches DbrButton). / |
+| `variant` | `DbrIconButtonVariant` | `"ghost"` | /** `ghost` — no border; icon fills the control (32 / 40 / 48); hover changes icon color only. `border` — fixed border; smaller centered icon; hover changes icon color only. / |
+| `iconColor` | `DbrIconButtonIconColor` | `"base"` | /** Icon color (CSS token). Hover moves toward primary. / |
+| `disabled` | `boolean` | `false` | /** Disables the button and removes pointer interaction. / |
+| `nativeType` | `'button' \| 'submit' \| 'reset'` | `"button"` | /** Native HTML button type. / |
 
 ### DbrInput
 

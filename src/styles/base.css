@@ -1,13 +1,9 @@
 .dbru-root {
   background: var(--dbru-color-bg);
-}
-
-:where(.dbru-root, .dbru-root *, .dbru-root *::before, .dbru-root *::after) {
-  box-sizing: border-box;
-}
-
-:where(.dbru-text-xs, .dbru-text-sm, .dbru-text-base, .dbru-text-lg, .dbru-text-xl, .dbru-text-main, .dbru-text-muted, .dbru-text-on-primary, .dbru-text-on-danger) {
+  color: var(--dbru-color-text);
   font-family: var(--dbru-font-family);
+  font-size: var(--dbru-font-size-base);
+  line-height: var(--dbru-line-height-base);
   text-rendering: optimizeLegibility;
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
@@ -15,45 +11,48 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.dbru-text-xs {
+:where(.dbru-root, .dbru-root *, .dbru-root *::before, .dbru-root *::after) {
+  box-sizing: border-box;
+}
+
+.dbru-root :focus:not(:focus-visible) {
+  outline: none;
+}
+
+.dbru-font-size-xs {
   font-size: var(--dbru-font-size-xs);
-  line-height: var(--dbru-line-height-base);
 }
 
-.dbru-text-sm {
+.dbru-font-size-sm {
   font-size: var(--dbru-font-size-sm);
-  line-height: var(--dbru-line-height-base);
 }
 
-.dbru-text-base {
+.dbru-font-size-base {
   font-size: var(--dbru-font-size-base);
-  line-height: var(--dbru-line-height-base);
 }
 
-.dbru-text-lg {
+.dbru-font-size-lg {
   font-size: var(--dbru-font-size-lg);
-  line-height: var(--dbru-line-height-base);
 }
 
-.dbru-text-xl {
+.dbru-font-size-xl {
   font-size: var(--dbru-font-size-xl);
-  line-height: var(--dbru-line-height-base);
   font-weight: var(--dbru-font-weight-semibold);
 }
 
-.dbru-text-main {
+.dbru-font-color-base {
   color: var(--dbru-color-text);
 }
 
-.dbru-text-muted {
-  color: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
+.dbru-font-color-muted {
+  color: var(--dbru-color-text-muted);
 }
 
-.dbru-text-on-primary {
+.dbru-font-color-on-primary {
   color: var(--dbru-color-on-primary);
 }
 
-.dbru-text-on-danger {
+.dbru-font-color-on-danger {
   color: var(--dbru-color-on-danger);
 }
 
@@ -65,9 +64,9 @@
   background: var(--dbru-color-surface);
 }
 
-.dbru-focusable:focus-visible {
+.dbru-focus-visible:focus-visible {
   outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
-  outline-offset: 2px;
+  outline-offset: 0;
 }
 
 .dbru-size-sm {
@@ -115,10 +114,6 @@
 
 .dbru-btn:hover:not(:disabled) {
   background: var(--_bg-hover);
-}
-
-.dbru-btn:active:not(:disabled) {
-  transform: translateY(1px);
 }
 
 .dbru-btn:disabled {

@@ -3,10 +3,11 @@
     <input
       class="dbru-radio__input dbru-reduced-motion"
       type="radio"
-      :checked="checked"
+      v-model="selected"
       :disabled="disabled"
       :name="name"
       :value="value"
+      @keydown.enter.prevent="selectFromKeyboard"
       @change="onChange"
     />
     <span class="dbru-radio__control" aria-hidden="true">
@@ -21,7 +22,7 @@
         />
       </svg>
     </span>
-    <span v-if="label || $slots.default" class="dbru-text-base dbru-text-main">
+    <span v-if="label || $slots.default" class="dbru-font-size-base dbru-font-color-base">
       <slot>{{ label }}</slot>
     </span>
   </label>
@@ -42,7 +43,18 @@ const emit = defineEmits<{
   (e: 'change', value: DbrRadioValue): void;
 }>();
 
-const checked = computed(() => Object.is(modelValue, value));
+const selected = computed({
+  get: () => modelValue,
+  set: (next: DbrRadioValue) => {
+    emit('update:modelValue', next);
+    emit('change', next);
+  },
+});
+
+const selectFromKeyboard = () => {
+  if (disabled) return;
+  selected.value = value;
+};
 
 const onChange = () => {
   emit('update:modelValue', value);
@@ -69,9 +81,9 @@ const onChange = () => {
   position: absolute;
   opacity: 0;
   margin: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 .dbru-radio__control {
@@ -121,9 +133,9 @@ const onChange = () => {
   outline: none;
 }
 
-.dbru-radio__input:focus-visible + .dbru-radio__control {
+.dbru-radio:has(.dbru-radio__input:focus-visible) .dbru-radio__control {
   outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
-  outline-offset: 2px;
+  outline-offset: 0;
 }
 
 .dbru-radio--disabled {

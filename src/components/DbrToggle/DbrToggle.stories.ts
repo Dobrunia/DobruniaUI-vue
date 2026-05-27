@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import DbrToggle from "./DbrToggle.vue";
 
 const meta: Meta<typeof DbrToggle> = {
@@ -33,6 +33,12 @@ export const Playground: Story = {
     components: { DbrToggle },
     setup: () => {
       const value = ref(args.modelValue ?? false);
+      watch(
+        () => args.modelValue,
+        (next) => {
+          value.value = next ?? false;
+        }
+      );
       return { args, value };
     },
     template: `

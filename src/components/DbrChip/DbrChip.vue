@@ -1,6 +1,6 @@
 <template>
   <span
-    class="dbru-chip dbru-btn dbru-size-sm dbru-text-sm"
+    class="dbru-chip dbru-btn dbru-size-sm dbru-font-size-sm"
     :class="[`dbru-btn--${variant}`, resolvedTextColorClass, { 'dbru-chip--removable': type === 'removable' }]"
   >
     <span class="dbru-chip__content">
@@ -9,7 +9,7 @@
     <button
       v-if="type === 'removable'"
       type="button"
-      class="dbru-chip__remove"
+      class="dbru-chip__remove dbru-focus-visible"
       :disabled="disabled"
       :aria-label="removeAriaLabel"
       @click="onRemove"
@@ -37,9 +37,9 @@ const {
 const emit = defineEmits<(e: 'remove') => void>();
 
 const textColorClass: Record<NonNullable<DbrChipProps['variant']>, string> = {
-  primary: 'dbru-text-on-primary',
-  ghost: 'dbru-text-main',
-  danger: 'dbru-text-on-danger',
+  primary: 'dbru-font-color-on-primary',
+  ghost: 'dbru-font-color-base',
+  danger: 'dbru-font-color-on-danger',
 };
 
 const resolvedTextColorClass = computed(() => textColorClass[variant]);
@@ -81,11 +81,6 @@ const onRemove = (event: MouseEvent) => {
 
 .dbru-chip__remove:hover:not(:disabled) {
   background: color-mix(in oklab, currentColor 16%, transparent);
-}
-
-.dbru-chip__remove:focus-visible {
-  outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
-  outline-offset: 1px;
 }
 
 .dbru-chip__remove:disabled {

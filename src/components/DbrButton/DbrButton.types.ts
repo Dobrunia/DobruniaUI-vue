@@ -27,4 +27,9 @@ export interface DbrButtonProps {
    * @default "button"
    */
   nativeType?: "button" | "submit" | "reset";
+  /**
+   * Slight downward shift on click (active state).
+   * @default false
+   */
+  pressEffect?: boolean;
 }

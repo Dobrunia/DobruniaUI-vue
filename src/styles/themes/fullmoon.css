@@ -2,6 +2,7 @@
   --dbru-color-bg: #0f1a2e;
   --dbru-color-surface: #1a2540;
   --dbru-color-text: #f4e4a6;
+  --dbru-color-text-muted: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
   --dbru-color-border: #3a4564;
 
   --dbru-color-primary: #f4d03f;
@@ -12,5 +13,5 @@
   --dbru-color-error: #ef4444;
   --dbru-color-success: #22c55e;
 
-  --dbru-color-focus: #f4d03f;
+  --dbru-color-focus: #b28f03;
 }

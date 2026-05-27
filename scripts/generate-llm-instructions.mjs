@@ -20,6 +20,7 @@ const COLOR_TOKEN_ORDER = [
   'bg',
   'surface',
   'text',
+  'text-muted',
   'border',
   'primary',
   'on-primary',
@@ -34,17 +35,17 @@ const REUSABLE_CLASS_ORDER = [
   'dbru-root',
   'dbru-bg',
   'dbru-surface',
-  ...SCALE_SUFFIX_ORDER.map((size) => `dbru-text-${size}`),
-  'dbru-text-main',
-  'dbru-text-muted',
-  'dbru-text-on-primary',
-  'dbru-text-on-danger',
+  ...SCALE_SUFFIX_ORDER.map((size) => `dbru-font-size-${size}`),
+  'dbru-font-color-base',
+  'dbru-font-color-muted',
+  'dbru-font-color-on-primary',
+  'dbru-font-color-on-danger',
   ...SCALE_SUFFIX_ORDER.filter((size) => size !== 'base' && size !== 'xl').map((size) => `dbru-size-${size}`),
   'dbru-btn',
   'dbru-btn--primary',
   'dbru-btn--ghost',
   'dbru-btn--danger',
-  'dbru-focusable',
+  'dbru-focus-visible',
   'dbru-reduced-motion',
 ];
 
@@ -205,12 +206,15 @@ const collectThemeCssFiles = async (dir) => {
     .sort((a, b) => a.localeCompare(b));
 };
 
+const REUSABLE_CLASS_EXCLUDE = new Set(['dbru-btn--press-effect']);
+
 const parseReusableClasses = (cssText) => {
   const classes = new Set();
   const classRegex = /\.([a-z0-9-]+)(?=[\s.:,{])/gi;
   for (const match of cssText.matchAll(classRegex)) {
     const className = match[1];
-    if (className.startsWith('dbru-')) classes.add(className);
+    if (!className.startsWith('dbru-') || REUSABLE_CLASS_EXCLUDE.has(className)) continue;
+    classes.add(className);
   }
   return sortByExplicitOrder([...classes], REUSABLE_CLASS_ORDER);
 };
@@ -246,6 +250,15 @@ const COMPONENT_USAGE_NOTES = {
   DbrChip: [
     'Pass chip content via default slot (text, icon, or mixed content).',
     'Use `variant` for visual style only (`primary|ghost|danger`).',
+  ],
+  DbrButton: [
+    'Optional `pressEffect` enables slight downward shift on click; default is no shift.',
+  ],
+  DbrIconButton: [
+    'Pass icon markup via default slot (`ariaLabel` is required).',
+    'Sizing: `dbru-size-*` + square `height`/`width` = `--dbru-control-height` (32 / 40 / 48); slot SVG scaled via `--_icon-scale` (sm / md / lg).',
+    'Default `variant="ghost"`: icon fills the control; hover — icon color only (`iconColor`: `base|muted|primary`).',
+    '`variant="border"`: fixed border; scaled centered icon; hover — icon color only (border unchanged).',
   ],
   DbrCheckbox: [
     'Use `v-model` (boolean) for checked state.',
@@ -359,8 +372,18 @@ const intro = [
   '',
   '- Reuse primitives and variants; avoid page-specific shortcuts.',
   '- Colors/radii/spacing should come from CSS variables and tokens.',
-  '- Prefer existing utility classes (`dbru-text-*`, `dbru-btn*`, `dbru-size-*`).',
+  '- Prefer existing utility classes (`dbru-font-size-*`, `dbru-font-color-*`, `dbru-btn*`, `dbru-size-*`).',
   '- Keep semantic shortcuts alias-only (no unique visual styles).',
+  '',
+  '## Focus Utilities',
+  '',
+  '- Wrap app UI in `dbru-root` (required). Root sets default typography (`font-family`, `font-size-base`, `line-height-base`, `color-text`) for the subtree.',
+  '- Inside root, `:focus:not(:focus-visible)` clears outline on mouse click; `.dbru-focus-visible:focus-visible` shows the ring on Tab.',
+  '- Add `dbru-focus-visible` on each focusable control that should show the ring (buttons, inputs, textareas).',
+  '- Do not use `dbru-focus-visible` on `DbrButtonGroup` items — group uses its own `:focus-visible` background (same as active).',
+  '- Hidden input + visible control (`DbrRadio`, `DbrToggle`, `DbrThemeToggle`): scoped `:has(input:focus-visible)` draws the ring on the visible track/control/label (input keeps `outline: none`).',
+  '- `--dbru-color-focus` is separate from `--dbru-color-primary` in every theme so the Tab ring stays visible.',
+  '- `DbrRadio` group: one Tab stop per `name`; arrow keys move selection; Enter selects focused option.',
   '',
   '## Reusable Classes From base.css',
   '',

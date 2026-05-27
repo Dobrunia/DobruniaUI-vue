@@ -48,7 +48,7 @@ export const Variants: Story = {
           <DbrRadio v-model="selected" name="shape" value="ellipse" label="Ellipse" />
           <DbrRadio v-model="selected" name="shape" value="polygon" label="Polygon" />
         </div>
-        <div class="dbru-text-base dbru-text-main">Your selection is: <b>{{ selected }}</b></div>
+        <div class="dbru-font-size-base dbru-font-color-base">Your selection is: <b>{{ selected }}</b></div>
       </div>
     `,
   }),

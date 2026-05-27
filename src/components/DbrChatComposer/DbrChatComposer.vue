@@ -10,11 +10,11 @@
         />
         <div
           v-else-if="item.kind === 'audio'"
-          class="dbru-chat-composer__audio dbru-text-sm dbru-text-main"
+          class="dbru-chat-composer__audio dbru-font-size-sm dbru-font-color-base"
         >
           <button
             type="button"
-            class="dbru-chat-composer__audio-btn dbru-text-main dbru-text-xs"
+            class="dbru-chat-composer__audio-btn dbru-font-color-base dbru-font-size-xs"
             @click="togglePreview(item.id)"
             aria-label="Play or pause audio"
           >
@@ -37,20 +37,20 @@
               :aria-label="`Audio position: ${item.name}`"
               @input="seekPreview(item.id, $event)"
             />
-            <span class="dbru-chat-composer__audio-time dbru-text-xs dbru-text-muted">
+            <span class="dbru-chat-composer__audio-time dbru-font-size-xs dbru-font-color-muted">
               {{ formatTime(item.currentTime || 0) }} / {{ formatTime(item.duration || 0) }}
             </span>
           </div>
         </div>
-        <div v-else class="dbru-chat-composer__file dbru-text-sm dbru-text-main">
+        <div v-else class="dbru-chat-composer__file dbru-font-size-sm dbru-font-color-base">
           <span class="dbru-chat-composer__file-icon">📎</span>
-          <span class="dbru-chat-composer__file-name dbru-text-sm dbru-text-main">{{
+          <span class="dbru-chat-composer__file-name dbru-font-size-sm dbru-font-color-base">{{
             item.name
           }}</span>
         </div>
         <button
           type="button"
-          class="dbru-chat-composer__remove dbru-text-main dbru-text-xs"
+          class="dbru-chat-composer__remove dbru-font-color-base dbru-font-size-xs"
           :disabled="disabled"
           @click="removeAttachment(item.id)"
           aria-label="Remove attachment"
@@ -63,7 +63,7 @@
     <div class="dbru-chat-composer__row">
       <button
         type="button"
-        class="dbru-chat-composer__icon-btn dbru-text-main"
+        class="dbru-chat-composer__icon-btn dbru-focus-visible dbru-font-color-base"
         :disabled="disabled"
         aria-label="Attach file"
         @click="openFilePicker"
@@ -81,7 +81,7 @@
 
       <textarea
         ref="textareaRef"
-        class="dbru-chat-composer__input dbru-reduced-motion dbru-text-base dbru-text-main"
+        class="dbru-chat-composer__input dbru-focus-visible dbru-reduced-motion dbru-font-size-base dbru-font-color-base"
         :value="modelValue"
         :placeholder="placeholder"
         :aria-label="ariaLabel"
@@ -93,7 +93,7 @@
 
       <button
         type="button"
-        class="dbru-chat-composer__icon-btn dbru-text-main"
+        class="dbru-chat-composer__icon-btn dbru-focus-visible dbru-font-color-base"
         :class="{ 'dbru-chat-composer__icon-btn--recording': isRecording }"
         :disabled="disabled || !canRecord"
         aria-label="Record voice message"
@@ -112,7 +112,7 @@
 
       <button
         type="button"
-        class="dbru-chat-composer__send dbru-text-main"
+        class="dbru-chat-composer__send dbru-focus-visible dbru-font-color-base"
         :disabled="disabled || !canSend"
         aria-label="Send message"
         @click="send"
@@ -143,7 +143,13 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { DbrChatAttachment, DbrChatComposerProps } from './DbrChatComposer.types';
 
-const { modelValue = '', placeholder = 'Message', ariaLabel = 'Message', disabled = false, maxHeight = 120 } = defineProps<DbrChatComposerProps>();
+const {
+  modelValue = '',
+  placeholder = 'Message',
+  ariaLabel = 'Message',
+  disabled = false,
+  maxHeight = 120,
+} = defineProps<DbrChatComposerProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
@@ -369,7 +375,10 @@ const toggleRecord = async () => {
   }
 };
 
-watch(() => modelValue, () => resizeTextarea());
+watch(
+  () => modelValue,
+  () => resizeTextarea()
+);
 
 onMounted(() => resizeTextarea());
 
@@ -418,10 +427,8 @@ onBeforeUnmount(() => {
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
 }
 
-.dbru-chat-composer__input:focus {
+.dbru-chat-composer__input:hover:not(:disabled) {
   border-color: var(--dbru-color-primary);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--dbru-color-primary) 25%, #0000);
-  outline: none;
 }
 
 .dbru-chat-composer__icon-btn,

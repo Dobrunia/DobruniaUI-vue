@@ -33,24 +33,24 @@ export const Variants: Story = {
     components: { DbrSkeleton },
     template: `
       <div style="display:grid; gap:14px; max-width: 360px;">
-        <div class="dbru-text-sm dbru-text-main">Default (no props: width 100%, height 0, radius 0)</div>
+        <div class="dbru-font-size-sm dbru-font-color-base">Default (no props: width 100%, height 0, radius 0)</div>
         <div style="border: 1px dashed var(--dbru-color-border); padding: 8px;">
           <DbrSkeleton />
         </div>
 
-        <div class="dbru-text-sm dbru-text-main">Square</div>
+        <div class="dbru-font-size-sm dbru-font-color-base">Square</div>
         <DbrSkeleton width="32px" height="32px" radius="0" />
 
-        <div class="dbru-text-sm dbru-text-main">Rounded Square</div>
+        <div class="dbru-font-size-sm dbru-font-color-base">Rounded Square</div>
         <DbrSkeleton width="40px" height="40px" radius="8px" />
 
-        <div class="dbru-text-sm dbru-text-main">Circle (avatar)</div>
+        <div class="dbru-font-size-sm dbru-font-color-base">Circle (avatar)</div>
         <DbrSkeleton width="40px" height="40px" radius="999px" />
 
-        <div class="dbru-text-sm dbru-text-main">Pill</div>
+        <div class="dbru-font-size-sm dbru-font-color-base">Pill</div>
         <DbrSkeleton width="120px" height="20px" radius="999px" />
 
-        <div class="dbru-text-sm dbru-text-main">Text Lines</div>
+        <div class="dbru-font-size-sm dbru-font-color-base">Text Lines</div>
         <div style="display:grid; gap:8px;">
           <DbrSkeleton width="220px" height="12px" radius="6px" />
           <DbrSkeleton width="180px" height="10px" radius="6px" />

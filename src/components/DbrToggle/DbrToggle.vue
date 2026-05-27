@@ -9,22 +9,25 @@
     <input
       class="dbru-toggle__input dbru-reduced-motion"
       type="checkbox"
-      :checked="modelValue"
+      v-model="checked"
       :disabled="disabled"
       :name="name"
       :value="value"
+      @keydown.enter.prevent="toggleFromKeyboard"
+      @keydown.space.prevent="toggleFromKeyboard"
       @change="onChange"
     />
     <span class="dbru-toggle__track" aria-hidden="true">
       <span class="dbru-toggle__thumb"></span>
     </span>
-    <span v-if="label || $slots.default" class="dbru-text-base dbru-text-main">
+    <span v-if="label || $slots.default" class="dbru-font-size-base dbru-font-color-base">
       <slot>{{ label }}</slot>
     </span>
   </label>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { DbrToggleProps } from './DbrToggle.types';
 
 defineSlots<{
@@ -38,6 +41,19 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'change', value: boolean): void;
 }>();
+
+const checked = computed({
+  get: () => modelValue,
+  set: (next: boolean) => {
+    emit('update:modelValue', next);
+    emit('change', next);
+  },
+});
+
+const toggleFromKeyboard = () => {
+  if (disabled) return;
+  checked.value = !checked.value;
+};
 
 const onChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -122,9 +138,13 @@ const onChange = (event: Event) => {
   border-color: var(--dbru-color-surface);
 }
 
-.dbru-toggle__input:focus-visible + .dbru-toggle__track {
+.dbru-toggle__input:focus-visible {
+  outline: none;
+}
+
+.dbru-toggle:has(.dbru-toggle__input:focus-visible) .dbru-toggle__track {
   outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
-  outline-offset: 2px;
+  outline-offset: 0;
 }
 
 .dbru-toggle--disabled {

@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { ref } from "vue";
 import DbrAvatar from "../components/DbrAvatar/DbrAvatar.vue";
 import DbrBadge from "../components/DbrBadge/DbrBadge.vue";
 import DbrChip from "../components/DbrChip/DbrChip.vue";
 import DbrButton from "../components/DbrButton/DbrButton.vue";
+import DbrIconButton from "../components/DbrIconButton/DbrIconButton.vue";
 import DbrButtonGroup from "../components/DbrButtonGroup/DbrButtonGroup.vue";
 import DbrCard from "../components/DbrCard/DbrCard.vue";
 import DbrChatBubble from "../components/DbrChatBubble/DbrChatBubble.vue";
@@ -30,11 +32,20 @@ type Story = StoryObj;
 
 export const AllComponents: Story = {
   render: () => ({
+    setup() {
+      const rememberMe = ref(false);
+      const autoUpdates = ref(false);
+      const menuOpen = ref(false);
+      const shape = ref("line");
+      const darkTheme = ref(false);
+      return { rememberMe, autoUpdates, menuOpen, shape, darkTheme };
+    },
     components: {
       DbrAvatar,
       DbrBadge,
       DbrChip,
       DbrButton,
+      DbrIconButton,
       DbrButtonGroup,
       DbrCard,
       DbrChatBubble,
@@ -55,7 +66,7 @@ export const AllComponents: Story = {
     template: `
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px; align-items:start;">
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-text-base dbru-text-main">Buttons</h4>
+          <h4 class="dbru-font-size-base dbru-font-color-base">Buttons</h4>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
             <DbrButton variant="primary">Primary</DbrButton>
             <DbrButton variant="ghost">Ghost</DbrButton>
@@ -78,32 +89,39 @@ export const AllComponents: Story = {
                 <span>Edit</span>
               </span>
             </DbrButton>
-            <DbrButton variant="ghost" style="width: 40px; padding: 0;">
-              ⚙️
-            </DbrButton>
+            <DbrIconButton aria-label="Settings" size="md">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+                <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1 1.39 1.51H21a2 2 0 1 1 0 4h-.09c-.62 0-1.13.4-1.39 1Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </DbrIconButton>
           </div>
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-text-base dbru-text-main">Inputs</h4>
+          <h4 class="dbru-font-size-base dbru-font-color-base">Inputs</h4>
           <div style="display:grid; gap:10px; margin-top:10px;">
             <DbrInput label="Email" model-value="user@mail.com" />
             <DbrInput label="Password" type="password" model-value="secret123" />
             <div style="display:flex; flex-wrap:wrap; gap:10px;">
-              <DbrCheckbox label="Remember me" />
-              <DbrToggle label="Auto updates" />
-              <DbrMenuToggle label="Mobile menu" />
+              <DbrCheckbox v-model="rememberMe" label="Remember me" />
+              <DbrToggle v-model="autoUpdates" label="Auto updates" />
+              <DbrMenuToggle v-model="menuOpen" label="Mobile menu" />
             </div>
-            <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
-              <DbrRadio name="theme-playground-shape" value="line" label="Line" />
-              <DbrRadio name="theme-playground-shape" value="rectangle" label="Rectangle" />
-              <DbrRadio name="theme-playground-shape" value="ellipse" label="Ellipse" />
+            <div
+              role="radiogroup"
+              aria-label="Shape"
+              style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;"
+            >
+              <DbrRadio v-model="shape" name="theme-playground-shape" value="line" label="Line" />
+              <DbrRadio v-model="shape" name="theme-playground-shape" value="rectangle" label="Rectangle" />
+              <DbrRadio v-model="shape" name="theme-playground-shape" value="ellipse" label="Ellipse" />
             </div>
           </div>
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-text-base dbru-text-main">Identity</h4>
+          <h4 class="dbru-font-size-base dbru-font-color-base">Identity</h4>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; align-items:center;">
             <DbrAvatar name="Jane Doe" size="sm" />
             <DbrAvatar name="Jane Doe" size="md" shape="rounded" />
@@ -116,15 +134,15 @@ export const AllComponents: Story = {
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; align-items:center;">
             <DbrTooltip text="Theme helper" variant="info" />
-            <DbrThemeToggle />
+            <DbrThemeToggle v-model="darkTheme" />
           </div>
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-text-base dbru-text-main">Cards And Loaders</h4>
+          <h4 class="dbru-font-size-base dbru-font-color-base">Cards And Loaders</h4>
           <DbrCard hoverable style="margin-top:10px;">
             <div style="display:grid; gap:10px;">
-              <span class="dbru-text-base dbru-text-main">Card content</span>
+              <span class="dbru-font-size-base dbru-font-color-base">Card content</span>
               <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
                 <DbrLoader size="sm" />
                 <DbrEyesLoader />
@@ -136,7 +154,7 @@ export const AllComponents: Story = {
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-text-base dbru-text-main">Chat</h4>
+          <h4 class="dbru-font-size-base dbru-font-color-base">Chat</h4>
           <div style="display:grid; gap:10px; margin-top:10px;">
             <DbrChatListItem
               name="Support"

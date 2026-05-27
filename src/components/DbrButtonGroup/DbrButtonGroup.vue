@@ -5,7 +5,7 @@
         v-for="(option, index) in options"
         :key="option.value"
         type="button"
-        class="dbru-button-group__item dbru-text-main"
+        class="dbru-button-group__item dbru-font-color-base"
         :class="{
           'dbru-button-group__item--active': isActive(option.value),
           'dbru-button-group__item--first': index === 0,
@@ -132,9 +132,9 @@ const onWheel = (event: WheelEvent) => {
   color: var(--dbru-color-primary);
 }
 
-.dbru-button-group__item:focus-visible {
-  outline: var(--dbru-border-size-2) solid var(--dbru-color-focus);
-  outline-offset: -2px;
+.dbru-button-group__item:focus-visible:not(:disabled) {
+  outline: none;
+  background: color-mix(in oklab, var(--dbru-color-primary) 16%, transparent);
   position: relative;
   z-index: 1;
 }

@@ -10,6 +10,8 @@ DobruniaUI is a comprehensive Vue 3 component library designed with a focus on m
 
 For the always up-to-date generated reference (components, tokens, reusable classes, and named types), use [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md).
 
+Upgrading from **2.x**? See **[MIGRATION_v2_to_v3.md](./MIGRATION_v2_to_v3.md)**.
+
 ## 🎮 Demo
 
 **[Explore all components in the interactive playground →](https://dobrunia.github.io/DobruniaUI-vue/)**
@@ -29,6 +31,14 @@ npm i dobruniaui-vue
 ```
 
 ## Usage
+
+Wrap app UI in `dbru-root` and a theme class (for example `dbru-theme-light`):
+
+```vue
+<div class="dbru-root dbru-theme-light">
+  <!-- components -->
+</div>
+```
 
 ```ts
 import { createApp } from 'vue';
@@ -67,14 +77,14 @@ Full up-to-date class list is generated in [`LLM_INSTRUCTIONS.md`](https://githu
 Examples:
 
 ```vue
-<span class="dbru-text-sm dbru-text-main">Main text</span>
-<span class="dbru-text-xs dbru-text-muted">Meta info</span>
-<span class="dbru-text-sm dbru-text-on-primary">Text on primary bg</span>
+<span class="dbru-font-size-sm dbru-font-color-base">Main text</span>
+<span class="dbru-font-size-xs dbru-font-color-muted">Meta info</span>
+<span class="dbru-font-size-sm dbru-font-color-on-primary">Text on primary bg</span>
 <div class="dbru-surface">Surface block</div>
 <button
-  class="dbru-btn dbru-btn--primary dbru-size-md dbru-text-base dbru-text-on-primary"
+  class="dbru-btn dbru-btn--primary dbru-size-md dbru-font-size-base dbru-font-color-on-primary"
 >Action</button>
-<button class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-text-sm dbru-text-main">Cancel</button>
+<button class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-font-size-sm dbru-font-color-base">Cancel</button>
 ```
 
 ## Design Tokens

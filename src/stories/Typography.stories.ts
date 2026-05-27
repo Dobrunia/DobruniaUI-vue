@@ -9,18 +9,18 @@ export default meta;
 type Story = StoryObj;
 
 const scaleRows = [
-  { className: "dbru-text-xs", token: "--dbru-font-size-xs", sample: "Extra small · 11px" },
-  { className: "dbru-text-sm", token: "--dbru-font-size-sm", sample: "Small · 12px" },
-  { className: "dbru-text-base", token: "--dbru-font-size-base", sample: "Base body · 14px" },
-  { className: "dbru-text-lg", token: "--dbru-font-size-lg", sample: "Large · 16px" },
-  { className: "dbru-text-xl", token: "--dbru-font-size-xl", sample: "Extra large heading · 28px" },
+  { className: "dbru-font-size-xs", token: "--dbru-font-size-xs", sample: "Extra small · 11px" },
+  { className: "dbru-font-size-sm", token: "--dbru-font-size-sm", sample: "Small · 12px" },
+  { className: "dbru-font-size-base", token: "--dbru-font-size-base", sample: "Base body · 14px" },
+  { className: "dbru-font-size-lg", token: "--dbru-font-size-lg", sample: "Large · 16px" },
+  { className: "dbru-font-size-xl", token: "--dbru-font-size-xl", sample: "Extra large heading · 28px" },
 ] as const;
 
 const colorRows = [
-  { className: "dbru-text-main", sample: "Main text color" },
-  { className: "dbru-text-muted", sample: "Muted secondary text" },
-  { className: "dbru-text-on-primary", sample: "On primary background", swatch: "primary" },
-  { className: "dbru-text-on-danger", sample: "On danger background", swatch: "danger" },
+  { className: "dbru-font-color-base", token: "--dbru-color-text", sample: "Base text color" },
+  { className: "dbru-font-color-muted", token: "--dbru-color-text-muted", sample: "Muted secondary text" },
+  { className: "dbru-font-color-on-primary", sample: "On primary background", swatch: "primary" },
+  { className: "dbru-font-color-on-danger", sample: "On danger background", swatch: "danger" },
 ] as const;
 
 export const Scale: Story = {
@@ -28,18 +28,18 @@ export const Scale: Story = {
     setup: () => ({ scaleRows }),
     template: `
       <div style="display:grid; gap:20px; max-width:720px;">
-        <p class="dbru-text-sm dbru-text-muted">
-          Size utilities from <code>base.css</code>. Combine with color classes (see Colors story).
+        <p class="dbru-font-size-sm dbru-font-color-muted">
+          Size utilities set <code>font-size</code> only. Base typography comes from <code>dbru-root</code>.
         </p>
         <div
           v-for="row in scaleRows"
           :key="row.className"
           style="display:grid; grid-template-columns: 140px 1fr; gap:12px; align-items:baseline; padding-bottom:12px; border-bottom:1px solid var(--dbru-color-border);"
         >
-          <code class="dbru-text-xs dbru-text-muted">{{ row.className }}</code>
+          <code class="dbru-font-size-xs dbru-font-color-muted">{{ row.className }}</code>
           <div>
-            <div :class="[row.className, 'dbru-text-main']">{{ row.sample }}</div>
-            <div class="dbru-text-xs dbru-text-muted" style="margin-top:4px;">{{ row.token }}</div>
+            <div :class="[row.className, 'dbru-font-color-base']">{{ row.sample }}</div>
+            <div class="dbru-font-size-xs dbru-font-color-muted" style="margin-top:4px;">{{ row.token }}</div>
           </div>
         </div>
       </div>
@@ -52,15 +52,15 @@ export const Colors: Story = {
     setup: () => ({ colorRows }),
     template: `
       <div style="display:grid; gap:16px; max-width:720px;">
-        <p class="dbru-text-sm dbru-text-muted">
-          Color utilities pair with any size class, e.g. <code>dbru-text-xl dbru-text-main</code>.
+        <p class="dbru-font-size-sm dbru-font-color-muted">
+          Color utilities pair with any size class, e.g. <code>dbru-font-size-xl dbru-font-color-base</code>.
         </p>
         <div
           v-for="row in colorRows"
           :key="row.className"
           style="display:grid; grid-template-columns: 180px 1fr; gap:12px; align-items:center;"
         >
-          <code class="dbru-text-xs dbru-text-muted">{{ row.className }}</code>
+          <code class="dbru-font-size-xs dbru-font-color-muted">{{ row.className }}</code>
           <div
             v-if="row.swatch"
             style="padding:12px 16px; border-radius: var(--dbru-radius-md);"
@@ -68,9 +68,12 @@ export const Colors: Story = {
               background: row.swatch === 'primary' ? 'var(--dbru-color-primary)' : 'var(--dbru-color-danger)',
             }"
           >
-            <span :class="['dbru-text-base', row.className]">{{ row.sample }}</span>
+            <span :class="['dbru-font-size-base', row.className]">{{ row.sample }}</span>
           </div>
-          <span v-else :class="['dbru-text-base', row.className]">{{ row.sample }}</span>
+          <div v-else>
+            <div :class="['dbru-font-size-base', row.className]">{{ row.sample }}</div>
+            <div v-if="row.token" class="dbru-font-size-xs dbru-font-color-muted" style="margin-top:4px;">{{ row.token }}</div>
+          </div>
         </div>
       </div>
     `,
@@ -82,15 +85,15 @@ export const Composed: Story = {
     template: `
       <div style="display:grid; gap:24px; max-width:640px;">
         <div>
-          <h1 class="dbru-text-xl dbru-text-main" style="margin:0;">Page title</h1>
-          <p class="dbru-text-base dbru-text-muted" style="margin:8px 0 0;">Subtitle with base + muted</p>
+          <h1 class="dbru-font-size-xl dbru-font-color-base" style="margin:0;">Page title</h1>
+          <p class="dbru-font-size-base dbru-font-color-muted" style="margin:8px 0 0;">Subtitle with base + muted</p>
         </div>
         <div>
-          <h2 class="dbru-text-lg dbru-text-main" style="margin:0;">Section heading</h2>
-          <p class="dbru-text-base dbru-text-main" style="margin:8px 0 0;">
-            Body copy uses <code>dbru-text-base dbru-text-main</code>.
+          <h2 class="dbru-font-size-lg dbru-font-color-base" style="margin:0;">Section heading</h2>
+          <p class="dbru-font-size-base dbru-font-color-base" style="margin:8px 0 0;">
+            Body copy uses <code>dbru-font-size-base dbru-font-color-base</code>.
           </p>
-          <p class="dbru-text-sm dbru-text-muted" style="margin:4px 0 0;">Meta line · dbru-text-sm dbru-text-muted</p>
+          <p class="dbru-font-size-sm dbru-font-color-muted" style="margin:4px 0 0;">Meta line · dbru-font-size-sm dbru-font-color-muted</p>
         </div>
       </div>
     `,

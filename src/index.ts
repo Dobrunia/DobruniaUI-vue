@@ -2,6 +2,7 @@ import "./styles/index.css";
 import type { App } from "vue";
 
 import DbrButton from "./components/DbrButton/DbrButton.vue";
+import DbrIconButton from "./components/DbrIconButton/DbrIconButton.vue";
 import DbrButtonGroup from "./components/DbrButtonGroup/DbrButtonGroup.vue";
 import DbrEyesLoader from "./components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrLoader from "./components/DbrLoader/DbrLoader.vue";
@@ -24,6 +25,7 @@ import DbrSkeleton from "./components/DbrSkeleton/DbrSkeleton.vue";
 
 export {
   DbrButton,
+  DbrIconButton,
   DbrButtonGroup,
   DbrEyesLoader,
   DbrLoader,
@@ -46,6 +48,12 @@ export {
 };
 
 export type { DbrButtonProps, DbrButtonSize, DbrButtonVariant } from "./components/DbrButton/DbrButton.types";
+export type {
+  DbrIconButtonProps,
+  DbrIconButtonSize,
+  DbrIconButtonVariant,
+  DbrIconButtonIconColor,
+} from "./components/DbrIconButton/DbrIconButton.types";
 export type { DbrButtonGroupProps, DbrButtonGroupOption, DbrButtonGroupSize, DbrButtonGroupValue } from "./components/DbrButtonGroup/DbrButtonGroup.types";
 export type { DbrLoaderProps } from "./components/DbrLoader/DbrLoader.types";
 export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.types";
@@ -67,6 +75,7 @@ export type { DbrSkeletonProps } from "./components/DbrSkeleton/DbrSkeleton.type
 export default {
   install(app: App) {
     app.component("DbrButton", DbrButton);
+    app.component("DbrIconButton", DbrIconButton);
     app.component("DbrButtonGroup", DbrButtonGroup);
     app.component("DbrEyesLoader", DbrEyesLoader);
     app.component("DbrLoader", DbrLoader);

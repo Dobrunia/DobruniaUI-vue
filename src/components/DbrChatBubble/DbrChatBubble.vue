@@ -1,10 +1,10 @@
 <template>
   <div class="dbru-chat-bubble-wrap" :class="`dbru-chat-bubble-wrap--${direction}`">
-    <div v-if="name" class="dbru-chat-bubble__name dbru-text-sm dbru-text-muted">
+    <div v-if="name" class="dbru-chat-bubble__name dbru-font-size-sm dbru-font-color-muted">
       {{ name }}
     </div>
     <div
-      class="dbru-chat-bubble dbru-text-main"
+      class="dbru-chat-bubble dbru-font-color-base"
       v-bind="attrs"
       :class="[
         `dbru-chat-bubble--${direction}`,
@@ -12,19 +12,19 @@
         { 'dbru-chat-bubble--no-text': !text },
       ]"
     >
-      <div v-if="kind === 'text'" class="dbru-chat-bubble__text dbru-text-base">{{ text }}</div>
+      <div v-if="kind === 'text'" class="dbru-chat-bubble__text dbru-font-size-base">{{ text }}</div>
       <div v-else-if="kind === 'image'" class="dbru-chat-bubble__media">
         <button class="dbru-chat-bubble__image-btn" type="button" @click="openImage">
           <img class="dbru-chat-bubble__image" :src="mediaSrc" :alt="text || 'Media'" />
         </button>
-        <div v-if="text" class="dbru-chat-bubble__caption dbru-text-base">
+        <div v-if="text" class="dbru-chat-bubble__caption dbru-font-size-base">
           {{ text }}
         </div>
       </div>
       <div v-else-if="kind === 'audio'" class="dbru-chat-bubble__media">
         <div class="dbru-chat-bubble__audio">
           <button
-            class="dbru-chat-bubble__audio-btn dbru-text-main"
+            class="dbru-chat-bubble__audio-btn dbru-font-color-base"
             type="button"
             @click="togglePlay"
             :aria-label="isPlaying ? 'Pause audio' : 'Play audio'"
@@ -37,7 +37,7 @@
             <div class="dbru-chat-bubble__audio-track" @click="seek">
               <div class="dbru-chat-bubble__audio-progress" :style="{ width: progress + '%' }"></div>
             </div>
-            <span class="dbru-chat-bubble__audio-time dbru-text-sm dbru-text-muted">{{
+            <span class="dbru-chat-bubble__audio-time dbru-font-size-sm dbru-font-color-muted">{{
               durationLabel
             }}</span>
           </div>
@@ -50,18 +50,18 @@
             @ended="onEnded"
           ></audio>
         </div>
-        <div v-if="text" class="dbru-chat-bubble__caption dbru-text-base">
+        <div v-if="text" class="dbru-chat-bubble__caption dbru-font-size-base">
           {{ text }}
         </div>
       </div>
       <div class="dbru-chat-bubble__meta">
-        <span class="dbru-chat-bubble__time dbru-text-sm dbru-text-muted">{{ time }}</span>
+        <span class="dbru-chat-bubble__time dbru-font-size-sm dbru-font-color-muted">{{ time }}</span>
         <span
           v-if="direction === 'out' && status !== 'none'"
-          class="dbru-chat-bubble__status dbru-text-xs dbru-text-muted"
+          class="dbru-chat-bubble__status dbru-font-size-xs dbru-font-color-muted"
           :class="`dbru-chat-bubble__status--${status}`"
         >
-          <span v-if="status === 'sending'" class="dbru-chat-bubble__sending dbru-text-xs">⏳</span>
+          <span v-if="status === 'sending'" class="dbru-chat-bubble__sending dbru-font-size-xs">⏳</span>
           <template v-else>
             <span class="dbru-chat-bubble__check">✓</span>
             <span v-if="status === 'read'" class="dbru-chat-bubble__check">✓</span>

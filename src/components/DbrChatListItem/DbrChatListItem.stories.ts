@@ -143,7 +143,7 @@ export const Variants: Story = {
         <div style="font-weight: 600; margin-top: 8px;">Loading Toggle</div>
         <button
           type="button"
-          class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-text-sm dbru-text-main"
+          class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-font-size-sm dbru-font-color-base"
           @click="loading = !loading"
         >
           {{ loading ? 'Show regular' : 'Show skeleton' }}
