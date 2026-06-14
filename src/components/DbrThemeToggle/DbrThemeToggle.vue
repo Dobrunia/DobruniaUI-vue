@@ -114,6 +114,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .dbru-theme-toggle {
+  box-sizing: border-box;
   background-color: var(--dbru-color-surface);
   width: var(--dbru-control-height, var(--dbru-control-height-md));
   height: var(--dbru-control-height, var(--dbru-control-height-md));

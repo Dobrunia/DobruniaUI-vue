@@ -64,6 +64,7 @@ const onWheel = (event: WheelEvent) => {
 
 <style scoped>
 .dbru-button-group {
+  box-sizing: border-box;
   display: block;
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   border-radius: var(--dbru-radius-md);
@@ -77,6 +78,18 @@ const onWheel = (event: WheelEvent) => {
   justify-self: start;
 }
 
+.dbru-button-group--sm {
+  height: var(--dbru-control-height-sm);
+}
+
+.dbru-button-group--md {
+  height: var(--dbru-control-height-md);
+}
+
+.dbru-button-group--lg {
+  height: var(--dbru-control-height-lg);
+}
+
 .dbru-button-group::-webkit-scrollbar {
   display: none;
 }
@@ -85,10 +98,12 @@ const onWheel = (event: WheelEvent) => {
   display: inline-flex;
   align-items: stretch;
   min-width: max-content;
+  height: 100%;
 }
 
 .dbru-button-group__item {
   flex: 0 0 auto;
+  height: 100%;
   border: none;
   border-right: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background: transparent;
@@ -106,19 +121,16 @@ const onWheel = (event: WheelEvent) => {
 }
 
 .dbru-button-group--sm .dbru-button-group__item {
-  min-height: var(--dbru-control-height-sm);
   padding: 0 var(--dbru-space-3);
   font-size: var(--dbru-font-size-sm);
 }
 
 .dbru-button-group--md .dbru-button-group__item {
-  min-height: var(--dbru-control-height-md);
   padding: 0 var(--dbru-space-4);
   font-size: var(--dbru-font-size-base);
 }
 
 .dbru-button-group--lg .dbru-button-group__item {
-  min-height: var(--dbru-control-height-lg);
   padding: 0 var(--dbru-space-5);
   font-size: var(--dbru-font-size-lg);
 }

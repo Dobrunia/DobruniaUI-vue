@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-05-27T22:43:08.493Z
+Generated on: 2026-06-14T17:16:36.653Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `3.0.0`
+- Version: `3.0.1`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -142,6 +142,7 @@ import "dobruniaui-vue/styles.css";
 
 - Pass chip content via default slot (text, icon, or mixed content).
 - Use `variant` for visual style only (`primary|ghost|danger`).
+- Fixed size only: always `sm` / 32px height (`dbru-size-sm`) — no `size` prop.
 
 ### DbrIconButton
 

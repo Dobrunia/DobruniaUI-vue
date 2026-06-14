@@ -131,6 +131,7 @@ const onInput = (event: Event) => {
 }
 
 .dbru-input__field {
+  box-sizing: border-box;
   width: 100%;
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background-color: var(--dbru-color-surface);

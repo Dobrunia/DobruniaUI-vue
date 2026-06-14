@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
+import DbrButton from '../DbrButton/DbrButton.vue';
 import DbrButtonGroup from './DbrButtonGroup.vue';
 
 const OPTIONS = [
@@ -40,7 +41,7 @@ export const Playground: Story = {
 
 export const Variants: Story = {
   render: () => ({
-    components: { DbrButtonGroup },
+    components: { DbrButton, DbrButtonGroup },
     setup: () => {
       const shape = ref('ellipse');
       const lockedShape = 'ellipse';
@@ -84,10 +85,19 @@ export const Variants: Story = {
           />
         </div>
 
-        <div style="font-weight:600; margin-top:4px;">Size scale</div>
-        <DbrButtonGroup v-model="shape" :options="options" size="sm" />
-        <DbrButtonGroup v-model="shape" :options="options" size="md" />
-        <DbrButtonGroup v-model="shape" :options="options" size="lg" />
+        <div style="font-weight:600; margin-top:4px;">Size scale (aligned with DbrButton)</div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
+          <DbrButton size="sm" variant="ghost">Button sm</DbrButton>
+          <DbrButtonGroup v-model="shape" :options="options" size="sm" />
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
+          <DbrButton size="md" variant="ghost">Button md</DbrButton>
+          <DbrButtonGroup v-model="shape" :options="options" size="md" />
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
+          <DbrButton size="lg" variant="ghost">Button lg</DbrButton>
+          <DbrButtonGroup v-model="shape" :options="options" size="lg" />
+        </div>
         <DbrButtonGroup
           v-model="shape"
           :options="[

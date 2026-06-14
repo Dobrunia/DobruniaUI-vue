@@ -26,6 +26,7 @@ const initials = computed(() => {
 
 <style scoped>
 .dbru-avatar {
+  box-sizing: border-box;
   --_size: var(--dbru-control-height, var(--dbru-control-height-md));
   --_font-size: var(--dbru-control-font-size, var(--dbru-font-size-base));
 

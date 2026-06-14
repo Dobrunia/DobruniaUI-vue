@@ -433,6 +433,7 @@ onBeforeUnmount(() => {
 
 .dbru-chat-composer__icon-btn,
 .dbru-chat-composer__send {
+  box-sizing: border-box;
   width: var(--dbru-control-height-md);
   height: var(--dbru-control-height-md);
   border-radius: 50%;

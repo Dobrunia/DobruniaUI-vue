@@ -96,6 +96,7 @@ const onChange = (event: Event) => {
 }
 
 .dbru-toggle__track {
+  box-sizing: border-box;
   width: var(--_track-width);
   height: var(--_height);
   border-radius: 999px;

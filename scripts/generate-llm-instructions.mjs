@@ -250,6 +250,7 @@ const COMPONENT_USAGE_NOTES = {
   DbrChip: [
     'Pass chip content via default slot (text, icon, or mixed content).',
     'Use `variant` for visual style only (`primary|ghost|danger`).',
+    'Fixed size only: always `sm` / 32px height (`dbru-size-sm`) — no `size` prop.',
   ],
   DbrButton: [
     'Optional `pressEffect` enables slight downward shift on click; default is no shift.',

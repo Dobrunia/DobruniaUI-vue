@@ -88,6 +88,7 @@
 }
 
 .dbru-btn {
+  box-sizing: border-box;
   --_radius: var(--dbru-radius-md);
   --_gap: var(--dbru-space-2);
   --_px: var(--dbru-control-px, var(--dbru-space-4));
