@@ -1,10 +1,16 @@
 <template>
   <div class="dbru-chat-bubble-wrap" :class="`dbru-chat-bubble-wrap--${direction}`">
-    <div v-if="name" class="dbru-chat-bubble__name dbru-font-size-sm dbru-font-color-muted">
+    <DbrText
+      v-if="name"
+      class="dbru-chat-bubble__name"
+      color="muted"
+      size="sm"
+      :align="direction === 'out' ? 'right' : 'left'"
+    >
       {{ name }}
-    </div>
+    </DbrText>
     <div
-      class="dbru-chat-bubble dbru-font-color-base"
+      class="dbru-chat-bubble"
       v-bind="attrs"
       :class="[
         `dbru-chat-bubble--${direction}`,
@@ -12,34 +18,34 @@
         { 'dbru-chat-bubble--no-text': !text },
       ]"
     >
-      <div v-if="kind === 'text'" class="dbru-chat-bubble__text dbru-font-size-base">{{ text }}</div>
+      <DbrText v-if="kind === 'text'" wrap="pre-wrap">{{ text }}</DbrText>
       <div v-else-if="kind === 'image'" class="dbru-chat-bubble__media">
         <button class="dbru-chat-bubble__image-btn" type="button" @click="openImage">
           <img class="dbru-chat-bubble__image" :src="mediaSrc" :alt="text || 'Media'" />
         </button>
-        <div v-if="text" class="dbru-chat-bubble__caption dbru-font-size-base">
+        <DbrText v-if="text" class="dbru-chat-bubble__caption">
           {{ text }}
-        </div>
+        </DbrText>
       </div>
       <div v-else-if="kind === 'audio'" class="dbru-chat-bubble__media">
         <div class="dbru-chat-bubble__audio">
           <button
-            class="dbru-chat-bubble__audio-btn dbru-font-color-base"
+            class="dbru-chat-bubble__audio-btn"
             type="button"
             @click="togglePlay"
             :aria-label="isPlaying ? 'Pause audio' : 'Play audio'"
           >
-            <span class="dbru-chat-bubble__audio-icon">
+            <DbrText class="dbru-chat-bubble__audio-icon">
               {{ isPlaying ? '⏸' : '▶' }}
-            </span>
+            </DbrText>
           </button>
           <div class="dbru-chat-bubble__audio-controls">
             <div class="dbru-chat-bubble__audio-track" @click="seek">
               <div class="dbru-chat-bubble__audio-progress" :style="{ width: progress + '%' }"></div>
             </div>
-            <span class="dbru-chat-bubble__audio-time dbru-font-size-sm dbru-font-color-muted">{{
-              durationLabel
-            }}</span>
+            <DbrText class="dbru-chat-bubble__audio-time" color="muted" size="sm" wrap="nowrap">
+              {{ durationLabel }}
+            </DbrText>
           </div>
           <audio
             ref="audioRef"
@@ -50,23 +56,24 @@
             @ended="onEnded"
           ></audio>
         </div>
-        <div v-if="text" class="dbru-chat-bubble__caption dbru-font-size-base">
+        <DbrText v-if="text" class="dbru-chat-bubble__caption">
           {{ text }}
-        </div>
+        </DbrText>
       </div>
       <div class="dbru-chat-bubble__meta">
-        <span class="dbru-chat-bubble__time dbru-font-size-sm dbru-font-color-muted">{{ time }}</span>
-        <span
+        <DbrText class="dbru-chat-bubble__time" color="muted" size="sm">{{ time }}</DbrText>
+        <DbrText
           v-if="direction === 'out' && status !== 'none'"
-          class="dbru-chat-bubble__status dbru-font-size-xs dbru-font-color-muted"
-          :class="`dbru-chat-bubble__status--${status}`"
+          class="dbru-chat-bubble__status"
+          :color="statusTextColor"
+          size="xs"
         >
-          <span v-if="status === 'sending'" class="dbru-chat-bubble__sending dbru-font-size-xs">⏳</span>
+          <template v-if="status === 'sending'">⏳</template>
           <template v-else>
             <span class="dbru-chat-bubble__check">✓</span>
             <span v-if="status === 'read'" class="dbru-chat-bubble__check">✓</span>
           </template>
-        </span>
+        </DbrText>
       </div>
     </div>
   </div>
@@ -86,6 +93,8 @@
 <script setup lang="ts">
 import type { DbrChatBubbleProps } from './DbrChatBubble.types';
 import { computed, ref, useAttrs, watch } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
+import type { DbrTextColor } from '../DbrText/DbrText.types';
 
 const {
   name = '',
@@ -116,6 +125,8 @@ const durationLabel = computed(() => {
   const secs = String(total % 60).padStart(2, '0');
   return `${mins}:${secs}`;
 });
+
+const statusTextColor = computed<DbrTextColor>(() => (status === 'read' ? 'success' : 'muted'));
 
 const togglePlay = () => {
   const audio = audioRef.value;
@@ -253,18 +264,8 @@ watch(isImageOpen, (open) => {
     color-mix(in oklab, var(--dbru-color-primary) 12%, transparent);
 }
 
-.dbru-chat-bubble__text {
-  white-space: pre-wrap;
-}
-
 .dbru-chat-bubble__name {
-  font-weight: 600;
-  line-height: 1.2;
   padding: 0 var(--dbru-space-1);
-}
-
-.dbru-chat-bubble-wrap--out .dbru-chat-bubble__name {
-  text-align: right;
 }
 
 .dbru-chat-bubble__media {
@@ -307,11 +308,6 @@ watch(isImageOpen, (open) => {
   margin-top: -4px;
 }
 
-.dbru-chat-bubble--image .dbru-chat-bubble__text,
-.dbru-chat-bubble--audio .dbru-chat-bubble__text {
-  display: none;
-}
-
 .dbru-chat-bubble__audio {
   display: flex;
   align-items: center;
@@ -343,8 +339,6 @@ watch(isImageOpen, (open) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  line-height: 1;
 }
 
 .dbru-chat-bubble__audio-controls {
@@ -376,7 +370,6 @@ watch(isImageOpen, (open) => {
 }
 
 .dbru-chat-bubble__audio-time {
-  white-space: nowrap;
   flex-shrink: 0;
   justify-self: end;
 }
@@ -421,11 +414,4 @@ watch(isImageOpen, (open) => {
   gap: 2px;
 }
 
-.dbru-chat-bubble__status--sending {
-  color: color-mix(in oklab, var(--dbru-color-text) 45%, transparent);
-}
-
-.dbru-chat-bubble__status--read {
-  color: #22c55e;
-}
 </style>

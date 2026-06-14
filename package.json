@@ -1,6 +1,6 @@
 {
   "name": "dobruniaui-vue",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Modern Vue 3 UI component library built with TypeScript and Vite",
   "homepage": "https://github.com/Dobrunia/DobruniaUI-vue#readme",
   "repository": {
@@ -18,7 +18,8 @@
   "files": [
     "dist",
     "README.md",
-    "MIGRATION_v2_to_v3.md"
+    "MIGRATION_v2_to_v3.md",
+    "MIGRATION_v3_to_v4.md"
   ],
   "sideEffects": [
     "./dist/styles.css"

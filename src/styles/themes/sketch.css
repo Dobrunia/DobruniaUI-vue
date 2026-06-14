@@ -1,8 +1,6 @@
 .dbru-theme-sketch {
   --dbru-color-bg: #f5f6f4;
   --dbru-color-surface: #ffffff;
-  --dbru-color-text: #20262d;
-  --dbru-color-text-muted: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
   --dbru-color-border: #cfd6de;
 
   --dbru-color-primary: #20262d;
@@ -12,6 +10,15 @@
   --dbru-color-on-danger: #ffffff;
   --dbru-color-error: #b23a3a;
   --dbru-color-success: #2f8f6b;
+
+  --dbru-text-color-base: #20262d;
+  --dbru-text-color-muted: color-mix(in oklab, var(--dbru-text-color-base) 55%, transparent);
+  --dbru-text-color-primary: #20262d;
+  --dbru-text-color-danger: #b23a3a;
+  --dbru-text-color-success: #2f8f6b;
+  --dbru-text-color-surface: #ffffff;
+  --dbru-text-color-on-primary: #ffffff;
+  --dbru-text-color-on-danger: #ffffff;
 
   --dbru-color-focus: #7f9fc4;
 }

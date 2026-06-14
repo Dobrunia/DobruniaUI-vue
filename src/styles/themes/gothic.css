@@ -1,8 +1,6 @@
 .dbru-theme-gothic {
   --dbru-color-bg: #0e1116;
   --dbru-color-surface: #161c23;
-  --dbru-color-text: #e6edf3;
-  --dbru-color-text-muted: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
   --dbru-color-border: #2f3c48;
 
   --dbru-color-primary: #2a6f73;
@@ -12,6 +10,15 @@
   --dbru-color-on-danger: #e6edf3;
   --dbru-color-error: #b23a3a;
   --dbru-color-success: #2f8f6b;
+
+  --dbru-text-color-base: #e6edf3;
+  --dbru-text-color-muted: color-mix(in oklab, var(--dbru-text-color-base) 55%, transparent);
+  --dbru-text-color-primary: #2a6f73;
+  --dbru-text-color-danger: #8b1e2d;
+  --dbru-text-color-success: #2f8f6b;
+  --dbru-text-color-surface: #161c23;
+  --dbru-text-color-on-primary: #e6edf3;
+  --dbru-text-color-on-danger: #e6edf3;
 
   --dbru-color-focus: #4fa3ff;
 }

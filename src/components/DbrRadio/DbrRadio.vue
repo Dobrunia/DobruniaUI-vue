@@ -22,14 +22,15 @@
         />
       </svg>
     </span>
-    <span v-if="label || $slots.default" class="dbru-font-size-base dbru-font-color-base">
+    <DbrText v-if="label || $slots.default">
       <slot>{{ label }}</slot>
-    </span>
+    </DbrText>
   </label>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type { DbrRadioProps, DbrRadioValue } from './DbrRadio.types';
 
 defineSlots<{

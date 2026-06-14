@@ -4,13 +4,30 @@ import DbrButton from "../components/DbrButton/DbrButton.vue";
 import DbrButtonGroup from "../components/DbrButtonGroup/DbrButtonGroup.vue";
 import DbrIconButton from "../components/DbrIconButton/DbrIconButton.vue";
 import DbrInput from "../components/DbrInput/DbrInput.vue";
+import DbrSelect from "../components/DbrSelect/DbrSelect.vue";
 import DbrLoader from "../components/DbrLoader/DbrLoader.vue";
 import DbrMenuToggle from "../components/DbrMenuToggle/DbrMenuToggle.vue";
 import DbrThemeToggle from "../components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrToggle from "../components/DbrToggle/DbrToggle.vue";
+import DbrText from "../components/DbrText/DbrText.vue";
 import type { DbrButtonGroupValue } from "../components/DbrButtonGroup/DbrButtonGroup.types";
 
 type ControlSize = "sm" | "md" | "lg";
+
+interface ControlHeightState {
+  value: string;
+  select: string;
+  group: DbrButtonGroupValue;
+  toggled: boolean;
+  menu: boolean;
+  dark: boolean;
+  onValue: (v: string) => void;
+  onSelect: (v: string | number) => void;
+  onGroup: (v: DbrButtonGroupValue) => void;
+  onToggled: (v: boolean) => void;
+  onMenu: (v: boolean) => void;
+  onDark: (v: boolean) => void;
+}
 
 const SettingsIcon = {
   template: `
@@ -27,6 +44,12 @@ const GROUP_OPTIONS = [
   { label: "C", value: "c" },
 ];
 
+const SELECT_OPTIONS = [
+  { label: "Alpha", value: "alpha" },
+  { label: "Beta", value: "beta" },
+  { label: "Gamma", value: "gamma" },
+];
+
 function itemSlot(content: ReturnType<typeof h> | string) {
   return h("div", { class: "control-height-item" }, [content]);
 }
@@ -41,18 +64,7 @@ function iconButton(size: ControlSize, variant: "ghost" | "border", label: strin
 
 function buildRow(
   size: ControlSize,
-  state: {
-    value: string;
-    group: DbrButtonGroupValue;
-    toggled: boolean;
-    menu: boolean;
-    dark: boolean;
-    onValue: (v: string) => void;
-    onGroup: (v: DbrButtonGroupValue) => void;
-    onToggled: (v: boolean) => void;
-    onMenu: (v: boolean) => void;
-    onDark: (v: boolean) => void;
-  },
+  state: ControlHeightState,
 ) {
   return h("div", { class: "control-height-row" }, [
     itemSlot(h(DbrButton, { size, variant: "ghost" }, () => "Button")),
@@ -69,7 +81,16 @@ function buildRow(
         modelValue: state.value,
         "onUpdate:modelValue": state.onValue,
         size,
-        label: `${size} input`,
+        placeholder: `${size} input`,
+      }),
+    ),
+    itemSlot(
+      h(DbrSelect, {
+        modelValue: state.select,
+        "onUpdate:modelValue": state.onSelect,
+        options: SELECT_OPTIONS,
+        size,
+        placeholder: `${size} select`,
       }),
     ),
     itemSlot(iconButton(size, "ghost", `Settings ${size}`)),
@@ -106,36 +127,57 @@ const SIZE_LABEL: Record<ControlSize, string> = {
   lg: "lg — 48px",
 };
 
+function renderSizeSection(size: ControlSize, state: ControlHeightState) {
+  return h("section", { key: size }, [
+    h("div", { class: "control-height-tag" }, [
+      h(DbrText, { color: "muted", size: "xs" }, () => SIZE_LABEL[size]),
+    ]),
+    buildRow(size, state),
+  ]);
+}
+
 export function renderControlHeightAlignment() {
   return {
     setup() {
       const value = ref("text");
+      const select = ref("beta");
       const toggled = ref(true);
       const menu = ref(false);
       const group = ref<DbrButtonGroupValue>("b");
       const dark = ref(false);
 
+      const onValue = (v: string) => {
+        value.value = v;
+      };
+      const onSelect = (v: string | number) => {
+        select.value = String(v);
+      };
+      const onGroup = (v: DbrButtonGroupValue) => {
+        group.value = v;
+      };
+      const onToggled = (v: boolean) => {
+        toggled.value = v;
+      };
+      const onMenu = (v: boolean) => {
+        menu.value = v;
+      };
+      const onDark = (v: boolean) => {
+        dark.value = v;
+      };
+
       const state = () => ({
         value: value.value,
+        select: select.value,
         group: group.value,
         toggled: toggled.value,
         menu: menu.value,
         dark: dark.value,
-        onValue: (v: string) => {
-          value.value = v;
-        },
-        onGroup: (v: DbrButtonGroupValue) => {
-          group.value = v;
-        },
-        onToggled: (v: boolean) => {
-          toggled.value = v;
-        },
-        onMenu: (v: boolean) => {
-          menu.value = v;
-        },
-        onDark: (v: boolean) => {
-          dark.value = v;
-        },
+        onValue,
+        onSelect,
+        onGroup,
+        onToggled,
+        onMenu,
+        onDark,
       });
 
       return () =>
@@ -143,19 +185,15 @@ export function renderControlHeightAlignment() {
           h("style", null, controlHeightAlignmentStyles),
           h("div", { class: "control-height-panel" }, [
           h(
-            "p",
+            DbrText,
             {
-              class: "dbru-font-size-sm dbru-font-color-muted",
+              color: "muted",
+              size: "sm",
               style: { margin: "0" },
             },
-            "One flex row per size — dashed outline = outer box. Scroll horizontally if needed.",
+            () => "One flex row per size — dashed outline = outer box. Scroll horizontally if needed.",
           ),
-          ...(["sm", "md", "lg"] as ControlSize[]).map((size) =>
-            h("section", { key: size }, [
-              h("div", { class: "control-height-tag" }, SIZE_LABEL[size]),
-              buildRow(size, state()),
-            ]),
-          ),
+          ...(["sm", "md", "lg"] as ControlSize[]).map((size) => renderSizeSection(size, state())),
           ]),
         ]);
     },
@@ -187,12 +225,11 @@ export const controlHeightAlignmentStyles = `
     box-sizing: border-box;
     outline: 1px dashed var(--dbru-color-border);
   }
-  .control-height-item > .dbru-input {
+  .control-height-item > .dbru-input,
+  .control-height-item > .dbru-select {
     width: 140px;
   }
   .control-height-tag {
-    font-size: 0.75rem;
-    color: var(--dbru-color-text-muted);
     margin-bottom: 6px;
   }
 `;

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { ref } from "vue";
 import DbrRadio from "./DbrRadio.vue";
+import DbrText from "../DbrText/DbrText.vue";
 
 const meta: Meta<typeof DbrRadio> = {
   title: "Components/Radio",
@@ -27,7 +28,7 @@ type Story = StoryObj<typeof DbrRadio>;
 
 export const Playground: Story = {
   render: (args) => ({
-    components: { DbrRadio },
+    components: { DbrRadio, DbrText },
     setup: () => ({ args }),
     template: `<DbrRadio v-bind="args" />`,
   }),
@@ -48,7 +49,7 @@ export const Variants: Story = {
           <DbrRadio v-model="selected" name="shape" value="ellipse" label="Ellipse" />
           <DbrRadio v-model="selected" name="shape" value="polygon" label="Polygon" />
         </div>
-        <div class="dbru-font-size-base dbru-font-color-base">Your selection is: <b>{{ selected }}</b></div>
+        <DbrText>Your selection is: <b>{{ selected }}</b></DbrText>
       </div>
     `,
   }),

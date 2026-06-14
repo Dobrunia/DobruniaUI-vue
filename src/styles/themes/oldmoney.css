@@ -1,8 +1,6 @@
 .dbru-theme-oldmoney {
   --dbru-color-bg: #f7f5f3;
   --dbru-color-surface: #ffffff;
-  --dbru-color-text: #2c2419;
-  --dbru-color-text-muted: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
   --dbru-color-border: #d4c4a8;
 
   --dbru-color-primary: #8b7355;
@@ -12,6 +10,15 @@
   --dbru-color-on-danger: #ffffff;
   --dbru-color-error: #a0674a;
   --dbru-color-success: #7d8471;
+
+  --dbru-text-color-base: #2c2419;
+  --dbru-text-color-muted: color-mix(in oklab, var(--dbru-text-color-base) 55%, transparent);
+  --dbru-text-color-primary: #8b7355;
+  --dbru-text-color-danger: #a0674a;
+  --dbru-text-color-success: #7d8471;
+  --dbru-text-color-surface: #ffffff;
+  --dbru-text-color-on-primary: #ffffff;
+  --dbru-text-color-on-danger: #ffffff;
 
   --dbru-color-focus: #2f894d;
 }

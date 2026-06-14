@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrIconButton from "./DbrIconButton.vue";
+import DbrText from "../DbrText/DbrText.vue";
 
 const meta: Meta<typeof DbrIconButton> = {
   title: "Components/Icon Button",
@@ -219,6 +220,7 @@ export const Variants: Story = {
   render: () => ({
     components: {
       DbrIconButton,
+      DbrText,
       SettingsIcon,
       PlusIcon,
       TrashIcon,
@@ -253,9 +255,6 @@ export const Variants: Story = {
           outline: 1px dashed var(--dbru-color-border);
           outline-offset: 1px;
         }
-        .dbru-icon-size-row__tag {
-          font-size: 0.6875rem;
-        }
         .dbru-icon-gallery__list {
           display: flex;
           flex-direction: column;
@@ -283,18 +282,11 @@ export const Variants: Story = {
           flex-direction: column;
           justify-content: center;
           gap: 2px;
-          line-height: 1.25;
-        }
-        .dbru-icon-gallery__label {
-          font-size: var(--dbru-font-size-sm, 0.875rem);
-        }
-        .dbru-icon-gallery__hint {
-          font-size: 0.6875rem;
         }
       </style>
       <div style="display:grid; gap:28px;">
         <div>
-          <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:10px;">Ghost — sizes</div>
+          <div style="margin-bottom:10px;"><DbrText color="muted" size="sm">Ghost — sizes</DbrText></div>
           <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
             <DbrIconButton aria-label="Small ghost" size="sm" variant="ghost"><SettingsIcon /></DbrIconButton>
             <DbrIconButton aria-label="Medium ghost" size="md" variant="ghost"><SettingsIcon /></DbrIconButton>
@@ -303,71 +295,71 @@ export const Variants: Story = {
           </div>
         </div>
         <div>
-          <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:10px;">
+          <div style="margin-bottom:10px;"><DbrText color="muted" size="sm">
             Panel collapse — ghost (dashed = button). Square <code>&lt;svg&gt;</code> ≠ square art: paths sit in ~21×21 of 38×38.
-          </div>
+          </DbrText></div>
           <div style="display:grid; gap:16px;">
             <div>
-              <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:8px;">
+              <div style="margin-bottom:8px;"><DbrText color="muted" size="sm">
                 As exported (<code>width/height="38"</code>, loose viewBox)
-              </div>
+              </DbrText></div>
               <div class="dbru-icon-size-row">
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse sm" size="sm" variant="ghost"><PanelCollapseUser /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">sm 32</span>
+                  <DbrText color="muted" size="xs">sm 32</DbrText>
                 </div>
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse md" size="md" variant="ghost"><PanelCollapseUser /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">md 40</span>
+                  <DbrText color="muted" size="xs">md 40</DbrText>
                 </div>
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse lg" size="lg" variant="ghost"><PanelCollapseUser /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">lg 48</span>
+                  <DbrText color="muted" size="xs">lg 48</DbrText>
                 </div>
               </div>
             </div>
             <div>
-              <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:8px;">
+              <div style="margin-bottom:8px;"><DbrText color="muted" size="sm">
                 Cropped <code>viewBox="7 7 24 24"</code> (fills control)
-              </div>
+              </DbrText></div>
               <div class="dbru-icon-size-row">
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse sm tight" size="sm" variant="ghost"><PanelCollapseUserTight /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">sm</span>
+                  <DbrText color="muted" size="xs">sm</DbrText>
                 </div>
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse md tight" size="md" variant="ghost"><PanelCollapseUserTight /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">md</span>
+                  <DbrText color="muted" size="xs">md</DbrText>
                 </div>
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse lg tight" size="lg" variant="ghost"><PanelCollapseUserTight /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">lg</span>
+                  <DbrText color="muted" size="xs">lg</DbrText>
                 </div>
               </div>
             </div>
             <div>
-              <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:8px;">
+              <div style="margin-bottom:8px;"><DbrText color="muted" size="sm">
                 Or <code>preserveAspectRatio="xMidYMid slice"</code> on loose viewBox
-              </div>
+              </DbrText></div>
               <div class="dbru-icon-size-row">
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse sm slice" size="sm" variant="ghost"><PanelCollapseUserSlice /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">sm</span>
+                  <DbrText color="muted" size="xs">sm</DbrText>
                 </div>
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse md slice" size="md" variant="ghost"><PanelCollapseUserSlice /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">md</span>
+                  <DbrText color="muted" size="xs">md</DbrText>
                 </div>
                 <div class="dbru-icon-size-row__item">
                   <DbrIconButton aria-label="Collapse lg slice" size="lg" variant="ghost"><PanelCollapseUserSlice /></DbrIconButton>
-                  <span class="dbru-icon-size-row__tag dbru-font-color-muted">lg</span>
+                  <DbrText color="muted" size="xs">lg</DbrText>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:10px;">Border — sizes</div>
+          <div style="margin-bottom:10px;"><DbrText color="muted" size="sm">Border — sizes</DbrText></div>
           <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
             <DbrIconButton aria-label="Small border" size="sm" variant="border"><SettingsIcon /></DbrIconButton>
             <DbrIconButton aria-label="Medium border" size="md" variant="border"><SettingsIcon /></DbrIconButton>
@@ -376,9 +368,9 @@ export const Variants: Story = {
           </div>
         </div>
         <div>
-          <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:10px;">
+          <div style="margin-bottom:10px;"><DbrText color="muted" size="sm">
             Ghost <code>md</code> — icon shapes (dashed = 40×40 button)
-          </div>
+          </DbrText></div>
           <div class="dbru-icon-gallery__list">
             <div
               v-for="item in items"
@@ -395,8 +387,8 @@ export const Variants: Story = {
                 </DbrIconButton>
               </div>
               <div class="dbru-icon-gallery__meta">
-                <span class="dbru-icon-gallery__label">{{ item.label }}</span>
-                <span class="dbru-icon-gallery__hint dbru-font-color-muted">{{ item.hint }}</span>
+                <DbrText size="sm">{{ item.label }}</DbrText>
+                <DbrText color="muted" size="xs">{{ item.hint }}</DbrText>
               </div>
             </div>
           </div>

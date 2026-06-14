@@ -11,6 +11,8 @@ import DbrCheckbox from "./components/DbrCheckbox/DbrCheckbox.vue";
 import DbrMenuToggle from "./components/DbrMenuToggle/DbrMenuToggle.vue";
 import DbrToggle from "./components/DbrToggle/DbrToggle.vue";
 import DbrInput from "./components/DbrInput/DbrInput.vue";
+import DbrTextarea from "./components/DbrTextarea/DbrTextarea.vue";
+import DbrSelect from "./components/DbrSelect/DbrSelect.vue";
 import DbrTooltip from "./components/DbrTooltip/DbrTooltip.vue";
 import DbrAvatar from "./components/DbrAvatar/DbrAvatar.vue";
 import DbrBadge from "./components/DbrBadge/DbrBadge.vue";
@@ -22,6 +24,7 @@ import DbrThemeToggle from "./components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrCard from "./components/DbrCard/DbrCard.vue";
 import DbrRadio from "./components/DbrRadio/DbrRadio.vue";
 import DbrSkeleton from "./components/DbrSkeleton/DbrSkeleton.vue";
+import DbrText from "./components/DbrText/DbrText.vue";
 
 export {
   DbrButton,
@@ -34,6 +37,8 @@ export {
   DbrMenuToggle,
   DbrToggle,
   DbrInput,
+  DbrTextarea,
+  DbrSelect,
   DbrTooltip,
   DbrAvatar,
   DbrBadge,
@@ -45,6 +50,7 @@ export {
   DbrCard,
   DbrRadio,
   DbrSkeleton,
+  DbrText,
 };
 
 export type { DbrButtonProps, DbrButtonSize, DbrButtonVariant } from "./components/DbrButton/DbrButton.types";
@@ -60,6 +66,8 @@ export type { DbrCheckboxProps } from "./components/DbrCheckbox/DbrCheckbox.type
 export type { DbrMenuToggleProps } from "./components/DbrMenuToggle/DbrMenuToggle.types";
 export type { DbrToggleProps } from "./components/DbrToggle/DbrToggle.types";
 export type { DbrInputProps } from "./components/DbrInput/DbrInput.types";
+export type { DbrTextareaProps, DbrTextareaResize } from "./components/DbrTextarea/DbrTextarea.types";
+export type { DbrSelectProps, DbrSelectOption, DbrSelectSize, DbrSelectValue } from "./components/DbrSelect/DbrSelect.types";
 export type { DbrTooltipProps } from "./components/DbrTooltip/DbrTooltip.types";
 export type { DbrAvatarProps } from "./components/DbrAvatar/DbrAvatar.types";
 export type { DbrBadgeProps, DbrBadgeVariant } from "./components/DbrBadge/DbrBadge.types";
@@ -71,6 +79,19 @@ export type { DbrThemeToggleProps } from "./components/DbrThemeToggle/DbrThemeTo
 export type { DbrCardProps, DbrCardVariant } from "./components/DbrCard/DbrCard.types";
 export type { DbrRadioProps, DbrRadioValue } from "./components/DbrRadio/DbrRadio.types";
 export type { DbrSkeletonProps } from "./components/DbrSkeleton/DbrSkeleton.types";
+export type {
+  DbrTextProps,
+  DbrTextSize,
+  DbrTextWeight,
+  DbrTextColor,
+  DbrTextLineHeight,
+  DbrTextAlign,
+  DbrTextTransform,
+  DbrTextDecoration,
+  DbrTextFontStyle,
+  DbrTextWrap,
+  DbrTextLetterSpacing,
+} from "./components/DbrText/DbrText.types";
 
 export default {
   install(app: App) {
@@ -84,6 +105,8 @@ export default {
     app.component("DbrMenuToggle", DbrMenuToggle);
     app.component("DbrToggle", DbrToggle);
     app.component("DbrInput", DbrInput);
+    app.component("DbrTextarea", DbrTextarea);
+    app.component("DbrSelect", DbrSelect);
     app.component("DbrTooltip", DbrTooltip);
     app.component("DbrAvatar", DbrAvatar);
     app.component("DbrBadge", DbrBadge);
@@ -95,5 +118,6 @@ export default {
     app.component("DbrCard", DbrCard);
     app.component("DbrRadio", DbrRadio);
     app.component("DbrSkeleton", DbrSkeleton);
+    app.component("DbrText", DbrText);
   },
 };

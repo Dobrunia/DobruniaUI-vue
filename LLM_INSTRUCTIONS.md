@@ -2,12 +2,12 @@
 
 This file is generated and intended for AI assistants and automation tools.
 
-Generated on: 2026-06-14T17:16:36.653Z
+Generated on: 2026-06-14T20:49:14.057Z
 
 ## Package Facts
 
 - Package: `dobruniaui-vue`
-- Version: `3.0.1`
+- Version: `4.0.0`
 - ESM import entry: `./dist/dobruniaui.mjs`
 - CJS require entry: `./dist/dobruniaui.cjs`
 - Types entry: `./dist/index.d.ts`
@@ -15,12 +15,12 @@ Generated on: 2026-06-14T17:16:36.653Z
 ## Recommended Usage For Consumers
 
 - Strong recommendation: use named imports for tree-shaking by default.
-- Preferred import pattern: `import { DbrButton, DbrInput } from "dobruniaui-vue"`.
+- Preferred import pattern: `import { DbrButton, DbrInput, DbrSelect, DbrTextarea } from "dobruniaui-vue"`.
 - Import styles once: `import "dobruniaui-vue/styles.css"`.
 - Avoid `app.use(DobruniaUI)` unless you explicitly want global registration of all components.
 
 ```ts
-import { DbrButton, DbrInput } from "dobruniaui-vue";
+import { DbrButton, DbrInput, DbrSelect, DbrTextarea } from "dobruniaui-vue";
 import "dobruniaui-vue/styles.css";
 ```
 
@@ -28,12 +28,13 @@ import "dobruniaui-vue/styles.css";
 
 - Reuse primitives and variants; avoid page-specific shortcuts.
 - Colors/radii/spacing should come from CSS variables and tokens.
-- Prefer existing utility classes (`dbru-font-size-*`, `dbru-font-color-*`, `dbru-btn*`, `dbru-size-*`).
+- Use `DbrText` for text styling; global typography utility classes do not exist.
+- Prefer existing structural utility classes (`dbru-btn*`, `dbru-size-*`, `dbru-bg`, `dbru-surface`).
 - Keep semantic shortcuts alias-only (no unique visual styles).
 
 ## Focus Utilities
 
-- Wrap app UI in `dbru-root` (required). Root sets default typography (`font-family`, `font-size-base`, `line-height-base`, `color-text`) for the subtree.
+- Wrap app UI in `dbru-root` (required). Root sets default typography for the subtree.
 - Inside root, `:focus:not(:focus-visible)` clears outline on mouse click; `.dbru-focus-visible:focus-visible` shows the ring on Tab.
 - Add `dbru-focus-visible` on each focusable control that should show the ring (buttons, inputs, textareas).
 - Do not use `dbru-focus-visible` on `DbrButtonGroup` items — group uses its own `:focus-visible` background (same as active).
@@ -46,15 +47,6 @@ import "dobruniaui-vue/styles.css";
 - `dbru-root`
 - `dbru-bg`
 - `dbru-surface`
-- `dbru-font-size-xs`
-- `dbru-font-size-sm`
-- `dbru-font-size-base`
-- `dbru-font-size-lg`
-- `dbru-font-size-xl`
-- `dbru-font-color-base`
-- `dbru-font-color-muted`
-- `dbru-font-color-on-primary`
-- `dbru-font-color-on-danger`
 - `dbru-size-sm`
 - `dbru-size-md`
 - `dbru-size-lg`
@@ -77,15 +69,30 @@ import "dobruniaui-vue/styles.css";
 
 ## Design Tokens
 
-- `--dbru-font-family`
-- `--dbru-font-size-xs`
-- `--dbru-font-size-sm`
-- `--dbru-font-size-base`
-- `--dbru-font-size-lg`
-- `--dbru-font-size-xl`
-- `--dbru-font-weight-semibold`
-- `--dbru-line-height-tight`
-- `--dbru-line-height-base`
+- `--dbru-text-font-family`
+- `--dbru-text-size-xs`
+- `--dbru-text-size-sm`
+- `--dbru-text-size-md`
+- `--dbru-text-size-lg`
+- `--dbru-text-size-xl`
+- `--dbru-text-size-2xl`
+- `--dbru-text-weight-regular`
+- `--dbru-text-weight-medium`
+- `--dbru-text-weight-semibold`
+- `--dbru-text-line-height-tight`
+- `--dbru-text-line-height-normal`
+- `--dbru-text-line-height-relaxed`
+- `--dbru-text-letter-spacing-normal`
+- `--dbru-text-letter-spacing-tight`
+- `--dbru-text-letter-spacing-wide`
+- `--dbru-text-color-base`
+- `--dbru-text-color-muted`
+- `--dbru-text-color-primary`
+- `--dbru-text-color-danger`
+- `--dbru-text-color-on-primary`
+- `--dbru-text-color-on-danger`
+- `--dbru-text-color-success`
+- `--dbru-text-color-surface`
 - `--dbru-space-1`
 - `--dbru-space-2`
 - `--dbru-space-3`
@@ -106,8 +113,6 @@ import "dobruniaui-vue/styles.css";
 - `--dbru-shadow-md`
 - `--dbru-color-bg`
 - `--dbru-color-surface`
-- `--dbru-color-text`
-- `--dbru-color-text-muted`
 - `--dbru-color-border`
 - `--dbru-color-primary`
 - `--dbru-color-on-primary`
@@ -151,14 +156,17 @@ import "dobruniaui-vue/styles.css";
 - `iconColor`: `base|muted|primary`; use `stroke="currentColor"` / `fill="currentColor"` on paths.
 
 **What the library does (do not reimplement in the app):**
+
 - Ghost: `.dbru-icon-btn__icon :deep(svg) { width: 100%; height: 100%; }` — the **SVG element** always matches the button (32/40/48).
 - Border: SVG size = control height × scale factor per `size`.
 - The library does **not** crop `viewBox`, move paths, or auto-detect icon shape. **Visible glyph size = your SVG source `viewBox` + path bounds.**
 
 **What the app / icon author must do (consumer responsibility):**
+
 - Prepare each icon file (`assets/icons/*.vue` or inline `<svg>`) so the **drawn artwork**, not just the `<svg>` tag, matches the intent below. Change **`viewBox`** (and remove export `width`/`height`) — **no changes to `DbrIconButton` props** for this.
 
 **Ghost sizing goals (LLM checklist):**
+
 | Icon shape | Goal in ghost button | How to achieve in the SVG file |
 | --- | --- | --- |
 | **Square glyph** (panel, plus, settings) | Visible art fills the square control edge-to-edge (≈32/40/48 px glyph) | **Tight `viewBox`** around paths (crop empty margin). Prefer `viewBox="0 0 24 24"` with art inset ~1–2px for stroke. Do **not** leave a large canvas (e.g. 21×21 art inside `0 0 38 38`) — the `<svg>` will be full size but the **rect/paths look ~55%**. |
@@ -166,6 +174,7 @@ import "dobruniaui-vue/styles.css";
 | **Tall / narrow** | Fits inside square; height limited, centered | Tall `viewBox` (e.g. `0 0 10 28`); do not expect width fill. |
 
 **Square icon — cropped `viewBox` (recommended):** keep path coordinates; only change `viewBox` + drop `width`/`height`:
+
 ```xml
 <!-- BAD: square <svg>, small visible rect (~21×21 in 38×38) -->
 <svg viewBox="0 0 38 38" width="38" height="38">
@@ -181,19 +190,23 @@ import "dobruniaui-vue/styles.css";
 **Square icon — alternative:** loose viewBox + `preserveAspectRatio="xMidYMid slice"` on root `<svg>` (zoom-to-fill; **only for square icons**, never on wide icons).
 
 **Slot wiring (critical):**
+
 - **DO:** default slot = root `<svg>` or icon SFC with `<svg>` as template root.
 - **DO NOT:** `<span v-html>`, wrappers, `<img src="*.svg">` — breaks `:deep(svg)` sizing.
 - **DO NOT:** `width`/`height` on `<svg>` in ghost (library sets 100%).
 
 **Usage pattern:**
+
 ```vue
 <DbrIconButton aria-label="Collapse panel" size="md" variant="ghost">
   <PanelCollapseIcon />
 </DbrIconButton>
 ```
+
 - Icon SFC: `<template><svg viewBox="7 7 24 24" aria-hidden="true">…</svg></template>` — paths unchanged, viewBox cropped in the **app icon file**, not in the library.
 
 **Wrong:**
+
 ```vue
 <DbrIconButton aria-label="Settings"><span v-html="svgString" /></DbrIconButton>
 ```
@@ -201,12 +214,37 @@ import "dobruniaui-vue/styles.css";
 ### DbrInput
 
 - Use `v-model` (string) as the single source of input value.
+- `label` always means visual informational text above the control. It is not clickable and does not focus the control.
+- `placeholder` means text inside the empty control.
+- `size` (`sm|md|lg`) changes only the input control height; the label is not included in that height.
 - For leading/trailing icon use the `icon` slot + `iconPosition` prop.
 
 ### DbrMenuToggle
 
 - Use `v-model` (boolean) as menu/sidebar open state.
 - Primary use case: mobile navigation menu and collapsible side panel toggle.
+
+### DbrSelect
+
+- Use `v-model` (`string | number | null`) with `options` as the source of selectable values.
+- `label` always means visual informational text above the control. It is not clickable and does not focus/open the control.
+- `placeholder` means text inside the empty control when no option is selected.
+- `size` (`sm|md|lg`) changes only the select control height; the label is not included in that height.
+- Options can include an `icon` URL rendered before the label.
+
+### DbrText
+
+- Inline typography via default slot. `DbrText` is the only public text styling primitive; there are no global typography utility classes.
+- Customize text only through props: `size` (`xs|sm|md|lg|xl|2xl`), `weight` (`regular|medium|semibold`), `color`, `lineHeight` (`tight|normal|relaxed`), `align`, `transform`, `decoration`, `fontStyle`, `wrap`, `letterSpacing`, `truncate`.
+- Omit a prop to keep the component default for that axis; set a prop only to override.
+
+### DbrTextarea
+
+- Use `v-model` (string) as the textarea value.
+- `label` always means visual informational text above the control. It is not clickable and does not focus the control.
+- `placeholder` means text inside the empty control.
+- Use `width` and `height` for dimensions. There is no `size` prop because textarea height is content/layout-specific.
+- `resize` defaults to `none`; opt into `vertical`, `horizontal`, or `both` when manual resize is desired.
 
 ### DbrThemeToggle
 
@@ -228,6 +266,8 @@ import "dobruniaui-vue/styles.css";
 | `DbrInput` | `string` | `""` | `update:modelValue` |
 | `DbrMenuToggle` | `boolean` | `false` | `update:modelValue` |
 | `DbrRadio` | `DbrRadioValue` | `undefined` | `update:modelValue` |
+| `DbrSelect` | `DbrSelectValue \| null` | `null` | `update:modelValue` |
+| `DbrTextarea` | `string` | `""` | `update:modelValue` |
 | `DbrThemeToggle` | `boolean` | `false` | `update:modelValue` |
 | `DbrToggle` | `boolean` | `false` | `update:modelValue` |
 
@@ -256,10 +296,23 @@ This section lists exported reusable type aliases (enums/unions) used by compone
 | `DbrMessageType` | `"text" \| "image" \| "file" \| "voice"` | `DbrChatListItem` |
 | `DbrPresence` | `"online" \| "away" \| "offline"` | `DbrChatListItem` |
 | `DbrRadioValue` | `string \| number \| boolean` | `DbrRadio` |
+| `DbrSelectSize` | `'sm' \| 'md' \| 'lg'` | `DbrSelect` |
+| `DbrSelectValue` | `string \| number` | `DbrSelect` |
+| `DbrTextAlign` | `'left' \| 'center' \| 'right'` | `DbrText` |
+| `DbrTextareaResize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `DbrTextarea` |
+| `DbrTextColor` | `\| 'base' \| 'muted' \| 'primary' \| 'danger' \| 'success' \| 'surface' \| 'on-primary' \| 'on-danger'` | `DbrText` |
+| `DbrTextDecoration` | `'none' \| 'underline' \| 'line-through'` | `DbrText` |
+| `DbrTextFontStyle` | `'normal' \| 'italic'` | `DbrText` |
+| `DbrTextLetterSpacing` | `'normal' \| 'tight' \| 'wide'` | `DbrText` |
+| `DbrTextLineHeight` | `'tight' \| 'normal' \| 'relaxed'` | `DbrText` |
+| `DbrTextSize` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | `DbrText` |
+| `DbrTextTransform` | `'none' \| 'uppercase' \| 'lowercase' \| 'capitalize'` | `DbrText` |
+| `DbrTextWeight` | `'regular' \| 'medium' \| 'semibold'` | `DbrText` |
+| `DbrTextWrap` | `'wrap' \| 'nowrap' \| 'pre-wrap'` | `DbrText` |
 
 ## Components And Props
 
-### DbrAvatar
+### DbrAvatar Props
 
 Source interface: `DbrAvatarProps`
 
@@ -272,7 +325,7 @@ Source interface: `DbrAvatarProps`
 | `shape` | `"circle" \| "rounded"` | `"circle"` | /** Avatar shape. / |
 | `active` | `boolean` | `false` | /** Highlights avatar as active. / |
 
-### DbrBadge
+### DbrBadge Props
 
 Source interface: `DbrBadgeProps`
 
@@ -283,7 +336,7 @@ Source interface: `DbrBadgeProps`
 | `offsetX` | `string` | `"-6px"` | /** Horizontal offset from right edge. / |
 | `offsetY` | `string` | `"-6px"` | /** Vertical offset from top edge. / |
 
-### DbrButton
+### DbrButton Props
 
 Source interface: `DbrButtonProps`
 
@@ -296,7 +349,7 @@ Source interface: `DbrButtonProps`
 | `nativeType` | `"button" \| "submit" \| "reset"` | `"button"` | /** Native HTML button type. / |
 | `pressEffect` | `boolean` | `false` | /** Slight downward shift on click (active state). / |
 
-### DbrButtonGroup
+### DbrButtonGroup Props
 
 Source interface: `DbrButtonGroupProps`
 
@@ -307,7 +360,7 @@ Source interface: `DbrButtonGroupProps`
 | `size` | `DbrButtonGroupSize` | `"md"` | /** Control size. / |
 | `disabled` | `boolean` | `false` | /** Disables whole group. / |
 
-### DbrCard
+### DbrCard Props
 
 Source interface: `DbrCardProps`
 
@@ -318,7 +371,7 @@ Source interface: `DbrCardProps`
 | `disabled` | `boolean` | `false` | /** Disables hover and interactions. / |
 | `hoverable` | `boolean` | `false` | /** Enables hover highlight effect. / |
 
-### DbrChatBubble
+### DbrChatBubble Props
 
 Source interface: `DbrChatBubbleProps`
 
@@ -332,7 +385,7 @@ Source interface: `DbrChatBubbleProps`
 | `direction` | `DbrChatBubbleDirection` | `"in"` | /** Direction of the message. / |
 | `status` | `DbrChatBubbleStatus` | `"none"` | /** Message status for checkmarks. / |
 
-### DbrChatComposer
+### DbrChatComposer Props
 
 Source interface: `DbrChatComposerProps`
 
@@ -344,7 +397,7 @@ Source interface: `DbrChatComposerProps`
 | `disabled` | `boolean` | `false` | /** Disable composer controls. / |
 | `maxHeight` | `number` | `120` | /** Max height for auto-growing textarea (px). / |
 
-### DbrChatListItem
+### DbrChatListItem Props
 
 Source interface: `DbrChatListItemProps`
 
@@ -366,7 +419,7 @@ Source interface: `DbrChatListItemProps`
 | `isTyping` | `boolean` | `false` | /** Shows typing indicator. / |
 | `loading` | `boolean` | `false` | /** Shows loading skeleton when true. / |
 
-### DbrCheckbox
+### DbrCheckbox Props
 
 Source interface: `DbrCheckboxProps`
 
@@ -378,7 +431,7 @@ Source interface: `DbrCheckboxProps`
 | `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
 | `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
 
-### DbrChip
+### DbrChip Props
 
 Source interface: `DbrChipProps`
 
@@ -389,7 +442,7 @@ Source interface: `DbrChipProps`
 | `disabled` | `boolean` | `false` | /** Removes interaction from the remove action button. / |
 | `removeAriaLabel` | `string` | `"Remove chip"` | /** Accessibility label for remove button. / |
 
-### DbrIconButton
+### DbrIconButton Props
 
 Source interface: `DbrIconButtonProps`
 
@@ -402,15 +455,16 @@ Source interface: `DbrIconButtonProps`
 | `disabled` | `boolean` | `false` | /** Disables the button and removes pointer interaction. / |
 | `nativeType` | `'button' \| 'submit' \| 'reset'` | `"button"` | /** Native HTML button type. / |
 
-### DbrInput
+### DbrInput Props
 
 Source interface: `DbrInputProps`
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `modelValue` | `string` | `""` | /** Input value for v-model. / |
-| `label` | `string` | `undefined` | /** Input label text. You can also use the default slot. / |
-| `size` | `'sm' \| 'md' \| 'lg'` | `"md"` | /** Input size. / |
+| `label` | `string` | `undefined` | /** Visual label text above the input. It is informational only and does not focus the control. / |
+| `placeholder` | `string` | `undefined` | /** Placeholder text shown inside the input when empty. / |
+| `size` | `'sm' \| 'md' \| 'lg'` | `"md"` | /** Control size. The label is not included in the control height. / |
 | `type` | `string` | `"text"` | /** Native input type. / |
 | `iconPosition` | `'left' \| 'right'` | `"left"` | /** Position of custom icon slot. / |
 | `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
@@ -419,7 +473,7 @@ Source interface: `DbrInputProps`
 | `required` | `boolean` | `false` | /** Marks input as required. / |
 | `autocomplete` | `string` | `undefined` | /** Native autocomplete attribute. / |
 
-### DbrLoader
+### DbrLoader Props
 
 Source interface: `DbrLoaderProps`
 
@@ -427,7 +481,7 @@ Source interface: `DbrLoaderProps`
 | --- | --- | --- | --- |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Loader size from global control scale. / |
 
-### DbrMenuToggle
+### DbrMenuToggle Props
 
 Source interface: `DbrMenuToggleProps`
 
@@ -441,7 +495,7 @@ Source interface: `DbrMenuToggleProps`
 | `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | /** Control size from global control scale. / |
 
-### DbrRadio
+### DbrRadio Props
 
 Source interface: `DbrRadioProps`
 
@@ -453,7 +507,23 @@ Source interface: `DbrRadioProps`
 | `name` | `string` | `undefined` | /** Native name attribute for grouping radios. / |
 | `disabled` | `boolean` | `false` | /** Disables radio interaction. / |
 
-### DbrSkeleton
+### DbrSelect Props
+
+Source interface: `DbrSelectProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modelValue` | `DbrSelectValue \| null` | `null` | /** Selected value for v-model. / |
+| `options` | `readonly DbrSelectOption[]` | `—` | /** Available options. / |
+| `label` | `string` | `undefined` | /** Visual label text above the select. It is informational only and does not focus/open the control. / |
+| `placeholder` | `string` | `""` | /** Placeholder text shown inside the control when no option is selected. / |
+| `size` | `DbrSelectSize` | `"md"` | /** Control size. The label is not included in the control height. / |
+| `name` | `string` | `undefined` | /** Native name attribute. A hidden input is rendered when provided. / |
+| `id` | `string` | `undefined` | /** Trigger id. / |
+| `disabled` | `boolean` | `false` | /** Disables the select. / |
+| `required` | `boolean` | `false` | /** Marks the select as required for accessibility. / |
+
+### DbrSkeleton Props
 
 Source interface: `DbrSkeletonProps`
 
@@ -463,7 +533,44 @@ Source interface: `DbrSkeletonProps`
 | `height` | `string` | `"0"` | /** Skeleton height (any valid CSS length). / |
 | `radius` | `string` | `"0"` | /** Skeleton border radius (any valid CSS radius). / |
 
-### DbrThemeToggle
+### DbrText Props
+
+Source interface: `DbrTextProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `DbrTextSize` | `—` | /** Text size. Default (omitted) = `md` / 14px. / |
+| `weight` | `DbrTextWeight` | `—` | /** Font weight token. Default = `regular` (400). / |
+| `color` | `DbrTextColor` | `—` | /** Text color. Default = `base`. / |
+| `lineHeight` | `DbrTextLineHeight` | `—` | /** Line height token. Default = `normal` (1.5). / |
+| `align` | `DbrTextAlign` | `—` | /** Text alignment. / |
+| `transform` | `DbrTextTransform` | `—` | /** Text transform. Default = `none`. / |
+| `decoration` | `DbrTextDecoration` | `—` | /** Text decoration. Default = `none`. / |
+| `fontStyle` | `DbrTextFontStyle` | `—` | /** Font style. Default = `normal`. / |
+| `wrap` | `DbrTextWrap` | `—` | /** White-space / wrapping. Default = `wrap`. / |
+| `letterSpacing` | `DbrTextLetterSpacing` | `—` | /** Letter spacing token. Default = `normal`. / |
+| `truncate` | `boolean` | `false` | /** Single-line ellipsis overflow. / |
+
+### DbrTextarea Props
+
+Source interface: `DbrTextareaProps`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modelValue` | `string` | `""` | /** Textarea value for v-model. / |
+| `label` | `string` | `undefined` | /** Visual label text above the textarea. It is informational only and does not focus the control. / |
+| `placeholder` | `string` | `undefined` | /** Placeholder text shown inside the textarea when empty. / |
+| `name` | `string` | `undefined` | /** Native name attribute for form submission. / |
+| `id` | `string` | `undefined` | /** Native id. / |
+| `disabled` | `boolean` | `false` | /** Disables the textarea and removes pointer interaction. / |
+| `required` | `boolean` | `false` | /** Marks textarea as required. / |
+| `autocomplete` | `string` | `undefined` | /** Native autocomplete attribute. / |
+| `rows` | `number` | `4` | /** Native rows attribute. / |
+| `width` | `string` | `"100%"` | /** CSS width of the textarea. / |
+| `height` | `string` | `undefined` | /** CSS height of the textarea. / |
+| `resize` | `DbrTextareaResize` | `"none"` | /** Resize behavior. Default locks manual resizing. / |
+
+### DbrThemeToggle Props
 
 Source interface: `DbrThemeToggleProps`
 
@@ -475,7 +582,7 @@ Source interface: `DbrThemeToggleProps`
 | `persist` | `boolean` | `true` | /** Persist choice to localStorage. / |
 | `storageKey` | `string` | `"dbru-theme"` | /** Storage key for persistence. / |
 
-### DbrToggle
+### DbrToggle Props
 
 Source interface: `DbrToggleProps`
 
@@ -488,7 +595,7 @@ Source interface: `DbrToggleProps`
 | `value` | `string` | `undefined` | /** Native value attribute for form submission. / |
 | `size` | `"xs" \| "sm" \| "md" \| "lg"` | `"md"` | /** Toggle size from global control scale. `xs` is local to this component and visually matches checkbox height. / |
 
-### DbrTooltip
+### DbrTooltip Props
 
 Source interface: `DbrTooltipProps`
 

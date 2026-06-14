@@ -30,8 +30,8 @@ defineSlots<{
 }>();
 
 const ICON_COLOR_MAP: Record<DbrIconButtonIconColor, string> = {
-  base: 'var(--dbru-color-text)',
-  muted: 'var(--dbru-color-text-muted)',
+  base: 'var(--dbru-text-color-base)',
+  muted: 'var(--dbru-text-color-muted)',
   primary: 'var(--dbru-color-primary)',
 };
 
@@ -91,7 +91,7 @@ const iconColorStyle = computed(() => ({
   align-items: center;
   justify-content: center;
   line-height: 0;
-  color: var(--dbru-icon-btn-icon-color, var(--dbru-color-text));
+  color: var(--dbru-icon-btn-icon-color, var(--dbru-text-color-base));
   transition: color var(--dbru-duration-base) var(--dbru-ease-standard);
 }
 

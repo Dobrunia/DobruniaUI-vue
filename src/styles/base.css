@@ -1,9 +1,9 @@
 .dbru-root {
   background: var(--dbru-color-bg);
-  color: var(--dbru-color-text);
-  font-family: var(--dbru-font-family);
-  font-size: var(--dbru-font-size-base);
-  line-height: var(--dbru-line-height-base);
+  color: var(--dbru-text-color-base);
+  font-family: var(--dbru-text-font-family);
+  font-size: var(--dbru-text-size-md);
+  line-height: var(--dbru-text-line-height-normal);
   text-rendering: optimizeLegibility;
   font-kerning: normal;
   -webkit-font-smoothing: antialiased;
@@ -17,43 +17,6 @@
 
 .dbru-root :focus:not(:focus-visible) {
   outline: none;
-}
-
-.dbru-font-size-xs {
-  font-size: var(--dbru-font-size-xs);
-}
-
-.dbru-font-size-sm {
-  font-size: var(--dbru-font-size-sm);
-}
-
-.dbru-font-size-base {
-  font-size: var(--dbru-font-size-base);
-}
-
-.dbru-font-size-lg {
-  font-size: var(--dbru-font-size-lg);
-}
-
-.dbru-font-size-xl {
-  font-size: var(--dbru-font-size-xl);
-  font-weight: var(--dbru-font-weight-semibold);
-}
-
-.dbru-font-color-base {
-  color: var(--dbru-color-text);
-}
-
-.dbru-font-color-muted {
-  color: var(--dbru-color-text-muted);
-}
-
-.dbru-font-color-on-primary {
-  color: var(--dbru-color-on-primary);
-}
-
-.dbru-font-color-on-danger {
-  color: var(--dbru-color-on-danger);
 }
 
 .dbru-bg {
@@ -71,19 +34,16 @@
 
 .dbru-size-sm {
   --dbru-control-height: var(--dbru-control-height-sm);
-  --dbru-control-font-size: var(--dbru-font-size-sm);
   --dbru-control-px: var(--dbru-space-3);
 }
 
 .dbru-size-md {
   --dbru-control-height: var(--dbru-control-height-md);
-  --dbru-control-font-size: var(--dbru-font-size-base);
   --dbru-control-px: var(--dbru-space-4);
 }
 
 .dbru-size-lg {
   --dbru-control-height: var(--dbru-control-height-lg);
-  --dbru-control-font-size: var(--dbru-font-size-lg);
   --dbru-control-px: var(--dbru-space-5);
 }
 
@@ -94,7 +54,7 @@
   --_px: var(--dbru-control-px, var(--dbru-space-4));
 
   --_bg: var(--dbru-color-primary);
-  --_bg-hover: color-mix(in oklab, var(--_bg) 85%, var(--dbru-color-text));
+  --_bg-hover: color-mix(in oklab, var(--_bg) 85%, var(--dbru-text-color-base));
 
   display: inline-flex;
   align-items: center;
@@ -104,7 +64,6 @@
   padding: 0 var(--_px);
   border-radius: var(--_radius);
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
-  font-weight: var(--dbru-font-weight-semibold);
   transition: transform var(--dbru-duration-fast) var(--dbru-ease-standard),
     background-color var(--dbru-duration-base) var(--dbru-ease-standard),
     color var(--dbru-duration-base) var(--dbru-ease-standard),
@@ -138,7 +97,7 @@
 
 .dbru-btn--danger {
   --_bg: var(--dbru-color-danger);
-  --_bg-hover: color-mix(in oklab, var(--_bg) 85%, var(--dbru-color-text));
+  --_bg-hover: color-mix(in oklab, var(--_bg) 85%, var(--dbru-text-color-base));
   border-color: var(--_bg);
 }
 
@@ -147,8 +106,8 @@
 .dbru-root input:-webkit-autofill:focus,
 .dbru-root textarea:-webkit-autofill,
 .dbru-root select:-webkit-autofill {
-  -webkit-text-fill-color: var(--dbru-color-text);
-  caret-color: var(--dbru-color-text);
+  -webkit-text-fill-color: var(--dbru-text-color-base);
+  caret-color: var(--dbru-text-color-base);
   -webkit-box-shadow: 0 0 0 1000px var(--dbru-color-surface) inset;
   box-shadow: 0 0 0 1000px var(--dbru-color-surface) inset;
   transition: background-color 9999s ease-in-out 0s;

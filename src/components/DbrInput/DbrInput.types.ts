@@ -5,12 +5,17 @@ export interface DbrInputProps {
    */
   modelValue?: string;
   /**
-   * Input label text. You can also use the default slot.
+   * Visual label text above the input. It is informational only and does not focus the control.
    * @default undefined
    */
   label?: string;
   /**
-   * Input size.
+   * Placeholder text shown inside the input when empty.
+   * @default undefined
+   */
+  placeholder?: string;
+  /**
+   * Control size. The label is not included in the control height.
    * @default "md"
    */
   size?: 'sm' | 'md' | 'lg';

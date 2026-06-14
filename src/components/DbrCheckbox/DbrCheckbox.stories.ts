@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrCheckbox from "./DbrCheckbox.vue";
+import DbrText from "../DbrText/DbrText.vue";
 
 const meta: Meta<typeof DbrCheckbox> = {
   title: "Components/Checkbox",
@@ -22,7 +23,7 @@ type Story = StoryObj<typeof DbrCheckbox>;
 
 export const Playground: Story = {
   render: (args) => ({
-    components: { DbrCheckbox },
+    components: { DbrCheckbox, DbrText },
     setup: () => ({ args }),
     template: `
       <DbrCheckbox v-bind="args" />
@@ -35,11 +36,11 @@ export const Variants: Story = {
     components: { DbrCheckbox },
     template: `
       <div style="display:grid; gap:12px;">
-        <div style="font-weight:600;">With label</div>
+        <DbrText>With label</DbrText>
         <DbrCheckbox label="Unchecked" />
         <DbrCheckbox :modelValue="true" label="Checked" />
         <DbrCheckbox :modelValue="true" label="Disabled" :disabled="true" />
-        <div style="font-weight:600; margin-top: 6px;">Without label</div>
+        <div style="margin-top: 6px;"><DbrText>Without label</DbrText></div>
         <div style="display:flex; gap:12px; align-items:center;">
           <DbrCheckbox />
           <DbrCheckbox :modelValue="true" />

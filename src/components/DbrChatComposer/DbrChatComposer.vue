@@ -8,18 +8,15 @@
           :src="item.url"
           :alt="item.name"
         />
-        <div
-          v-else-if="item.kind === 'audio'"
-          class="dbru-chat-composer__audio dbru-font-size-sm dbru-font-color-base"
-        >
+        <div v-else-if="item.kind === 'audio'" class="dbru-chat-composer__audio">
           <button
             type="button"
-            class="dbru-chat-composer__audio-btn dbru-font-color-base dbru-font-size-xs"
+            class="dbru-chat-composer__audio-btn"
             @click="togglePreview(item.id)"
             aria-label="Play or pause audio"
           >
-            <span v-if="!item.playing">▶</span>
-            <span v-else>⏸</span>
+            <DbrText v-if="!item.playing" size="xs">▶</DbrText>
+            <DbrText v-else size="xs">⏸</DbrText>
           </button>
           <audio
             class="dbru-chat-composer__audio-el"
@@ -37,25 +34,25 @@
               :aria-label="`Audio position: ${item.name}`"
               @input="seekPreview(item.id, $event)"
             />
-            <span class="dbru-chat-composer__audio-time dbru-font-size-xs dbru-font-color-muted">
+            <DbrText class="dbru-chat-composer__audio-time" color="muted" size="xs" wrap="nowrap">
               {{ formatTime(item.currentTime || 0) }} / {{ formatTime(item.duration || 0) }}
-            </span>
+            </DbrText>
           </div>
         </div>
-        <div v-else class="dbru-chat-composer__file dbru-font-size-sm dbru-font-color-base">
+        <div v-else class="dbru-chat-composer__file">
           <span class="dbru-chat-composer__file-icon">📎</span>
-          <span class="dbru-chat-composer__file-name dbru-font-size-sm dbru-font-color-base">{{
-            item.name
-          }}</span>
+          <DbrText class="dbru-chat-composer__file-name" size="sm" truncate>
+            {{ item.name }}
+          </DbrText>
         </div>
         <button
           type="button"
-          class="dbru-chat-composer__remove dbru-font-color-base dbru-font-size-xs"
+          class="dbru-chat-composer__remove"
           :disabled="disabled"
           @click="removeAttachment(item.id)"
           aria-label="Remove attachment"
         >
-          ×
+          <DbrText size="xs">×</DbrText>
         </button>
       </div>
     </div>
@@ -63,7 +60,7 @@
     <div class="dbru-chat-composer__row">
       <button
         type="button"
-        class="dbru-chat-composer__icon-btn dbru-focus-visible dbru-font-color-base"
+        class="dbru-chat-composer__icon-btn dbru-focus-visible"
         :disabled="disabled"
         aria-label="Attach file"
         @click="openFilePicker"
@@ -81,7 +78,7 @@
 
       <textarea
         ref="textareaRef"
-        class="dbru-chat-composer__input dbru-focus-visible dbru-reduced-motion dbru-font-size-base dbru-font-color-base"
+        class="dbru-chat-composer__input dbru-focus-visible dbru-reduced-motion"
         :value="modelValue"
         :placeholder="placeholder"
         :aria-label="ariaLabel"
@@ -93,7 +90,7 @@
 
       <button
         type="button"
-        class="dbru-chat-composer__icon-btn dbru-focus-visible dbru-font-color-base"
+        class="dbru-chat-composer__icon-btn dbru-focus-visible"
         :class="{ 'dbru-chat-composer__icon-btn--recording': isRecording }"
         :disabled="disabled || !canRecord"
         aria-label="Record voice message"
@@ -112,7 +109,7 @@
 
       <button
         type="button"
-        class="dbru-chat-composer__send dbru-focus-visible dbru-font-color-base"
+        class="dbru-chat-composer__send dbru-focus-visible"
         :disabled="disabled || !canSend"
         aria-label="Send message"
         @click="send"
@@ -142,6 +139,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { DbrChatAttachment, DbrChatComposerProps } from './DbrChatComposer.types';
+import DbrText from '../DbrText/DbrText.vue';
 
 const {
   modelValue = '',
@@ -422,9 +420,20 @@ onBeforeUnmount(() => {
   border-radius: var(--dbru-radius-md);
   padding: var(--dbru-space-2) var(--dbru-space-3);
   background: var(--dbru-color-surface);
+  color: var(--dbru-text-color-base) !important;
+  font-family: var(--dbru-text-font-family) !important;
+  font-size: var(--dbru-text-size-md) !important;
+  font-weight: var(--dbru-text-weight-regular) !important;
+  line-height: var(--dbru-text-line-height-normal) !important;
+  letter-spacing: var(--dbru-text-letter-spacing-normal) !important;
   transition:
     border-color var(--dbru-duration-base) var(--dbru-ease-standard),
     box-shadow var(--dbru-duration-base) var(--dbru-ease-standard);
+}
+
+.dbru-chat-composer__input::placeholder {
+  color: var(--dbru-text-color-muted) !important;
+  opacity: 1 !important;
 }
 
 .dbru-chat-composer__input:hover:not(:disabled) {
@@ -439,6 +448,7 @@ onBeforeUnmount(() => {
   border-radius: 50%;
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   background: var(--dbru-color-surface);
+  color: var(--dbru-text-color-base);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -538,7 +548,7 @@ onBeforeUnmount(() => {
 }
 
 .dbru-chat-composer__audio-time {
-  white-space: nowrap;
+  min-width: max-content;
 }
 
 .dbru-chat-composer__audio-btn {
@@ -559,9 +569,6 @@ onBeforeUnmount(() => {
 
 .dbru-chat-composer__file-name {
   max-width: 160px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .dbru-chat-composer__remove {

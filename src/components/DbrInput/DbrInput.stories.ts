@@ -7,7 +7,8 @@ const meta: Meta<typeof DbrInput> = {
   tags: ['autodocs'],
   args: {
     modelValue: "",
-    label: "Input label",
+    label: "Email",
+    placeholder: "mail@example.com",
     disabled: false,
     required: false,
     size: "md",
@@ -17,6 +18,7 @@ const meta: Meta<typeof DbrInput> = {
   argTypes: {
     modelValue: { control: "text" },
     label: { control: "text" },
+    placeholder: { control: "text" },
     disabled: { control: "boolean" },
     required: { control: "boolean" },
     size: {
@@ -40,6 +42,7 @@ type Story = StoryObj<typeof DbrInput>;
 export const Playground: Story = {
   args: {
     label: "Input label",
+    placeholder: "Type here...",
     modelValue: "",
     disabled: false
   },
@@ -58,9 +61,10 @@ export const Variants: Story = {
     components: { DbrInput },
     template: `
       <div style="display:grid; gap:12px; max-width: 240px;">
-        <DbrInput label="Small" size="sm" />
-        <DbrInput label="Medium" size="md" />
-        <DbrInput label="Large" size="lg" />
+        <DbrInput placeholder="Small" size="sm" />
+        <DbrInput placeholder="Medium" size="md" />
+        <DbrInput placeholder="Large" size="lg" />
+        <DbrInput label="With label" placeholder="Placeholder text" />
         <DbrInput label="Filled" :modelValue="'John Doe'" />
         <DbrInput label="Password" type="password" :modelValue="'secret123'" />
         <DbrInput label="With left icon" :modelValue="'Design system'">

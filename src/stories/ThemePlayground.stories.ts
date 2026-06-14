@@ -13,6 +13,8 @@ import DbrChatListItem from "../components/DbrChatListItem/DbrChatListItem.vue";
 import DbrCheckbox from "../components/DbrCheckbox/DbrCheckbox.vue";
 import DbrEyesLoader from "../components/DbrEyesLoader/DbrEyesLoader.vue";
 import DbrInput from "../components/DbrInput/DbrInput.vue";
+import DbrTextarea from "../components/DbrTextarea/DbrTextarea.vue";
+import DbrSelect from "../components/DbrSelect/DbrSelect.vue";
 import DbrLoader from "../components/DbrLoader/DbrLoader.vue";
 import DbrMenuToggle from "../components/DbrMenuToggle/DbrMenuToggle.vue";
 import DbrToggle from "../components/DbrToggle/DbrToggle.vue";
@@ -21,6 +23,7 @@ import DbrSkeleton from "../components/DbrSkeleton/DbrSkeleton.vue";
 import DbrTerminalLoader from "../components/DbrTerminalLoader/DbrTerminalLoader.vue";
 import DbrThemeToggle from "../components/DbrThemeToggle/DbrThemeToggle.vue";
 import DbrTooltip from "../components/DbrTooltip/DbrTooltip.vue";
+import DbrText from "../components/DbrText/DbrText.vue";
 
 const meta: Meta = {
   title: "Foundations/Theme Playground",
@@ -37,8 +40,14 @@ export const AllComponents: Story = {
       const autoUpdates = ref(false);
       const menuOpen = ref(false);
       const shape = ref("line");
+      const section = ref("components");
       const darkTheme = ref(false);
-      return { rememberMe, autoUpdates, menuOpen, shape, darkTheme };
+      const sectionOptions = [
+        { label: "Components", value: "components" },
+        { label: "Tokens", value: "tokens" },
+        { label: "Stories", value: "stories" },
+      ];
+      return { rememberMe, autoUpdates, menuOpen, shape, section, sectionOptions, darkTheme };
     },
     components: {
       DbrAvatar,
@@ -54,6 +63,8 @@ export const AllComponents: Story = {
       DbrCheckbox,
       DbrEyesLoader,
       DbrInput,
+      DbrTextarea,
+      DbrSelect,
       DbrLoader,
       DbrMenuToggle,
       DbrToggle,
@@ -62,11 +73,12 @@ export const AllComponents: Story = {
       DbrTerminalLoader,
       DbrThemeToggle,
       DbrTooltip,
+      DbrText,
     },
     template: `
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px; align-items:start;">
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-font-size-base dbru-font-color-base">Buttons</h4>
+          <DbrText>Buttons</DbrText>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
             <DbrButton variant="primary">Primary</DbrButton>
             <DbrButton variant="ghost">Ghost</DbrButton>
@@ -99,10 +111,12 @@ export const AllComponents: Story = {
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-font-size-base dbru-font-color-base">Inputs</h4>
+          <DbrText>Inputs</DbrText>
           <div style="display:grid; gap:10px; margin-top:10px;">
             <DbrInput label="Email" model-value="user@mail.com" />
             <DbrInput label="Password" type="password" model-value="secret123" />
+            <DbrSelect v-model="section" label="Section" :options="sectionOptions" />
+            <DbrTextarea label="Message" placeholder="Write a message..." model-value="Textarea content" height="120px" />
             <div style="display:flex; flex-wrap:wrap; gap:10px;">
               <DbrCheckbox v-model="rememberMe" label="Remember me" />
               <DbrToggle v-model="autoUpdates" label="Auto updates" />
@@ -121,7 +135,7 @@ export const AllComponents: Story = {
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-font-size-base dbru-font-color-base">Identity</h4>
+          <DbrText>Identity</DbrText>
           <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; align-items:center;">
             <DbrAvatar name="Jane Doe" size="sm" />
             <DbrAvatar name="Jane Doe" size="md" shape="rounded" />
@@ -139,10 +153,10 @@ export const AllComponents: Story = {
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-font-size-base dbru-font-color-base">Cards And Loaders</h4>
+          <DbrText>Cards And Loaders</DbrText>
           <DbrCard hoverable style="margin-top:10px;">
             <div style="display:grid; gap:10px;">
-              <span class="dbru-font-size-base dbru-font-color-base">Card content</span>
+              <DbrText>Card content</DbrText>
               <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
                 <DbrLoader size="sm" />
                 <DbrEyesLoader />
@@ -154,7 +168,7 @@ export const AllComponents: Story = {
         </section>
 
         <section class="dbru-surface" style="padding:14px; border:1px solid var(--dbru-color-border); border-radius: var(--dbru-radius-md);">
-          <h4 class="dbru-font-size-base dbru-font-color-base">Chat</h4>
+          <DbrText>Chat</DbrText>
           <div style="display:grid; gap:10px; margin-top:10px;">
             <DbrChatListItem
               name="Support"

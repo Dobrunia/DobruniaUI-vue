@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { ref } from "vue";
+import DbrButton from "../DbrButton/DbrButton.vue";
+import DbrText from "../DbrText/DbrText.vue";
 import DbrChatListItem from "./DbrChatListItem.vue";
 
 const meta: Meta<typeof DbrChatListItem> = {
@@ -52,7 +54,7 @@ export const Playground: Story = {
   },
 
   render: (args) => ({
-    components: { DbrChatListItem },
+    components: { DbrChatListItem, DbrButton },
     setup: () => ({ args }),
     template: `
       <DbrChatListItem v-bind="args" />
@@ -70,14 +72,14 @@ export const Variants: Story = {
     }
   },
   render: () => ({
-    components: { DbrChatListItem },
+    components: { DbrChatListItem, DbrButton, DbrText },
     setup: () => {
       const loading = ref(false);
       return { loading };
     },
     template: `
       <div style="display:grid; gap:12px; max-width: 420px;">
-        <div style="font-weight: 600;">Incoming</div>
+        <DbrText>Incoming</DbrText>
         <DbrChatListItem
           name="Mia Wallace"
           :lastMessage="{ text: 'Hey, are you there?', type: 'text' }"
@@ -114,7 +116,7 @@ export const Variants: Story = {
           :unreadCount="0"
         />
 
-        <div style="font-weight: 600; margin-top: 8px;">Outgoing</div>
+        <div style="margin-top: 8px;"><DbrText>Outgoing</DbrText></div>
         <DbrChatListItem
           name="Alex Johnson"
           :lastMessage="{ text: 'Got it!', type: 'text' }"
@@ -140,14 +142,10 @@ export const Variants: Story = {
           status="online"
         />
 
-        <div style="font-weight: 600; margin-top: 8px;">Loading Toggle</div>
-        <button
-          type="button"
-          class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-font-size-sm dbru-font-color-base"
-          @click="loading = !loading"
-        >
+        <div style="margin-top: 8px;"><DbrText>Loading Toggle</DbrText></div>
+        <DbrButton variant="ghost" size="sm" @click="loading = !loading">
           {{ loading ? 'Show regular' : 'Show skeleton' }}
-        </button>
+        </DbrButton>
         <DbrChatListItem
           :loading="loading"
           name="Alex Johnson"

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrChatBubble from "./DbrChatBubble.vue";
+import DbrText from "../DbrText/DbrText.vue";
 
 const audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 const imageUrl = "https://cdn.fishki.net/upload/post/2021/02/16/3613245/tn/alberta-2297204-1280.jpg";
@@ -42,7 +43,7 @@ type Story = StoryObj<typeof DbrChatBubble>;
 
 export const Playground: Story = {
   render: (args) => ({
-    components: { DbrChatBubble },
+    components: { DbrChatBubble, DbrText },
     setup: () => ({ args }),
     template: `
       <div style="display:flex; flex-direction: column; gap:12px;">
@@ -62,11 +63,11 @@ export const Showcase: Story = {
     }
   },
   render: () => ({
-    components: { DbrChatBubble },
+    components: { DbrChatBubble, DbrText },
     setup: () => ({ imageUrl, audioUrl }),
     template: `
       <div style="display:flex; flex-direction: column; gap:16px; max-width: 720px;">
-        <div style="font-weight: 600;">Text</div>
+        <DbrText>Text</DbrText>
         <DbrChatBubble
           name="Alex"
           text="Hello!"
@@ -90,7 +91,7 @@ export const Showcase: Story = {
         />
         <DbrChatBubble text="Hi, on my way." time="11:23" direction="out" status="sending" />
 
-        <div style="font-weight: 600; margin-top: 8px;">Media</div>
+        <div style="margin-top: 8px;"><DbrText>Media</DbrText></div>
         <DbrChatBubble
           text="Фото"
           time="11:21"
@@ -107,7 +108,7 @@ export const Showcase: Story = {
           kind="audio"
           :mediaSrc="audioUrl"
         />
-        <div style="font-weight: 600; margin-top: 8px;">Media Only</div>
+        <div style="margin-top: 8px;"><DbrText>Media Only</DbrText></div>
         <DbrChatBubble
           text=""
           time="11:28"

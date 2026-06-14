@@ -1,6 +1,6 @@
 # 🎨 DobruniaUI for Vue 3
 
-**Modern Vue 3 UI component library**
+Modern Vue 3 UI component library
 
 [![npm version](https://img.shields.io/npm/v/dobruniaui-vue.svg)](https://www.npmjs.com/package/dobruniaui-vue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,7 +10,8 @@ DobruniaUI is a comprehensive Vue 3 component library designed with a focus on m
 
 For the always up-to-date generated reference (components, tokens, reusable classes, and named types), use [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md).
 
-Upgrading from **2.x**? See **[MIGRATION_v2_to_v3.md](./MIGRATION_v2_to_v3.md)**.
+Upgrading from **3.x**? See **[MIGRATION_v3_to_v4.md](./MIGRATION_v3_to_v4.md)**.
+Upgrading from **2.x**? See **[MIGRATION_v2_to_v3.md](./MIGRATION_v2_to_v3.md)** first.
 
 ## 🎮 Demo
 
@@ -32,10 +33,10 @@ npm i dobruniaui-vue
 
 ## Usage
 
-Wrap app UI in `dbru-root` and a theme class (for example `dbru-theme-light`):
+Wrap app UI in `dbru-root`. Light theme tokens are the default; add a theme class only when you manage the theme manually:
 
 ```vue
-<div class="dbru-root dbru-theme-light">
+<div class="dbru-root">
   <!-- components -->
 </div>
 ```
@@ -52,7 +53,7 @@ app.use(DobruniaUI);
 Or per-component:
 
 ```ts
-import { DbrButton, DbrInput } from 'dobruniaui-vue';
+import { DbrButton, DbrInput, DbrSelect, DbrTextarea } from 'dobruniaui-vue';
 ```
 
 ## Tree Shaking
@@ -61,7 +62,7 @@ Tree shaking is supported for ESM builds. To get the smallest bundle, use
 named imports instead of the default plugin:
 
 ```ts
-import { DbrButton, DbrInput } from 'dobruniaui-vue';
+import { DbrButton, DbrInput, DbrSelect, DbrTextarea } from 'dobruniaui-vue';
 ```
 
 The package is marked as side‑effect free (except `styles.css`) so bundlers
@@ -70,21 +71,21 @@ can drop unused components.
 Using `app.use(DobruniaUI)` registers all components and will include the full
 library in your bundle.
 
-## Utility And Primitive Classes
+## Utilities And Text
 
-Full up-to-date class list is generated in [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md) (`Reusable Classes From base.css` section).
+Text styling is component-driven. Use `DbrText` for size, color, weight, line height, alignment, wrapping, and truncation. Global typography utility classes are not part of the API.
+
+Full up-to-date structural class list is generated in [`LLM_INSTRUCTIONS.md`](https://github.com/Dobrunia/DobruniaUI-vue/blob/main/LLM_INSTRUCTIONS.md) (`Reusable Classes From base.css` section).
 
 Examples:
 
 ```vue
-<span class="dbru-font-size-sm dbru-font-color-base">Main text</span>
-<span class="dbru-font-size-xs dbru-font-color-muted">Meta info</span>
-<span class="dbru-font-size-sm dbru-font-color-on-primary">Text on primary bg</span>
+<DbrText size="sm">Main text</DbrText>
+<DbrText size="xs" color="muted">Meta info</DbrText>
+<DbrText size="sm" color="on-primary">Text on primary bg</DbrText>
 <div class="dbru-surface">Surface block</div>
-<button
-  class="dbru-btn dbru-btn--primary dbru-size-md dbru-font-size-base dbru-font-color-on-primary"
->Action</button>
-<button class="dbru-btn dbru-btn--ghost dbru-size-sm dbru-font-size-sm dbru-font-color-base">Cancel</button>
+<DbrButton variant="primary" size="md">Action</DbrButton>
+<DbrButton variant="ghost" size="sm">Cancel</DbrButton>
 ```
 
 ## Design Tokens

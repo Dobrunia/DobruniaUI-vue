@@ -10,17 +10,24 @@
       :style="{ right: offsetX, top: offsetY }"
       aria-live="polite"
     >
-      <span v-if="!dot && hasBadgeContent" class="dbru-badge__text">
+      <DbrText
+        v-if="!dot && hasBadgeContent"
+        :color="badgeTextColor"
+        size="xs"
+        class="dbru-badge__content"
+      >
         <template v-if="normalizedBadgeText !== null">{{ normalizedBadgeText }}</template>
         <slot v-else name="badge" />
-      </span>
+      </DbrText>
     </span>
   </span>
 </template>
 
 <script setup lang="ts">
 import { computed, useSlots } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type { DbrBadgeProps } from './DbrBadge.types';
+import type { DbrTextColor } from '../DbrText/DbrText.types';
 
 defineSlots<{
   default?: (props: {}) => any;
@@ -49,6 +56,8 @@ const normalizedBadgeText = computed(() => {
   if (!Number.isFinite(numeric)) return rawText;
   return numeric > 99 ? '99+' : rawText;
 });
+
+const badgeTextColor = computed<DbrTextColor>(() => (variant === 'neutral' ? 'surface' : 'on-primary'));
 </script>
 
 <style scoped>
@@ -73,15 +82,11 @@ const normalizedBadgeText = computed(() => {
   z-index: 1;
 }
 
-.dbru-badge__text {
+.dbru-badge__content {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 100%;
-  line-height: 1;
-  font-size: 10px;
-  color: var(--dbru-color-on-primary);
-  font-weight: var(--dbru-font-weight-semibold);
   transform: translateY(-0.5px);
 }
 
@@ -94,11 +99,7 @@ const normalizedBadgeText = computed(() => {
 }
 
 .dbru-badge--neutral {
-  background: color-mix(in oklab, var(--dbru-color-text) 65%, var(--dbru-color-surface));
-}
-
-.dbru-badge--neutral .dbru-badge__text {
-  color: var(--dbru-color-surface);
+  background: color-mix(in oklab, var(--dbru-text-color-base) 65%, var(--dbru-color-surface));
 }
 
 .dbru-badge--dot {

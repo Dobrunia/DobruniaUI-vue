@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
 import DbrButton from '../DbrButton/DbrButton.vue';
+import DbrText from '../DbrText/DbrText.vue';
 import DbrButtonGroup from './DbrButtonGroup.vue';
 
 const OPTIONS = [
@@ -41,7 +42,7 @@ export const Playground: Story = {
 
 export const Variants: Story = {
   render: () => ({
-    components: { DbrButton, DbrButtonGroup },
+    components: { DbrButton, DbrButtonGroup, DbrText },
     setup: () => {
       const shape = ref('ellipse');
       const lockedShape = 'ellipse';
@@ -59,7 +60,7 @@ export const Variants: Story = {
     },
     template: `
       <div style="display:grid; gap:16px;">
-        <div style="font-weight:600;">Interactive (with switching)</div>
+        <DbrText>Interactive (with switching)</DbrText>
         <div style="border:1px dashed var(--dbru-color-border); padding:8px; width: 220px;">
           <DbrButtonGroup v-model="shape" :options="longOptions" size="md" />
         </div>
@@ -67,7 +68,7 @@ export const Variants: Story = {
           <DbrButtonGroup v-model="shape" :options="longOptions" size="md" />
         </div>
 
-        <div style="font-weight:600; margin-top:4px;">Locked (without switching)</div>
+        <div style="margin-top:4px;"><DbrText>Locked (without switching)</DbrText></div>
         <div style="border:1px dashed var(--dbru-color-border); padding:8px; width: 220px;">
           <DbrButtonGroup
             :model-value="lockedShape"
@@ -85,7 +86,7 @@ export const Variants: Story = {
           />
         </div>
 
-        <div style="font-weight:600; margin-top:4px;">Size scale (aligned with DbrButton)</div>
+        <div style="margin-top:4px;"><DbrText>Size scale (aligned with DbrButton)</DbrText></div>
         <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
           <DbrButton size="sm" variant="ghost">Button sm</DbrButton>
           <DbrButtonGroup v-model="shape" :options="options" size="sm" />
@@ -106,7 +107,7 @@ export const Variants: Story = {
             options[3],
           ]"
         />
-        <div class="dbru-font-size-base dbru-font-color-base">Active: <b>{{ shape }}</b></div>
+        <DbrText>Active: <b>{{ shape }}</b></DbrText>
       </div>
     `,
   }),

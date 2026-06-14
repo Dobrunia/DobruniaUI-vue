@@ -5,7 +5,7 @@
         v-for="(option, index) in options"
         :key="option.value"
         type="button"
-        class="dbru-button-group__item dbru-font-color-base"
+        class="dbru-button-group__item"
         :class="{
           'dbru-button-group__item--active': isActive(option.value),
           'dbru-button-group__item--first': index === 0,
@@ -15,18 +15,28 @@
         :disabled="disabled || option.disabled"
         @click="select(option)"
       >
-        <span class="dbru-button-group__label">{{ option.label }}</span>
+        <DbrText
+          :size="textSize"
+          :color="isActive(option.value) ? 'primary' : 'base'"
+          :weight="isActive(option.value) ? 'semibold' : undefined"
+          wrap="nowrap"
+        >
+          {{ option.label }}
+        </DbrText>
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type {
   DbrButtonGroupOption,
   DbrButtonGroupProps,
   DbrButtonGroupValue,
 } from './DbrButtonGroup.types';
+import type { DbrTextSize } from '../DbrText/DbrText.types';
 
 const { modelValue, options = [], size = 'md', disabled = false } =
   defineProps<DbrButtonGroupProps>();
@@ -37,6 +47,14 @@ const emit = defineEmits<{
 }>();
 
 const isActive = (value: DbrButtonGroupValue) => Object.is(modelValue, value);
+
+const textSizeByGroupSize: Record<NonNullable<DbrButtonGroupProps['size']>, DbrTextSize> = {
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
+};
+
+const textSize = computed(() => textSizeByGroupSize[size]);
 
 const select = (option: DbrButtonGroupOption) => {
   if (disabled || option.disabled) return;
@@ -111,9 +129,6 @@ const onWheel = (event: WheelEvent) => {
   transition:
     background-color var(--dbru-duration-base) var(--dbru-ease-standard),
     color var(--dbru-duration-base) var(--dbru-ease-standard);
-  font-family: var(--dbru-font-family);
-  font-weight: var(--dbru-font-weight-semibold);
-  line-height: var(--dbru-line-height-base);
 }
 
 .dbru-button-group__item--last {
@@ -122,17 +137,14 @@ const onWheel = (event: WheelEvent) => {
 
 .dbru-button-group--sm .dbru-button-group__item {
   padding: 0 var(--dbru-space-3);
-  font-size: var(--dbru-font-size-sm);
 }
 
 .dbru-button-group--md .dbru-button-group__item {
   padding: 0 var(--dbru-space-4);
-  font-size: var(--dbru-font-size-base);
 }
 
 .dbru-button-group--lg .dbru-button-group__item {
   padding: 0 var(--dbru-space-5);
-  font-size: var(--dbru-font-size-lg);
 }
 
 .dbru-button-group__item:hover:not(:disabled):not(.dbru-button-group__item--active) {
@@ -156,7 +168,4 @@ const onWheel = (event: WheelEvent) => {
   opacity: 0.6;
 }
 
-.dbru-button-group__label {
-  white-space: nowrap;
-}
 </style>

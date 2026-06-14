@@ -10,14 +10,15 @@
       @keydown.enter.prevent="toggleFromKeyboard"
       @change="onChange"
     />
-    <span v-if="label || $slots.default" class="dbru-font-size-base dbru-font-color-base">
+    <DbrText v-if="label || $slots.default">
       <slot>{{ label }}</slot>
-    </span>
+    </DbrText>
   </label>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type { DbrCheckboxProps } from './DbrCheckbox.types';
 
 defineSlots<{
@@ -25,7 +26,13 @@ defineSlots<{
   default?: (props: {}) => any;
 }>();
 
-const { modelValue = false, disabled = false, label, name, value } = defineProps<DbrCheckboxProps>();
+const {
+  modelValue = false,
+  disabled = false,
+  label,
+  name,
+  value,
+} = defineProps<DbrCheckboxProps>();
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;

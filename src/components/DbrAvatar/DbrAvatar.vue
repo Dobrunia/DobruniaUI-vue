@@ -1,16 +1,20 @@
 <template>
   <span
-    class="dbru-avatar dbru-font-color-base"
+    class="dbru-avatar"
     :class="[`dbru-size-${size}`, `dbru-avatar--${shape}`, { 'dbru-avatar--active': active }]"
   >
     <img v-if="src" class="dbru-avatar__img" :src="src" :alt="altText" />
-    <span v-else class="dbru-avatar__initials dbru-font-color-base">{{ initials }}</span>
+    <DbrText v-else :size="textSize" transform="uppercase">
+      {{ initials }}
+    </DbrText>
   </span>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type { DbrAvatarProps } from './DbrAvatar.types';
+import type { DbrTextSize } from '../DbrText/DbrText.types';
 
 const { src, alt, name = '', size = 'md', shape = 'circle', active = false } =
   defineProps<DbrAvatarProps>();
@@ -22,13 +26,20 @@ const initials = computed(() => {
   const parts = name.trim().split(/\s+/).slice(0, 2);
   return parts.map((part) => part[0]?.toUpperCase()).join('');
 });
+
+const textSizeByAvatarSize: Record<NonNullable<DbrAvatarProps['size']>, DbrTextSize> = {
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
+};
+
+const textSize = computed(() => textSizeByAvatarSize[size]);
 </script>
 
 <style scoped>
 .dbru-avatar {
   box-sizing: border-box;
   --_size: var(--dbru-control-height, var(--dbru-control-height-md));
-  --_font-size: var(--dbru-control-font-size, var(--dbru-font-size-base));
 
   display: inline-flex;
   align-items: center;
@@ -38,8 +49,6 @@ const initials = computed(() => {
   border-radius: 50%;
   background-color: var(--dbru-color-surface);
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
-  font-size: var(--_font-size);
-  font-weight: var(--dbru-font-weight-semibold);
   overflow: hidden;
 }
 
@@ -58,7 +67,4 @@ const initials = computed(() => {
   display: block;
 }
 
-.dbru-avatar__initials {
-  text-transform: uppercase;
-}
 </style>

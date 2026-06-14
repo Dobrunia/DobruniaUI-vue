@@ -1,12 +1,17 @@
 <template>
   <span class="dbru-tooltip" :class="variant ? `dbru-tooltip--${variant}` : 'dbru-tooltip--plain'">
-    <span class="dbru-tooltip__icon dbru-font-size-sm" aria-hidden="true">{{ icon }}</span>
-    <span class="dbru-tooltip__text dbru-font-size-sm dbru-font-color-base">{{ text }}</span>
+    <span class="dbru-tooltip__icon" aria-hidden="true">
+      <DbrText color="on-primary" size="sm">{{ icon }}</DbrText>
+    </span>
+    <span class="dbru-tooltip__content">
+      <DbrText size="sm" wrap="nowrap">{{ text }}</DbrText>
+    </span>
   </span>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type { DbrTooltipProps } from './DbrTooltip.types';
 
 const { text = 'This is a cool tooltip!', variant } = defineProps<DbrTooltipProps>();
@@ -27,7 +32,7 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
   cursor: pointer;
 }
 
-.dbru-tooltip:hover .dbru-tooltip__text {
+.dbru-tooltip:hover .dbru-tooltip__content {
   visibility: visible;
   opacity: 1;
   transform: translateX(-50%) translateY(0);
@@ -37,10 +42,9 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
     visibility 0s;
 }
 
-.dbru-tooltip__text {
+.dbru-tooltip__content {
   visibility: hidden;
   background-color: var(--dbru-color-surface);
-  text-align: center;
   border-radius: var(--dbru-radius-sm);
   padding: var(--dbru-space-2) var(--dbru-space-3);
   position: absolute;
@@ -55,7 +59,6 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
     visibility 0s var(--dbru-duration-base);
   border: var(--dbru-border-size-1) solid var(--dbru-color-border);
   box-shadow: var(--dbru-shadow-md);
-  white-space: nowrap;
 }
 
 .dbru-tooltip__icon {
@@ -67,7 +70,6 @@ const icon = computed(() => (variant ? ICON_MAP[variant] : undefined) ?? 'i');
   background-color: var(--_icon-bg, var(--dbru-color-primary));
   color: var(--dbru-color-on-primary);
   border-radius: 50%;
-  text-align: center;
 }
 
 .dbru-tooltip--plain {

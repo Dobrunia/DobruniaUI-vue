@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
-import { resolve } from 'path';
+import { resolve } from 'node:path';
+
+const VUE_DTS_FILE_RE = /(\w+)\.vue\.d\.ts$/;
 
 const COMPONENT_DOCS: Record<string, string> = {
   DbrButton:
@@ -25,10 +27,14 @@ const COMPONENT_DOCS: Record<string, string> = {
   DbrMenuToggle:
     'Hamburger ↔ X animated menu toggle for mobile navigation and collapsible sidebars. Uses `v-model` as open/closed state.',
   DbrThemeToggle: 'Light / dark theme toggle. Persists to `localStorage`, controls `[data-theme="dark"]` on `<html>`.',
-  DbrInput: 'Text input with optional `icon` slot and built-in password visibility toggle.',
+  DbrInput: 'Text input with label, placeholder, optional `icon` slot, and built-in password visibility toggle.',
+  DbrTextarea: 'Multiline textarea with locked resize by default and optional manual resize modes.',
+  DbrSelect: 'Custom select control with label, placeholder, optional option icons, and standard `sm` | `md` | `lg` control sizes.',
   DbrChatComposer: 'Chat message composer — auto-growing textarea, file attachments, audio recording.',
   DbrChatListItem: 'Chat list row — avatar, name, last message preview, timestamp, unread badge, presence.',
   DbrSkeleton: 'Generic skeleton loader with configurable `width`, `height`, and `radius`.',
+  DbrText:
+    'Typography span — tokenized size, weight, color, line-height, etc. Defaults match library body text; overrides only when props are set. Isolates from parent heading styles.',
   DbrEyesLoader: 'Decorative eye-tracking loader animation.',
   DbrTerminalLoader: 'Decorative terminal-style loading animation.',
 };
@@ -54,7 +60,7 @@ export default defineConfig({
       ],
       beforeWriteFile(filePath: string, content: string) {
         if (!filePath.endsWith('.vue.d.ts')) return;
-        const match = filePath.match(/(\w+)\.vue\.d\.ts$/);
+        const match = VUE_DTS_FILE_RE.exec(filePath);
         if (!match) return;
         const doc = COMPONENT_DOCS[match[1]];
         if (!doc) return;
@@ -82,7 +88,9 @@ export default defineConfig({
       output: {
         exports: 'named',
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'styles.css';
+          const assetNames = assetInfo.names ?? [];
+          const legacyAssetName = (assetInfo as { name?: string }).name;
+          if (assetNames.includes('style.css') || legacyAssetName === 'style.css') return 'styles.css';
           return 'assets/[name]-[hash][extname]';
         },
       },

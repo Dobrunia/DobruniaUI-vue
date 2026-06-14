@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrButton from "./DbrButton.vue";
+import DbrText from "../DbrText/DbrText.vue";
 
 const meta: Meta<typeof DbrButton> = {
   title: "Components/Button",
@@ -42,7 +43,7 @@ export const Playground: Story = {
   },
 
   render: (args) => ({
-    components: { DbrButton },
+    components: { DbrButton, DbrText },
     setup: () => ({ args }),
     template: `
       <div style="display:flex; gap:16px; align-items:center; flex-wrap: wrap;">
@@ -65,7 +66,7 @@ export const Variants: Story = {
     template: `
       <div style="display:grid; gap:16px;">
         <div v-for="variant in variants" :key="variant" style="display:grid; gap:12px;">
-          <div style="text-transform: capitalize; font-weight: 600;">{{ variant }}</div>
+          <DbrText transform="capitalize">{{ variant }}</DbrText>
           <div style="display:flex; gap:12px; flex-wrap: wrap;">
             <template v-for="size in sizes" :key="size">
               <DbrButton :variant="variant" :size="size">{{ size }}</DbrButton>
@@ -79,7 +80,7 @@ export const Variants: Story = {
           </div>
         </div>
         <div style="display:grid; gap:12px;">
-          <div style="font-weight: 600;">With icons</div>
+          <DbrText>With icons</DbrText>
           <div style="display:flex; gap:12px; flex-wrap: wrap;">
             <DbrButton variant="primary" size="sm">
               <span style="display:inline-flex; align-items:center; gap:8px;">

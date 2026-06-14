@@ -4,21 +4,23 @@
     :class="[
       `dbru-btn--${variant}`,
       `dbru-size-${size}`,
-      resolvedTextSizeClass,
-      resolvedTextColorClass,
       { 'dbru-btn--press-effect': pressEffect },
     ]"
     :type="nativeType"
     :disabled="disabled"
     :aria-pressed="pressed"
   >
-    <slot />
+    <DbrText :size="textSize" :color="textColor">
+      <slot />
+    </DbrText>
   </button>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type { DbrButtonProps } from './DbrButton.types';
+import type { DbrTextColor, DbrTextSize } from '../DbrText/DbrText.types';
 
 defineSlots<{
   /** Button content */
@@ -34,20 +36,20 @@ const {
   pressEffect = false,
 } = defineProps<DbrButtonProps>();
 
-const textSizeClass: Record<NonNullable<DbrButtonProps['size']>, string> = {
-  sm: 'dbru-font-size-sm',
-  md: 'dbru-font-size-base',
-  lg: 'dbru-font-size-lg',
+const textSizeByButtonSize: Record<NonNullable<DbrButtonProps['size']>, DbrTextSize> = {
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
 };
 
-const textColorClass: Record<NonNullable<DbrButtonProps['variant']>, string> = {
-  primary: 'dbru-font-color-on-primary',
-  ghost: 'dbru-font-color-base',
-  danger: 'dbru-font-color-on-danger',
+const textColorByVariant: Record<NonNullable<DbrButtonProps['variant']>, DbrTextColor> = {
+  primary: 'on-primary',
+  ghost: 'base',
+  danger: 'on-danger',
 };
 
-const resolvedTextSizeClass = computed(() => textSizeClass[size]);
-const resolvedTextColorClass = computed(() => textColorClass[variant]);
+const textSize = computed(() => textSizeByButtonSize[size]);
+const textColor = computed(() => textColorByVariant[variant]);
 </script>
 
 <style scoped>

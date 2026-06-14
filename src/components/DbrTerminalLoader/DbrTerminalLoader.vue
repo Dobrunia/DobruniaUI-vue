@@ -1,18 +1,21 @@
 <template>
   <div class="dbru-terminal-loader dbru-reduced-motion" aria-busy="true" aria-live="polite">
     <div class="dbru-terminal-header">
-      <div class="dbru-terminal-title">Status</div>
+      <DbrText class="dbru-terminal-title" color="surface" size="xs">
+        Status
+      </DbrText>
       <div class="dbru-terminal-controls">
         <span class="dbru-terminal-control dbru-terminal-control--close"></span>
         <span class="dbru-terminal-control dbru-terminal-control--minimize"></span>
         <span class="dbru-terminal-control dbru-terminal-control--maximize"></span>
       </div>
     </div>
-    <div class="dbru-terminal-text">Loading...</div>
+    <DbrText class="dbru-terminal-content" color="success" wrap="nowrap">Loading...</DbrText>
   </div>
 </template>
 
 <script setup lang="ts">
+import DbrText from '../DbrText/DbrText.vue';
 </script>
 
 <style scoped>
@@ -40,9 +43,6 @@
 .dbru-terminal-loader {
   border: 0.1em solid #333;
   background-color: #1a1a1a;
-  color: #0f0;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1em;
   padding: 1.5em 1em;
   width: 12em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -91,13 +91,11 @@
 
 .dbru-terminal-title {
   float: left;
-  line-height: 1.5em;
-  color: #eee;
+  padding-top: 0.25em;
 }
 
-.dbru-terminal-text {
+.dbru-terminal-content {
   display: inline-block;
-  white-space: nowrap;
   overflow: hidden;
   border-right: 0.2em solid green;
   animation:

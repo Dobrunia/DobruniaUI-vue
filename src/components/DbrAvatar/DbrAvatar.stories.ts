@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrAvatar from "./DbrAvatar.vue";
+import DbrText from "../DbrText/DbrText.vue";
 
 const meta: Meta<typeof DbrAvatar> = {
   title: "Components/Avatar",
@@ -31,7 +32,7 @@ type Story = StoryObj<typeof DbrAvatar>;
 
 export const Playground: Story = {
   render: (args) => ({
-    components: { DbrAvatar },
+    components: { DbrAvatar, DbrText },
     setup: () => ({ args }),
     template: `
       <DbrAvatar v-bind="args" />
@@ -45,9 +46,9 @@ export const Variants: Story = {
     template: `
       <div style="display:grid; gap:28px;">
         <div>
-          <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:10px;">
+          <div style="margin-bottom:10px;"><DbrText color="muted" size="sm">
             Circle — <code>shape="circle"</code>
-          </div>
+          </DbrText></div>
           <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
             <DbrAvatar name="A B" size="sm" shape="circle" />
             <DbrAvatar name="Jane Doe" size="md" shape="circle" />
@@ -56,9 +57,9 @@ export const Variants: Story = {
           </div>
         </div>
         <div>
-          <div class="dbru-font-size-sm dbru-font-color-muted" style="margin-bottom:10px;">
+          <div style="margin-bottom:10px;"><DbrText color="muted" size="sm">
             Rounded — <code>shape="rounded"</code>
-          </div>
+          </DbrText></div>
           <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
             <DbrAvatar name="A B" size="sm" shape="rounded" />
             <DbrAvatar name="Jane Doe" size="md" shape="rounded" />

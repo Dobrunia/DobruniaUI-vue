@@ -15,7 +15,8 @@ const escapeCell = (text) =>
     .replaceAll('|', escapedPipe)
     .replaceAll('\n', '<br/>');
 
-const SCALE_SUFFIX_ORDER = ['xs', 'sm', 'base', 'md', 'lg', 'xl'];
+const TEXT_SCALE_SUFFIX_ORDER = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+const CONTROL_SIZE_ORDER = ['sm', 'md', 'lg'];
 const COLOR_TOKEN_ORDER = [
   'bg',
   'surface',
@@ -35,12 +36,7 @@ const REUSABLE_CLASS_ORDER = [
   'dbru-root',
   'dbru-bg',
   'dbru-surface',
-  ...SCALE_SUFFIX_ORDER.map((size) => `dbru-font-size-${size}`),
-  'dbru-font-color-base',
-  'dbru-font-color-muted',
-  'dbru-font-color-on-primary',
-  'dbru-font-color-on-danger',
-  ...SCALE_SUFFIX_ORDER.filter((size) => size !== 'base' && size !== 'xl').map((size) => `dbru-size-${size}`),
+  ...CONTROL_SIZE_ORDER.map((size) => `dbru-size-${size}`),
   'dbru-btn',
   'dbru-btn--primary',
   'dbru-btn--ghost',
@@ -63,38 +59,41 @@ const sortByExplicitOrder = (items, order) => {
   });
 };
 
-const suffixRank = (value, order = SCALE_SUFFIX_ORDER) => {
+const suffixRank = (value, order = TEXT_SCALE_SUFFIX_ORDER) => {
   const index = order.indexOf(value);
   return index === -1 ? Number.MAX_SAFE_INTEGER : index;
 };
 
+const numericRank = (value) => {
+  const index = Number(value);
+  return Number.isFinite(index) ? index : Number.MAX_SAFE_INTEGER;
+};
+
+const TOKEN_SORT_RULES = [
+  { prefix: 'text-size-', group: 1, order: TEXT_SCALE_SUFFIX_ORDER },
+  { prefix: 'text-weight-', group: 2, order: ['regular', 'medium', 'semibold'] },
+  { prefix: 'text-line-height-', group: 3, order: ['tight', 'normal', 'relaxed'] },
+  { prefix: 'text-letter-spacing-', group: 3.5, order: ['normal', 'tight', 'wide'] },
+  { prefix: 'text-color-', group: 3.6, order: ['base', 'muted', 'primary', 'danger', 'on-primary', 'on-danger'] },
+  { prefix: 'space-', group: 4, rank: numericRank },
+  { prefix: 'control-height-', group: 5, order: ['sm', 'md', 'lg'] },
+  { prefix: 'radius-', group: 6, order: ['sm', 'md'] },
+  { prefix: 'border-size-', group: 7, rank: numericRank },
+  { prefix: 'shadow-', group: 9, order: ['sm', 'md'] },
+  { prefix: 'color-', group: 10, order: COLOR_TOKEN_ORDER },
+];
+
 const getDesignTokenSortKey = (token) => {
   const name = token.replace(/^--dbru-/, '');
 
-  if (name === 'font-family') return [0, 0, token];
-  if (name.startsWith('font-size-')) return [1, suffixRank(name.replace('font-size-', '')), token];
-  if (name.startsWith('font-weight-')) return [2, 0, token];
-  if (name.startsWith('line-height-')) {
-    return [3, name === 'line-height-tight' ? 0 : 1, token];
-  }
-  if (name.startsWith('space-')) {
-    const spaceIndex = Number(name.replace('space-', ''));
-    return [4, Number.isFinite(spaceIndex) ? spaceIndex : Number.MAX_SAFE_INTEGER, token];
-  }
-  if (name.startsWith('control-height-')) {
-    return [5, suffixRank(name.replace('control-height-', ''), ['sm', 'md', 'lg']), token];
-  }
-  if (name.startsWith('radius-')) return [6, suffixRank(name.replace('radius-', ''), ['sm', 'md']), token];
-  if (name.startsWith('border-size-')) {
-    const borderIndex = Number(name.replace('border-size-', ''));
-    return [7, Number.isFinite(borderIndex) ? borderIndex : Number.MAX_SAFE_INTEGER, token];
+  if (name === 'text-font-family') return [0, 0, token];
+  const rule = TOKEN_SORT_RULES.find((item) => name.startsWith(item.prefix));
+  if (rule) {
+    const suffix = name.replace(rule.prefix, '');
+    return [rule.group, rule.rank?.(suffix) ?? suffixRank(suffix, rule.order), token];
   }
   if (['ease-standard', 'duration-fast', 'duration-base'].includes(name)) {
     return [8, ['ease-standard', 'duration-fast', 'duration-base'].indexOf(name), token];
-  }
-  if (name.startsWith('shadow-')) return [9, suffixRank(name.replace('shadow-', ''), ['sm', 'md']), token];
-  if (name.startsWith('color-')) {
-    return [10, suffixRank(name.replace('color-', ''), COLOR_TOKEN_ORDER), token];
   }
 
   return [99, 0, token];
@@ -252,6 +251,11 @@ const COMPONENT_USAGE_NOTES = {
     'Use `variant` for visual style only (`primary|ghost|danger`).',
     'Fixed size only: always `sm` / 32px height (`dbru-size-sm`) — no `size` prop.',
   ],
+  DbrText: [
+    'Inline typography via default slot. `DbrText` is the only public text styling primitive; there are no global typography utility classes.',
+    'Customize text only through props: `size` (`xs|sm|md|lg|xl|2xl`), `weight` (`regular|medium|semibold`), `color`, `lineHeight` (`tight|normal|relaxed`), `align`, `transform`, `decoration`, `fontStyle`, `wrap`, `letterSpacing`, `truncate`.',
+    'Omit a prop to keep the component default for that axis; set a prop only to override.',
+  ],
   DbrButton: [
     'Optional `pressEffect` enables slight downward shift on click; default is no shift.',
   ],
@@ -326,7 +330,24 @@ const COMPONENT_USAGE_NOTES = {
   ],
   DbrInput: [
     'Use `v-model` (string) as the single source of input value.',
+    '`label` always means visual informational text above the control. It is not clickable and does not focus the control.',
+    '`placeholder` means text inside the empty control.',
+    '`size` (`sm|md|lg`) changes only the input control height; the label is not included in that height.',
     'For leading/trailing icon use the `icon` slot + `iconPosition` prop.',
+  ],
+  DbrTextarea: [
+    'Use `v-model` (string) as the textarea value.',
+    '`label` always means visual informational text above the control. It is not clickable and does not focus the control.',
+    '`placeholder` means text inside the empty control.',
+    'Use `width` and `height` for dimensions. There is no `size` prop because textarea height is content/layout-specific.',
+    '`resize` defaults to `none`; opt into `vertical`, `horizontal`, or `both` when manual resize is desired.',
+  ],
+  DbrSelect: [
+    'Use `v-model` (`string | number | null`) with `options` as the source of selectable values.',
+    '`label` always means visual informational text above the control. It is not clickable and does not focus/open the control.',
+    '`placeholder` means text inside the empty control when no option is selected.',
+    '`size` (`sm|md|lg`) changes only the select control height; the label is not included in that height.',
+    'Options can include an `icon` URL rendered before the label.',
   ],
   DbrChatComposer: [
     'Use `v-model` (string) for draft text.',
@@ -407,12 +428,12 @@ const intro = [
   '## Recommended Usage For Consumers',
   '',
   '- Strong recommendation: use named imports for tree-shaking by default.',
-  '- Preferred import pattern: `import { DbrButton, DbrInput } from "dobruniaui-vue"`.',
+  '- Preferred import pattern: `import { DbrButton, DbrInput, DbrSelect, DbrTextarea } from "dobruniaui-vue"`.',
   '- Import styles once: `import "dobruniaui-vue/styles.css"`.',
   '- Avoid `app.use(DobruniaUI)` unless you explicitly want global registration of all components.',
   '',
   '```ts',
-  'import { DbrButton, DbrInput } from "dobruniaui-vue";',
+  'import { DbrButton, DbrInput, DbrSelect, DbrTextarea } from "dobruniaui-vue";',
   'import "dobruniaui-vue/styles.css";',
   '```',
   '',
@@ -420,12 +441,13 @@ const intro = [
   '',
   '- Reuse primitives and variants; avoid page-specific shortcuts.',
   '- Colors/radii/spacing should come from CSS variables and tokens.',
-  '- Prefer existing utility classes (`dbru-font-size-*`, `dbru-font-color-*`, `dbru-btn*`, `dbru-size-*`).',
+  '- Use `DbrText` for text styling; global typography utility classes do not exist.',
+  '- Prefer existing structural utility classes (`dbru-btn*`, `dbru-size-*`, `dbru-bg`, `dbru-surface`).',
   '- Keep semantic shortcuts alias-only (no unique visual styles).',
   '',
   '## Focus Utilities',
   '',
-  '- Wrap app UI in `dbru-root` (required). Root sets default typography (`font-family`, `font-size-base`, `line-height-base`, `color-text`) for the subtree.',
+  '- Wrap app UI in `dbru-root` (required). Root sets default typography for the subtree.',
   '- Inside root, `:focus:not(:focus-visible)` clears outline on mouse click; `.dbru-focus-visible:focus-visible` shows the ring on Tab.',
   '- Add `dbru-focus-visible` on each focusable control that should show the ring (buttons, inputs, textareas).',
   '- Do not use `dbru-focus-visible` on `DbrButtonGroup` items — group uses its own `:focus-visible` background (same as active).',
@@ -473,15 +495,28 @@ function pushUsageNote(section, note) {
     section.push('');
     return;
   }
+  const ensureBlankLine = () => {
+    if (section.at(-1) !== '') section.push('');
+  };
+  const previous = section.at(-1) ?? '';
+  const isFence = note.startsWith('```');
+  const isTable = note.startsWith('|');
+  const isList = note.startsWith('- ');
+  const isSubheading = note.startsWith('**');
+
   if (
-    note.startsWith('```') ||
-    note.startsWith('**') ||
-    note.startsWith('- ') ||
-    note.startsWith('|')
+    isFence ||
+    isSubheading ||
+    isList ||
+    isTable
   ) {
+    const isSameList = isList && previous.startsWith('- ');
+    const isSameTable = isTable && previous.startsWith('|');
+    if (!isSameList && !isSameTable) ensureBlankLine();
     section.push(note);
     return;
   }
+  if (previous.startsWith('|') || previous.startsWith('**') || previous.endsWith('```')) ensureBlankLine();
   section.push(`- ${note}`);
 }
 
@@ -517,7 +552,7 @@ if (vModelContracts.length) {
 const componentSections = [];
 for (const component of components) {
   componentSections.push(
-    `### ${component.name}`,
+    `### ${component.name} Props`,
     '',
     `Source interface: \`${component.interfaceName}\``,
     '',

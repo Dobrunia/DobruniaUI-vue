@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import DbrCard from "./DbrCard.vue";
+import DbrText from "../DbrText/DbrText.vue";
 
 const meta: Meta<typeof DbrCard> = {
   title: "Components/Card",
@@ -34,13 +35,13 @@ type Story = StoryObj<typeof DbrCard>;
 
 export const Playground: Story = {
   render: (args) => ({
-    components: { DbrCard },
+    components: { DbrCard, DbrText },
     setup: () => ({ args }),
     template: `
       <DbrCard v-bind="args">
         <div style="display:grid; gap:8px; padding:16px;">
-          <strong style="font-size:16px;">Card title</strong>
-          <span style="opacity:0.8;">Card has no native padding. Add your own spacing.</span>
+          <DbrText size="lg">Card title</DbrText>
+          <DbrText color="muted">Card has no native padding. Add your own spacing.</DbrText>
         </div>
       </DbrCard>
     `
@@ -49,31 +50,31 @@ export const Playground: Story = {
 
 export const Variants: Story = {
   render: () => ({
-    components: { DbrCard },
+    components: { DbrCard, DbrText },
     template: `
       <div style="display:grid; gap:12px; max-width: 420px;">
         <DbrCard variant="surface">
           <div style="padding:12px 14px;">
-            <strong>Surface</strong>
-            <div style="opacity:.75; margin-top: 6px;">No hover by default.</div>
+            <DbrText>Surface</DbrText>
+            <div style="margin-top: 6px;"><DbrText color="muted">No hover by default.</DbrText></div>
           </div>
         </DbrCard>
         <DbrCard variant="surface" hoverable>
           <div style="padding:12px 14px;">
-            <strong>Surface + hoverable</strong>
-            <div style="opacity:.75; margin-top: 6px;">Hover highlight is enabled.</div>
+            <DbrText>Surface + hoverable</DbrText>
+            <div style="margin-top: 6px;"><DbrText color="muted">Hover highlight is enabled.</DbrText></div>
           </div>
         </DbrCard>
         <DbrCard variant="bordered">
           <div style="padding:14px 16px;">
-            <strong>Bordered</strong>
-            <div style="opacity:.75; margin-top: 6px;">Dashed border, no hover.</div>
+            <DbrText>Bordered</DbrText>
+            <div style="margin-top: 6px;"><DbrText color="muted">Dashed border, no hover.</DbrText></div>
           </div>
         </DbrCard>
         <DbrCard variant="bordered" hoverable disabled>
           <div style="padding:10px 12px;">
-            <strong>Disabled</strong>
-            <div style="opacity:.75; margin-top: 6px;">No hover/interactions.</div>
+            <DbrText>Disabled</DbrText>
+            <div style="margin-top: 6px;"><DbrText color="muted">No hover/interactions.</DbrText></div>
           </div>
         </DbrCard>
       </div>

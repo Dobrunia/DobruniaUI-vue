@@ -21,51 +21,58 @@
 
     <div class="dbru-chat-item__content">
       <div class="dbru-chat-item__row">
-        <span v-if="!loading" class="dbru-chat-item__name dbru-font-size-base dbru-font-color-base">{{
-          name
-        }}</span>
+        <DbrText v-if="!loading" class="dbru-chat-item__name" truncate>
+          {{ name }}
+        </DbrText>
         <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--title"></span>
 
         <div class="dbru-chat-item__meta">
-          <span
+          <DbrText
             v-if="!loading && isOutgoing"
-            class="dbru-chat-item__status dbru-font-size-xs dbru-font-color-muted"
-            :class="`dbru-chat-item__status--${
-              messageStatus === 'read' ? 'read' : messageStatus === 'error' ? 'error' : 'sent'
-            }`"
+            class="dbru-chat-item__status"
+            :color="statusTextColor"
+            size="xs"
           >
             <span v-if="messageStatus === 'error'" class="dbru-chat-item__check">×</span>
             <template v-else>
               <span class="dbru-chat-item__check">✓</span>
               <span v-if="messageStatus === 'read'" class="dbru-chat-item__check">✓</span>
             </template>
-          </span>
-          <span v-if="!loading" class="dbru-chat-item__time dbru-font-size-sm dbru-font-color-muted">{{
-            timeLabel
-          }}</span>
+          </DbrText>
+          <DbrText v-if="!loading" class="dbru-chat-item__time" color="muted" size="sm">
+            {{ timeLabel }}
+          </DbrText>
           <span v-else class="dbru-chat-item__skeleton dbru-chat-item__skeleton--time"></span>
         </div>
       </div>
 
       <div class="dbru-chat-item__row">
         <template v-if="!loading">
-          <span v-if="isTyping" class="dbru-chat-item__typing dbru-font-size-sm">typing…</span>
-          <span
+          <DbrText
+            v-if="isTyping"
+            class="dbru-chat-item__typing"
+            color="primary"
+            size="sm"
+            truncate
+          >
+            typing…
+          </DbrText>
+          <DbrText
             v-else
-            class="dbru-chat-item__message dbru-font-size-sm dbru-font-color-muted"
-            :class="{
-              'dbru-chat-item__message--unread':
-                !isOutgoing && messageStatus === 'unread' && unreadCount,
-            }"
+            class="dbru-chat-item__message"
+            :color="messageTextColor"
+            size="sm"
+            :weight="messageTextWeight"
+            truncate
           >
             <span v-if="messageIcon" class="dbru-chat-item__msg-icon">
               {{ messageIcon }}
             </span>
             {{ messagePreview }}
-          </span>
+          </DbrText>
           <DbrChip
             v-if="!isOutgoing && messageStatus === 'unread' && unreadCount"
-            class="dbru-chat-item__badge dbru-font-size-xs"
+            class="dbru-chat-item__badge"
             variant="primary"
           >
             {{ String(unreadCount) }}
@@ -83,6 +90,8 @@ import type { DbrChatListItemProps } from './DbrChatListItem.types';
 import DbrAvatar from '../DbrAvatar/DbrAvatar.vue';
 import DbrChip from '../DbrChip/DbrChip.vue';
 import DbrChatListItemSkeleton from './DbrChatListItemSkeleton.vue';
+import DbrText from '../DbrText/DbrText.vue';
+import type { DbrTextColor, DbrTextWeight } from '../DbrText/DbrText.types';
 
 const {
   avatar,
@@ -119,6 +128,24 @@ const messageIcon = computed(() => {
   if (lastMessage?.type === 'file') return '📎';
   if (lastMessage?.type === 'voice') return '🎙️';
   return '';
+});
+
+const hasUnreadIncomingMessage = computed(
+  () => !isOutgoing && messageStatus === 'unread' && Boolean(unreadCount)
+);
+
+const messageTextColor = computed<DbrTextColor>(() =>
+  hasUnreadIncomingMessage.value ? 'primary' : 'muted'
+);
+
+const messageTextWeight = computed<DbrTextWeight>(() =>
+  hasUnreadIncomingMessage.value ? 'semibold' : 'regular'
+);
+
+const statusTextColor = computed<DbrTextColor>(() => {
+  if (messageStatus === 'read') return 'success';
+  if (messageStatus === 'error') return 'danger';
+  return 'muted';
 });
 </script>
 
@@ -193,32 +220,15 @@ const messageIcon = computed(() => {
 }
 
 .dbru-chat-item__name {
-  font-weight: var(--dbru-font-weight-semibold);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .dbru-chat-item__message {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--dbru-space-1);
-}
-
-.dbru-chat-item__message--unread {
-  color: var(--dbru-color-primary);
-  font-weight: var(--dbru-font-weight-semibold);
+  min-width: 0;
 }
 
 .dbru-chat-item__typing {
-  color: var(--dbru-color-primary);
-  font-weight: var(--dbru-font-weight-semibold);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .dbru-chat-item__meta {
@@ -232,15 +242,6 @@ const messageIcon = computed(() => {
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  line-height: var(--dbru-line-height-tight);
-}
-
-.dbru-chat-item__status--read {
-  color: #22c55e;
-}
-
-.dbru-chat-item__status--error {
-  color: #ef4444;
 }
 
 .dbru-chat-item__badge {
@@ -295,8 +296,5 @@ const messageIcon = computed(() => {
   100% {
     background-position: -200% 50%;
   }
-}
-.dbru-chat-item__msg-icon {
-  line-height: var(--dbru-line-height-tight);
 }
 </style>

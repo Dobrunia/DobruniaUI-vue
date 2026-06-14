@@ -1,11 +1,11 @@
 <template>
   <span
-    class="dbru-chip dbru-btn dbru-size-sm dbru-font-size-sm"
-    :class="[`dbru-btn--${variant}`, resolvedTextColorClass, { 'dbru-chip--removable': type === 'removable' }]"
+    class="dbru-chip dbru-btn dbru-size-sm"
+    :class="[`dbru-btn--${variant}`, { 'dbru-chip--removable': type === 'removable' }]"
   >
-    <span class="dbru-chip__content">
+    <DbrText :color="textColor" size="sm">
       <slot />
-    </span>
+    </DbrText>
     <button
       v-if="type === 'removable'"
       type="button"
@@ -14,14 +14,16 @@
       :aria-label="removeAriaLabel"
       @click="onRemove"
     >
-      ×
+      <DbrText :color="textColor" size="sm">×</DbrText>
     </button>
   </span>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import DbrText from '../DbrText/DbrText.vue';
 import type { DbrChipProps } from './DbrChip.types';
+import type { DbrTextColor } from '../DbrText/DbrText.types';
 
 defineSlots<{
   default?: (props: {}) => any;
@@ -36,13 +38,13 @@ const {
 
 const emit = defineEmits<(e: 'remove') => void>();
 
-const textColorClass: Record<NonNullable<DbrChipProps['variant']>, string> = {
-  primary: 'dbru-font-color-on-primary',
-  ghost: 'dbru-font-color-base',
-  danger: 'dbru-font-color-on-danger',
+const textColorByVariant: Record<NonNullable<DbrChipProps['variant']>, DbrTextColor> = {
+  primary: 'on-primary',
+  ghost: 'base',
+  danger: 'on-danger',
 };
 
-const resolvedTextColorClass = computed(() => textColorClass[variant]);
+const textColor = computed(() => textColorByVariant[variant]);
 
 const onRemove = (event: MouseEvent) => {
   event.stopPropagation();
@@ -58,16 +60,9 @@ const onRemove = (event: MouseEvent) => {
   gap: var(--dbru-space-2);
 }
 
-.dbru-chip__content {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--dbru-space-1);
-}
-
 .dbru-chip__remove {
   border: none;
   background: transparent;
-  color: inherit;
   width: 18px;
   height: 18px;
   border-radius: 999px;
@@ -76,7 +71,6 @@ const onRemove = (event: MouseEvent) => {
   align-items: center;
   justify-content: center;
   padding: 0;
-  line-height: 1;
 }
 
 .dbru-chip__remove:hover:not(:disabled) {

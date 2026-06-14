@@ -1,8 +1,6 @@
 .dbru-theme-grey {
     --dbru-color-bg: #000000;
     --dbru-color-surface: #16181c;
-    --dbru-color-text: #e7e9ea;
-    --dbru-color-text-muted: color-mix(in oklab, var(--dbru-color-text) 55%, transparent);
     --dbru-color-border: #2f3336;
 
     --dbru-color-primary: #4b4e55;
@@ -12,6 +10,15 @@
     --dbru-color-on-danger: #ffffff;
     --dbru-color-error: #c0392b;
     --dbru-color-success: #2ea573;
+
+    --dbru-text-color-base: #e7e9ea;
+    --dbru-text-color-muted: color-mix(in oklab, var(--dbru-text-color-base) 55%, transparent);
+    --dbru-text-color-primary: #4b4e55;
+    --dbru-text-color-danger: #8b1e1e;
+    --dbru-text-color-success: #2ea573;
+    --dbru-text-color-surface: #16181c;
+    --dbru-text-color-on-primary: #e7e9ea;
+    --dbru-text-color-on-danger: #ffffff;
 
     --dbru-color-focus: #4da3ff;
 }
