@@ -18,7 +18,6 @@
         <DbrText
           :size="textSize"
           :color="isActive(option.value) ? 'primary' : 'base'"
-          :weight="isActive(option.value) ? 'semibold' : undefined"
           wrap="nowrap"
         >
           {{ option.label }}
